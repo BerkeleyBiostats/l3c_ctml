@@ -7,3 +7,9 @@
 *.Rhistory
 .DS_Store
 .Rproj.user
+
+# the synthetic data
+*.tar.gz
+synthetic_data
+tmp_data
+spark-warehouse

@@ -1,0 +1,2008 @@
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39"),
+    final_rollups=Input(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13"),
+    add_labels=Input(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    comorbidity_counts=Input(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    count_dx_pre_and_post=Input(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    covid_measures=Input(rid="ri.foundry.main.dataset.00f71213-03c7-44f8-be40-520411e33272"),
+    device_count_clean=Input(rid="ri.foundry.main.dataset.bfb42402-89ee-4333-9677-40d88ea630dd"),
+    features=Input(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b"),
+    lab_measures_clean=Input(rid="ri.foundry.main.dataset.26ad74be-fcb8-4a41-b373-501854feb6c3"),
+    obs_person_pivot=Input(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    pre_post_med_final_distinct=Input(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    severity_table=Input(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a000ff39-5346-446b-bae0-774be581f4e2"),
+    Feature_table_all_patients_dx_drug_train=Input(rid="ri.foundry.main.dataset.280e0507-3677-4071-9953-58e698b78c92"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b58177f1-cd68-4be9-be4b-715f899c2a0b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    measurement=Input(rid="ri.foundry.main.dataset.b7749e49-cf01-4d0a-a154-2f00eecab21e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    obs_person_clean=Input(rid="ri.vector.main.execute.9baea4ea-ef0d-4496-bacf-c34d0cba82f7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.24643c26-4692-4225-92be-b81a187ae80e"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.2cf5493c-fc3e-40da-a018-52f37934e2fe")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    person=Input(rid="ri.foundry.main.dataset.06629068-25fc-4802-9b31-ead4ed515da4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.60346ff3-e886-4714-9402-81b6c2e328ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.16e9328b-7dfa-48d8-b60b-ea5b945ea683"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.26a51cab-0279-45a6-bbc0-f44a12b52f9c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.d357092e-6841-48fb-8d5f-809b4a1ae4fb"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.fde6567c-4e53-42e9-b07a-d733fb443471"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.692f0334-6976-4043-9038-27e2d8836f79")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.02850990-abf4-4b63-82b7-dbad6fda7ed7"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.3e01546f-f110-4c67-a6db-9063d2939a74"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.192a0bb9-7930-4f8a-8227-405ff5d0f6a0"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.e7aa7bae-473d-44bb-8869-9fa53186e2f7")
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
+)
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    observation=Input(rid="ri.foundry.main.dataset.f9d8b08e-3c9f-4292-b603-f1bfa4336516")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6b72ca05-314e-44a8-bf4d-b16482206e54"),
+    obs_person=Input(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
+    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80"),
+    final_rollups=Input(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    pre_post_more_in_dx_calc=Input(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Device_count_clean=Input(rid="ri.foundry.main.dataset.3dedc0a1-f9dc-441c-9f1c-eee2ee5176ba"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    count_dx_pre_and_post=Input(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    features=Input(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.6f1d6d9a-9bc8-437c-8a4b-ce02d6ec5ef4"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    biological_pathways=Input(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5"),
+    covid_measurement=Input(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    post_measurement=Input(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    pre_measurement=Input(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    pre_pre_measurement=Input(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    four_windows_measure=Input(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.469b3181-6336-4d0e-8c11-5e33a99876b5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_drugs=Input(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973"),
+    DrugConcepts=Input(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    Drugs_for_These_Patients=Input(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_drugs=Input(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0"),
+    covidtbl=Input(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    posttbl=Input(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    prepretbl=Input(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    pretbl=Input(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    pre_post_med_count=Input(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_pre_drugs=Input(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_drugs=Input(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_condition=Input(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_condition=Input(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    pre_condition=Input(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    pre_pre_condition=Input(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    four_windows_dx_counts=Input(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.8599371f-a219-4a0d-be3a-345e200197be"),
+    device_covid=Input(rid="ri.foundry.main.dataset.c71ca392-9117-4940-a9ba-0ec468ed35f7"),
+    device_filtered=Input(rid="ri.vector.main.execute.c4f0173a-942b-4c1e-b6b4-b1b7183e0d91"),
+    device_post=Input(rid="ri.foundry.main.dataset.9e04d829-d626-4640-b157-1633e8dec074"),
+    device_pre=Input(rid="ri.foundry.main.dataset.86a8ce34-1c75-4e4c-8512-c0b3dfb2ba4e"),
+    device_pre_pre=Input(rid="ri.foundry.main.dataset.6027a85f-b97f-40ea-b125-92f65183484e")
+)
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39"),
+    final_rollups=Input(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13"),
+    add_labels=Input(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    comorbidity_counts=Input(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    count_dx_pre_and_post=Input(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    covid_measures=Input(rid="ri.foundry.main.dataset.00f71213-03c7-44f8-be40-520411e33272"),
+    device_count_clean=Input(rid="ri.foundry.main.dataset.bfb42402-89ee-4333-9677-40d88ea630dd"),
+    features=Input(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b"),
+    lab_measures_clean=Input(rid="ri.foundry.main.dataset.26ad74be-fcb8-4a41-b373-501854feb6c3"),
+    obs_person_pivot=Input(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    pre_post_med_final_distinct=Input(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    severity_table=Input(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a000ff39-5346-446b-bae0-774be581f4e2"),
+    Feature_table_all_patients_dx_drug_train=Input(rid="ri.foundry.main.dataset.280e0507-3677-4071-9953-58e698b78c92"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b58177f1-cd68-4be9-be4b-715f899c2a0b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    measurement=Input(rid="ri.foundry.main.dataset.b7749e49-cf01-4d0a-a154-2f00eecab21e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    obs_person_clean=Input(rid="ri.vector.main.execute.9baea4ea-ef0d-4496-bacf-c34d0cba82f7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.24643c26-4692-4225-92be-b81a187ae80e"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.2cf5493c-fc3e-40da-a018-52f37934e2fe")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    person=Input(rid="ri.foundry.main.dataset.06629068-25fc-4802-9b31-ead4ed515da4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.60346ff3-e886-4714-9402-81b6c2e328ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.16e9328b-7dfa-48d8-b60b-ea5b945ea683"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.26a51cab-0279-45a6-bbc0-f44a12b52f9c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.d357092e-6841-48fb-8d5f-809b4a1ae4fb"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.fde6567c-4e53-42e9-b07a-d733fb443471"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.692f0334-6976-4043-9038-27e2d8836f79")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.02850990-abf4-4b63-82b7-dbad6fda7ed7"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.3e01546f-f110-4c67-a6db-9063d2939a74"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.192a0bb9-7930-4f8a-8227-405ff5d0f6a0"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.e7aa7bae-473d-44bb-8869-9fa53186e2f7")
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
+)
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    observation=Input(rid="ri.foundry.main.dataset.f9d8b08e-3c9f-4292-b603-f1bfa4336516")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6b72ca05-314e-44a8-bf4d-b16482206e54"),
+    obs_person=Input(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
+    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80"),
+    final_rollups=Input(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    pre_post_more_in_dx_calc=Input(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Device_count_clean=Input(rid="ri.foundry.main.dataset.3dedc0a1-f9dc-441c-9f1c-eee2ee5176ba"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    count_dx_pre_and_post=Input(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    features=Input(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.6f1d6d9a-9bc8-437c-8a4b-ce02d6ec5ef4"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    biological_pathways=Input(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5"),
+    covid_measurement=Input(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    post_measurement=Input(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    pre_measurement=Input(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    pre_pre_measurement=Input(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    four_windows_measure=Input(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.469b3181-6336-4d0e-8c11-5e33a99876b5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_drugs=Input(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973"),
+    DrugConcepts=Input(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    Drugs_for_These_Patients=Input(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_drugs=Input(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0"),
+    covidtbl=Input(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    posttbl=Input(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    prepretbl=Input(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    pretbl=Input(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    pre_post_med_count=Input(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_pre_drugs=Input(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_drugs=Input(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_condition=Input(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_condition=Input(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    pre_condition=Input(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    pre_pre_condition=Input(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    four_windows_dx_counts=Input(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.8599371f-a219-4a0d-be3a-345e200197be"),
+    device_covid=Input(rid="ri.foundry.main.dataset.c71ca392-9117-4940-a9ba-0ec468ed35f7"),
+    device_filtered=Input(rid="ri.vector.main.execute.c4f0173a-942b-4c1e-b6b4-b1b7183e0d91"),
+    device_post=Input(rid="ri.foundry.main.dataset.9e04d829-d626-4640-b157-1633e8dec074"),
+    device_pre=Input(rid="ri.foundry.main.dataset.86a8ce34-1c75-4e4c-8512-c0b3dfb2ba4e"),
+    device_pre_pre=Input(rid="ri.foundry.main.dataset.6027a85f-b97f-40ea-b125-92f65183484e")
+)
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39"),
+    final_rollups=Input(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13"),
+    add_labels=Input(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    comorbidity_counts=Input(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    count_dx_pre_and_post=Input(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    covid_measures=Input(rid="ri.foundry.main.dataset.00f71213-03c7-44f8-be40-520411e33272"),
+    device_count_clean=Input(rid="ri.foundry.main.dataset.bfb42402-89ee-4333-9677-40d88ea630dd"),
+    features=Input(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b"),
+    lab_measures_clean=Input(rid="ri.foundry.main.dataset.26ad74be-fcb8-4a41-b373-501854feb6c3"),
+    obs_person_pivot=Input(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    pre_post_med_final_distinct=Input(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    severity_table=Input(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a000ff39-5346-446b-bae0-774be581f4e2"),
+    Feature_table_all_patients_dx_drug_train=Input(rid="ri.foundry.main.dataset.280e0507-3677-4071-9953-58e698b78c92"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b58177f1-cd68-4be9-be4b-715f899c2a0b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    measurement=Input(rid="ri.foundry.main.dataset.b7749e49-cf01-4d0a-a154-2f00eecab21e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    obs_person_clean=Input(rid="ri.vector.main.execute.9baea4ea-ef0d-4496-bacf-c34d0cba82f7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.24643c26-4692-4225-92be-b81a187ae80e"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.2cf5493c-fc3e-40da-a018-52f37934e2fe")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    person=Input(rid="ri.foundry.main.dataset.06629068-25fc-4802-9b31-ead4ed515da4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.60346ff3-e886-4714-9402-81b6c2e328ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.16e9328b-7dfa-48d8-b60b-ea5b945ea683"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.26a51cab-0279-45a6-bbc0-f44a12b52f9c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.d357092e-6841-48fb-8d5f-809b4a1ae4fb"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.fde6567c-4e53-42e9-b07a-d733fb443471"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.692f0334-6976-4043-9038-27e2d8836f79")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.02850990-abf4-4b63-82b7-dbad6fda7ed7"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.3e01546f-f110-4c67-a6db-9063d2939a74"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.192a0bb9-7930-4f8a-8227-405ff5d0f6a0"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.e7aa7bae-473d-44bb-8869-9fa53186e2f7")
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
+)
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    observation=Input(rid="ri.foundry.main.dataset.f9d8b08e-3c9f-4292-b603-f1bfa4336516")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6b72ca05-314e-44a8-bf4d-b16482206e54"),
+    obs_person=Input(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
+    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80"),
+    final_rollups=Input(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    pre_post_more_in_dx_calc=Input(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Device_count_clean=Input(rid="ri.foundry.main.dataset.3dedc0a1-f9dc-441c-9f1c-eee2ee5176ba"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    count_dx_pre_and_post=Input(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    features=Input(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.6f1d6d9a-9bc8-437c-8a4b-ce02d6ec5ef4"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    biological_pathways=Input(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5"),
+    covid_measurement=Input(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    post_measurement=Input(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    pre_measurement=Input(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    pre_pre_measurement=Input(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    four_windows_measure=Input(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.469b3181-6336-4d0e-8c11-5e33a99876b5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_drugs=Input(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973"),
+    DrugConcepts=Input(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    Drugs_for_These_Patients=Input(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_drugs=Input(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0"),
+    covidtbl=Input(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    posttbl=Input(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    prepretbl=Input(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    pretbl=Input(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    pre_post_med_count=Input(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_pre_drugs=Input(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_drugs=Input(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_condition=Input(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_condition=Input(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    pre_condition=Input(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    pre_pre_condition=Input(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    four_windows_dx_counts=Input(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.8599371f-a219-4a0d-be3a-345e200197be"),
+    device_covid=Input(rid="ri.foundry.main.dataset.c71ca392-9117-4940-a9ba-0ec468ed35f7"),
+    device_filtered=Input(rid="ri.vector.main.execute.c4f0173a-942b-4c1e-b6b4-b1b7183e0d91"),
+    device_post=Input(rid="ri.foundry.main.dataset.9e04d829-d626-4640-b157-1633e8dec074"),
+    device_pre=Input(rid="ri.foundry.main.dataset.86a8ce34-1c75-4e4c-8512-c0b3dfb2ba4e"),
+    device_pre_pre=Input(rid="ri.foundry.main.dataset.6027a85f-b97f-40ea-b125-92f65183484e")
+)
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39"),
+    final_rollups=Input(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13"),
+    add_labels=Input(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+    comorbidity_counts=Input(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    count_dx_pre_and_post=Input(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+    covid_measures=Input(rid="ri.foundry.main.dataset.00f71213-03c7-44f8-be40-520411e33272"),
+    device_count_clean=Input(rid="ri.foundry.main.dataset.bfb42402-89ee-4333-9677-40d88ea630dd"),
+    features=Input(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b"),
+    lab_measures_clean=Input(rid="ri.foundry.main.dataset.26ad74be-fcb8-4a41-b373-501854feb6c3"),
+    obs_person_pivot=Input(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    pre_post_med_final_distinct=Input(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    severity_table=Input(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a000ff39-5346-446b-bae0-774be581f4e2"),
+    Feature_table_all_patients_dx_drug_train=Input(rid="ri.foundry.main.dataset.280e0507-3677-4071-9953-58e698b78c92"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b58177f1-cd68-4be9-be4b-715f899c2a0b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    measurement=Input(rid="ri.foundry.main.dataset.b7749e49-cf01-4d0a-a154-2f00eecab21e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+    obs_person_clean=Input(rid="ri.vector.main.execute.9baea4ea-ef0d-4496-bacf-c34d0cba82f7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8"),
+    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.24643c26-4692-4225-92be-b81a187ae80e"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.2cf5493c-fc3e-40da-a018-52f37934e2fe")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    person=Input(rid="ri.foundry.main.dataset.06629068-25fc-4802-9b31-ead4ed515da4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.60346ff3-e886-4714-9402-81b6c2e328ba"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.16e9328b-7dfa-48d8-b60b-ea5b945ea683"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.26a51cab-0279-45a6-bbc0-f44a12b52f9c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.d357092e-6841-48fb-8d5f-809b4a1ae4fb"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.fde6567c-4e53-42e9-b07a-d733fb443471"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.692f0334-6976-4043-9038-27e2d8836f79")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.02850990-abf4-4b63-82b7-dbad6fda7ed7"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.3e01546f-f110-4c67-a6db-9063d2939a74"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.192a0bb9-7930-4f8a-8227-405ff5d0f6a0"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.e7aa7bae-473d-44bb-8869-9fa53186e2f7")
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
+)
+
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    observation=Input(rid="ri.foundry.main.dataset.f9d8b08e-3c9f-4292-b603-f1bfa4336516")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6b72ca05-314e-44a8-bf4d-b16482206e54"),
+    obs_person=Input(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
+    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
+    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
+    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80"),
+    final_rollups=Input(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    pre_post_more_in_dx_calc=Input(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Device_count_clean=Input(rid="ri.foundry.main.dataset.3dedc0a1-f9dc-441c-9f1c-eee2ee5176ba"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    count_dx_pre_and_post=Input(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+    features=Input(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+    parent_condition_rollup=Input(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.6f1d6d9a-9bc8-437c-8a4b-ce02d6ec5ef4"),
+    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+    biological_pathways=Input(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4"),
+    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5"),
+    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+    add_alt_rollup=Input(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191"),
+    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305"),
+    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5"),
+    covid_measurement=Input(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+    post_measurement=Input(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    pre_measurement=Input(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    pre_pre_measurement=Input(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+    four_windows_measure=Input(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drug_exposure=Input(rid="ri.foundry.main.dataset.469b3181-6336-4d0e-8c11-5e33a99876b5")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_drugs=Input(rid="ri.vector.main.execute.130284d0-8168-4ecb-8556-9646aa90cd07"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973"),
+    DrugConcepts=Input(rid="ri.vector.main.execute.a63a8ea7-8537-4ef5-9e68-274c3b5bb545"),
+    Drugs_for_These_Patients=Input(rid="ri.vector.main.execute.288cdbd1-0d61-4a65-a86d-1714402f663f"),
+    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_drugs=Input(rid="ri.vector.main.execute.d7cd5658-cbb1-418e-9b84-a8777aa67f19")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0"),
+    covidtbl=Input(rid="ri.vector.main.execute.99e86a2a-69e5-4c25-b6e8-6ea4ade87b3f"),
+    posttbl=Input(rid="ri.vector.main.execute.f7b478eb-85f4-43a0-949c-2ecc78140e17"),
+    prepretbl=Input(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    pretbl=Input(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    pre_post_med_count=Input(rid="ri.vector.main.execute.3bd5ba7c-d0c2-4485-9d10-c16895794ea0")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    drugRollUp=Input(rid="ri.vector.main.execute.685e760b-462c-47c5-b2b2-5e8d9b1b4973")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.753f92de-1931-408e-ade4-9d18a7f4bb76"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_pre_drugs=Input(rid="ri.vector.main.execute.9b9a05ee-943a-4764-9585-7f94c813af83")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.0c161a09-22c1-421b-b6ef-df510fa5d02c"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    pre_drugs=Input(rid="ri.vector.main.execute.6420351f-3985-4ec5-b098-66c21eb6900a")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    covid_condition=Input(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+    post_condition=Input(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    pre_condition=Input(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    pre_pre_condition=Input(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    four_windows_dx_counts=Input(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e"),
+    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+    hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+    Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+    Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
+    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+    Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
+)
+@transform_pandas(
+    Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
+    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+    inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
+)
+@transform_pandas(
+    Output(rid="ri.foundry.main.dataset.8599371f-a219-4a0d-be3a-345e200197be"),
+    device_covid=Input(rid="ri.foundry.main.dataset.c71ca392-9117-4940-a9ba-0ec468ed35f7"),
+    device_filtered=Input(rid="ri.vector.main.execute.c4f0173a-942b-4c1e-b6b4-b1b7183e0d91"),
+    device_post=Input(rid="ri.foundry.main.dataset.9e04d829-d626-4640-b157-1633e8dec074"),
+    device_pre=Input(rid="ri.foundry.main.dataset.86a8ce34-1c75-4e4c-8512-c0b3dfb2ba4e"),
+    device_pre_pre=Input(rid="ri.foundry.main.dataset.6027a85f-b97f-40ea-b125-92f65183484e")
+)
+
+
+
+
+
+
+
+

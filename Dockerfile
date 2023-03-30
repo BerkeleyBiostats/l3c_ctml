@@ -6,7 +6,7 @@ USER jovyan
 # TODO: we shouldn't need to do this
 RUN pip3 install "py4j==0.10.9.5"
 RUN ln -s /usr/local/spark-3.3.2-bin-hadoop3/python/pyspark /opt/conda/lib/python3.10/site-packages/pyspark
-
+RUN pip3 install shap
 
 #TODO: other dependencies we load
 
@@ -15,15 +15,10 @@ USER root
 RUN fix-permissions "${CONDA_DIR}"
 RUN fix-permissions "/home/${NB_USER}"
 
-# put test files in home director
+# put needed files in home directory (also will mount whole project as volume at runtime)
+
 USER jovyan
 
-# put needed files in home directory (also will mount whole project as volume)
-USER jovyan
+ADD /utils/run.sh /home/jovyan/run.sh
 
-# RUN ln -s /usr/local/spark/python/lib/* /opt/
-
-ADD run.sh /home/jovyan/run.sh
-
-# run i3c code
-# CMD ["run.sh"]
+CMD ["run.sh"]
