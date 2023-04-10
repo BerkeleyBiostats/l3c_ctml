@@ -48,17 +48,18 @@ def sql_statement_01(long_covid_silver_standard):
 ####     tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
 ####     tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
 # )
-def sql_statement_02():
-    statement = '''SELECT\ feat\.\*,\ \
-\(nvl\(tot_ip\.post_tot_ip_days,\ 0\)/feat\.tot_post_days\)\ as\ post_ip_visit_ratio,\ \
-\(nvl\(tot_ip\.covid_tot_ip_days,\ 0\)/feat\.tot_covid_days\)\ as\ covid_ip_visit_ratio,\ \
-\(nvl\(tot_icu\.post_tot_icu_days,\ 0\)/feat\.tot_post_days\)\ as\ post_icu_visit_ratio,\ \
-\(nvl\(tot_icu\.covid_tot_icu_days,\ 0\)/feat\.tot_covid_days\)\ as\ covid_icu_visit_ratio\
-FROM\ Feature_Table_Builder_v0\ feat\
-LEFT\ JOIN\ tot_ip_days_calc\ tot_ip\ ON\ feat\.person_id\ =\ tot_ip\.person_id\
-LEFT\ JOIN\ tot_icu_days_calc\ tot_icu\ ON\ feat\.person_id\ =\ tot_icu\.person_id\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_calc):
+    feat = Feature_Table_Builder_v0
+    tot_ip = tot_ip_days_calc
+    tot_icu = tot_icu_days_calc
+    feat = feat.join(tot_ip, ['person_id'], how='left') \
+        .join(tot_icu, ['person_id'], how='left') \
+        .select(feat['*'],
+                (coalesce(tot_ip['post_tot_ip_days'], lit(0)) / feat['tot_post_days']).alias('post_ip_visit_ratio'),
+                (coalesce(tot_ip['covid_tot_ip_days'], lit(0)) / feat['tot_covid_days']).alias('covid_ip_visit_ratio'),
+                (coalesce(tot_icu['post_tot_icu_days'], lit(0)) / feat['tot_post_days']).alias('post_icu_visit_ratio'),
+                (coalesce(tot_icu['covid_tot_icu_days'], lit(0)) / feat['tot_covid_days']).alias('covid_icu_visit_ratio'))
+    return feat
 
 
 #### @transform_pandas(
@@ -81,7 +82,7 @@ def sql_statement_03(Covid_Pasc_Index_Dates, hosp_and_non, microvisits_to_macrov
         max("visit_start_date").alias("max_visit_start_date"),
         countDistinct("visit_start_date").alias("tot_long_data_days")
     ).drop("min_covid_dt") \
-    .withColumn(
+        .withColumn(
         "pre_pre_window_start_dt", date_add(col("min_covid_dt_2"), -365)
     ).withColumn(
         "pre_window_start_dt", date_add(col("min_covid_dt_2"), -37)
@@ -137,17 +138,17 @@ def sql_statement_04(cohort, cond_occ, micro_to_macro):
 ####     Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
 ####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
-def sql_statement_05(microvisits_to_macrovisits):
-
-    df = microvisits_to_macrovisits.select('person_id', 'visit_concept_name', 'macrovisit_id', 'macrovisit_start_date',
-                                      'macrovisit_end_date') \
-        .where(col('visit_concept_id').isin('Inpatient Critical Care Facility',
-                                              'Emergency Room and Inpatient Visit',
-                                              'Emergency Room Visit',
-                                              'Intensive Care',
-                                              'Emergency Room - Hospital')) \
-        .where(col('macrovisit_id').isNotNull())
-    return(df)
+def sql_statement_05(microvisits_to_macrovisits, concept):
+    df = microvisits_to_macrovisits \
+        .join(concept, (microvisits_to_macrovisits.visit_concept_id == concept.concept_id), 'left') \
+        .select('person_id', 'concept_name', 'visit_occurrence_id', 'visit_start_date', 'visit_end_date') \
+        .where(col('concept_name').isin('Inpatient Critical Care Facility',
+                                        'Emergency Room and Inpatient Visit',
+                                        'Emergency Room Visit',
+                                        'Intensive Care',
+                                        'Emergency Room - Hospital')) \
+        .where(col('visit_occurrence_id').isNotNull())
+    return (df)
 
 
 #### @transform_pandas(
@@ -173,15 +174,16 @@ def sql_statement_06(cohort, hosp_cases):
 ####     Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
 ####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
-def sql_statement_07():
-    statement = '''SELECT\ \*\ \
-\ \ \ \ \ \ \ \ FROM\ microvisits_to_macrovisits\
-\ \ \ \ \ \ \ \ WHERE\ visit_concept_name\ IN\ \('Inpatient\ Visit',\ 'Inpatient\ Hospital',\ 'Inpatient\ Critical\ Care\ Facility',\ \
-\ \ \ \ \ \ \ \ 'Emergency\ Room\ and\ Inpatient\ Visit',\ \
-\ \ \ \ \ \ \ \ 'Emergency\ Room\ Visit',\ 'Intensive\ Care',\ 'Emergency\ Room\ \-\ Hospital'\)\ \
-\ \ \ \ \ \ \ \ and\ macrovisit_id\ is\ not\ null\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_07(microvisits_to_macrovisits, concept):
+    df = microvisits_to_macrovisits \
+        .join(concept, (microvisits_to_macrovisits.visit_concept_id == concept.concept_id), 'left') \
+        .select('person_id', 'concept_name', 'visit_occurrence_id', 'visit_start_date', 'visit_end_date') \
+        .where(col('concept_name').isin("Inpatient Visit", "Inpatient Hospital", "Inpatient Critical Care Facility",
+                                        "Emergency Room and Inpatient Visit", "Emergency Room Visit", "Intensive Care",
+                                        "Emergency Room - Hospital")) \
+        .where(col('visit_occurrence_id').isNotNull())
+
+    return df
 
 
 #### @transform_pandas(
@@ -201,52 +203,53 @@ def sql_statement_08(covid_pasc_index_dates):
 ####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
 ####     ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
 # )
-def sql_statement_09():
-    statement = '''\-\-\ find\ the\ total\ number\ of\ inpatient\ days\ in\ the\ covid\ window\ and\ the\ post\ covid\ window\ for\ use\ later\
-SELECT\ nvl\(post_tbl\.person_id,\ covid_tbl\.person_id\)\ as\ person_id,\ nvl\(post_tbl\.post_window_start_dt,\ covid_tbl\.post_window_start_dt\)\ as\ post_window_start_dt,\ post_tbl\.post_window_end_dt,\ post_tot_icu_days,\ covid_tbl\.pre_window_end_dt,\ covid_tot_icu_days\
-FROM\
-\
-\(SELECT\ \*,\ \ \ \ \ \ \
-\ \ \ \ \ \ \ \ CASE\ WHEN\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ >\ \ datediff\(post_window_end_dt,\ macrovisit_start_date\)\
-\ \ \ \ \ \ \ \ \ THEN\ datediff\(post_window_end_dt,\ macrovisit_start_date\)\ \ ELSE\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ \
-\ \ \ \ \ \ \ \ \ END\ post_tot_icu_days\
-FROM\(SELECT\ \
-\ \ \ \ person_id,\ post_window_start_dt,\ post_window_end_dt,\ max\(macrovisit_end_date\)\ as\ macrovisit_end_date,\ min\(macrovisit_start_date\)\ as\ macrovisit_start_date\
-FROM\ \	\(\
-\	SELECT\ distinct\ feat\.person_id,\ \
-\	feat\.post_window_start_dt,\
-\	feat\.post_window_end_dt,\
-\	mm\.macrovisit_start_date,\ \
-\	mm\.macrovisit_end_date\
-\	FROM\ Feature_Table_Builder_v0\ feat\ JOIN\ ICU_visits\ mm\ \
-\ \ \ \ ON\ feat\.person_id\ =\ mm\.person_id\ and\ mm\.macrovisit_start_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\
-\	\)\ tbl\
-GROUP\ BY\ person_id,\ post_window_start_dt,\ post_window_end_dt\)\
-\)\ post_tbl\
-\
-FULL\ JOIN\
-\
-\(SELECT\ \*,\ \ \ \ \ \ \
-\ \ \ \ \ \ \ \ CASE\ WHEN\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ >\ \ datediff\(post_window_start_dt,\ macrovisit_start_date\)\
-\ \ \ \ \ \ \ \ \ THEN\ datediff\(post_window_start_dt,\ macrovisit_start_date\)\ \ ELSE\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ \
-\ \ \ \ \ \ \ \ \ END\ covid_tot_icu_days\
-FROM\(SELECT\ \
-\ \ \ \ person_id,\ pre_window_end_dt,\ post_window_start_dt,\ max\(macrovisit_end_date\)\ as\ macrovisit_end_date,\ min\(macrovisit_start_date\)\ as\ macrovisit_start_date\
-FROM\ \	\(\
-\	SELECT\ distinct\ feat\.person_id,\ \
-\	feat\.pre_window_end_dt,\
-\	feat\.post_window_start_dt,\
-\	mm\.macrovisit_start_date,\ \
-\	mm\.macrovisit_end_date\
-\	FROM\ Feature_Table_Builder_v0\ feat\ JOIN\ ICU_visits\ mm\ \
-\ \ \ \ ON\ feat\.person_id\ =\ mm\.person_id\ and\ mm\.macrovisit_start_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\
-\	\)\ tbl\
-GROUP\ BY\ person_id,\ pre_window_end_dt,\ post_window_start_dt\)\
-\)\ covid_tbl\
-\
-ON\ post_tbl\.person_id\ =\ covid_tbl\.person_id\ and\ post_tbl\.post_window_start_dt\ =\ covid_tbl\.post_window_start_dt\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_09(Feature_Table_Builder_v0, icu_visits):
+    feat = Feature_Table_Builder_v0
+
+    tbl = feat.join(icu_visits, (feat.person_id == icu_visits.person_id) & \
+                    (icu_visits.visit_start_date.between(feat.post_window_start_dt, feat.post_window_end_dt)),
+                    "inner") \
+        .select(feat.person_id, feat.post_window_start_dt, feat.post_window_end_dt, \
+                icu_visits.visit_start_date, icu_visits.visit_end_date)
+
+    post_tbl = tbl.groupBy("person_id", "post_window_start_dt", "post_window_end_dt") \
+        .agg(max(col("visit_end_date")).alias("macrovisit_end_date"),
+             min(col("visit_start_date")).alias("macrovisit_start_date")) \
+        .select("*", when(datediff(col("macrovisit_end_date"), col("macrovisit_start_date")) >
+                          datediff(col("post_window_end_dt"), col("macrovisit_start_date")),
+                          datediff(col("post_window_end_dt"), col("macrovisit_start_date")))
+                .otherwise(datediff(col("macrovisit_end_date"), col("macrovisit_start_date")))
+                .alias("post_tot_icu_days"))
+
+    tbl = feat.join(icu_visits, (feat.person_id == icu_visits.person_id) & \
+                    (icu_visits.visit_start_date.between(feat.pre_window_end_dt, feat.post_window_start_dt)),
+                    "inner") \
+        .select(feat.person_id, feat.pre_window_end_dt, feat.post_window_start_dt, \
+                icu_visits.visit_start_date, icu_visits.visit_end_date)
+
+    covid_tbl = tbl.groupBy("person_id", "pre_window_end_dt", "post_window_start_dt") \
+        .agg(max(col("visit_end_date")).alias("macrovisit_end_date"), \
+             min(col("visit_start_date")).alias("macrovisit_start_date")) \
+        .select("*", when(datediff(col("macrovisit_end_date"), col("macrovisit_start_date")) > \
+                          datediff(col("post_window_start_dt"), col("macrovisit_start_date")), \
+                          datediff(col("post_window_start_dt"), col("macrovisit_start_date"))) \
+                .otherwise(datediff(col("macrovisit_end_date"), col("macrovisit_start_date"))) \
+                .alias("covid_tot_icu_days"))
+
+    post_tbl = post_tbl.withColumnRenamed("person_id", "person_id_post") \
+        .withColumnRenamed("post_window_start_dt", "post_window_start_dt_post")
+
+    joined_df = post_tbl.join(covid_tbl, (post_tbl.person_id_post == covid_tbl.person_id) & ((post_tbl.post_window_start_dt_post == covid_tbl.post_window_start_dt)),
+                              how="full_outer") \
+        .select(
+        coalesce(post_tbl.person_id_post, covid_tbl.person_id).alias("person_id"),
+        coalesce(post_tbl.post_window_start_dt_post, covid_tbl.post_window_start_dt).alias("post_window_start_dt"),
+        post_tbl.post_window_end_dt,
+        post_tbl.post_tot_icu_days,
+        covid_tbl.pre_window_end_dt,
+        covid_tbl.covid_tot_icu_days
+    )
+    return joined_df
 
 
 #### @transform_pandas(
@@ -254,53 +257,55 @@ ON\ post_tbl\.person_id\ =\ covid_tbl\.person_id\ and\ post_tbl\.post_window_sta
 ####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
 ####     inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
 # )
-def sql_statement_10():
-    statement = '''\-\-\ find\ the\ total\ number\ of\ inpatient\ days\ in\ the\ covid\ window\ and\ the\ post\ covid\ window\ for\ use\ later\
-SELECT\ nvl\(post_tbl\.person_id,\ covid_tbl\.person_id\)\ as\ person_id,\ nvl\(post_tbl\.post_window_start_dt,\ covid_tbl\.post_window_start_dt\)\ as\ post_window_start_dt,\ post_tbl\.post_window_end_dt,\ post_tot_ip_days,\ covid_tbl\.pre_window_end_dt,\ covid_tot_ip_days\
-FROM\
-\
-\(SELECT\ \*,\ \ \ \ \ \ \
-\ \ \ \ \ \ \ \ CASE\ WHEN\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ >\ \ datediff\(post_window_end_dt,\ macrovisit_start_date\)\
-\ \ \ \ \ \ \ \ \ THEN\ datediff\(post_window_end_dt,\ macrovisit_start_date\)\ \ ELSE\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ \
-\ \ \ \ \ \ \ \ \ END\ post_tot_ip_days\
-FROM\(SELECT\ \
-\ \ \ \ person_id,\ post_window_start_dt,\ post_window_end_dt,\ max\(macrovisit_end_date\)\ as\ macrovisit_end_date,\ min\(macrovisit_start_date\)\ as\ macrovisit_start_date\
-FROM\ \	\(\
-\	SELECT\ distinct\ feat\.person_id,\ \
-\	feat\.post_window_start_dt,\
-\	feat\.post_window_end_dt,\
-\	mm\.macrovisit_start_date,\ \
-\	mm\.macrovisit_end_date\
-\	FROM\ Feature_Table_Builder_v0\ feat\ JOIN\ inpatient_visits\ mm\ \
-\ \ \ \ ON\ feat\.person_id\ =\ mm\.person_id\ and\ mm\.macrovisit_start_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\
-\	\)\ tbl\
-GROUP\ BY\ person_id,\ post_window_start_dt,\ post_window_end_dt\)\
-\)\ post_tbl\
-\
-FULL\ JOIN\
-\
-\(SELECT\ \*,\ \ \ \ \ \ \
-\ \ \ \ \ \ \ \ CASE\ WHEN\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ >\ \ datediff\(post_window_start_dt,\ macrovisit_start_date\)\
-\ \ \ \ \ \ \ \ \ THEN\ datediff\(post_window_start_dt,\ macrovisit_start_date\)\ \ ELSE\ datediff\(macrovisit_end_date,macrovisit_start_date\)\ \
-\ \ \ \ \ \ \ \ \ END\ covid_tot_ip_days\
-FROM\(SELECT\ \
-\ \ \ \ person_id,\ pre_window_end_dt,\ post_window_start_dt,\ max\(macrovisit_end_date\)\ as\ macrovisit_end_date,\ min\(macrovisit_start_date\)\ as\ macrovisit_start_date\
-FROM\ \	\(\
-\	SELECT\ distinct\ feat\.person_id,\ \
-\	feat\.pre_window_end_dt,\
-\	feat\.post_window_start_dt,\
-\	mm\.macrovisit_start_date,\ \
-\	mm\.macrovisit_end_date\
-\	FROM\ Feature_Table_Builder_v0\ feat\ JOIN\ inpatient_visits\ mm\ \
-\ \ \ \ ON\ feat\.person_id\ =\ mm\.person_id\ and\ mm\.macrovisit_start_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\
-\	\)\ tbl\
-GROUP\ BY\ person_id,\ pre_window_end_dt,\ post_window_start_dt\)\
-\)\ covid_tbl\
-\
-ON\ post_tbl\.person_id\ =\ covid_tbl\.person_id\ and\ post_tbl\.post_window_start_dt\ =\ covid_tbl\.post_window_start_dt\
-\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_10(Feature_Table_Builder_v0, inpatient_visits):
+    feat = Feature_Table_Builder_v0
+
+    tbl = feat.join(inpatient_visits, (feat.person_id == inpatient_visits.person_id) & \
+                    (inpatient_visits.visit_start_date.between(feat.post_window_start_dt, feat.post_window_end_dt)),
+                    "inner") \
+        .select(feat.person_id, feat.post_window_start_dt, feat.post_window_end_dt, \
+                inpatient_visits.visit_start_date, inpatient_visits.visit_end_date)
+
+    post_tbl = tbl.groupBy("person_id", "post_window_start_dt", "post_window_end_dt") \
+        .agg(max(col("visit_end_date")).alias("macrovisit_end_date"), \
+             min(col("visit_start_date")).alias("macrovisit_start_date")) \
+        .select("*", when(datediff(col("macrovisit_end_date"), col("macrovisit_start_date")) > \
+                          datediff(col("post_window_end_dt"), col("macrovisit_start_date")), \
+                          datediff(col("post_window_end_dt"), col("macrovisit_start_date"))) \
+                .otherwise(datediff(col("macrovisit_end_date"), col("macrovisit_start_date"))) \
+                .alias("post_tot_ip_days"))
+
+    tbl = feat.join(inpatient_visits, (feat.person_id == inpatient_visits.person_id) & \
+                    (inpatient_visits.visit_start_date.between(feat.pre_window_end_dt, feat.post_window_start_dt)),
+                    "inner") \
+        .select(feat.person_id, feat.pre_window_end_dt, feat.post_window_start_dt, \
+                inpatient_visits.visit_start_date, inpatient_visits.visit_end_date)
+
+    covid_tbl = tbl.groupBy("person_id", "pre_window_end_dt", "post_window_start_dt") \
+        .agg(max(col("visit_end_date")).alias("macrovisit_end_date"), \
+             min(col("visit_start_date")).alias("macrovisit_start_date")) \
+        .select("*", when(datediff(col("macrovisit_end_date"), col("macrovisit_start_date")) > \
+                          datediff(col("post_window_start_dt"), col("macrovisit_start_date")), \
+                          datediff(col("post_window_start_dt"), col("macrovisit_start_date"))) \
+                .otherwise(datediff(col("macrovisit_end_date"), col("macrovisit_start_date"))) \
+                .alias("covid_tot_ip_days"))
+
+    post_tbl = post_tbl.withColumnRenamed("person_id", "person_id_post") \
+        .withColumnRenamed("post_window_start_dt", "post_window_start_dt_post")
+
+
+    joined_df = post_tbl.join(covid_tbl, (post_tbl.person_id_post == covid_tbl.person_id) & ((post_tbl.post_window_start_dt_post == covid_tbl.post_window_start_dt)),
+                              how="full_outer") \
+        .select(
+        coalesce(post_tbl.person_id_post, covid_tbl.person_id).alias("person_id"),
+        coalesce(post_tbl.post_window_start_dt_post, covid_tbl.post_window_start_dt).alias("post_window_start_dt"),
+        post_tbl.post_window_end_dt,
+        post_tbl.post_tot_ip_days,
+        covid_tbl.pre_window_end_dt,
+        covid_tbl.covid_tot_ip_days
+    )
+
+    return joined_df
 
 
 __all__ = [sql_statement_00, sql_statement_01, sql_statement_02, sql_statement_03, sql_statement_04, sql_statement_05,

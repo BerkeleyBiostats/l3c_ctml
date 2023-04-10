@@ -31,6 +31,7 @@ def main():
                 print(full_file)
                 globals()[var_name] = df
 
+
     # 1_cohort_and_features
 
     covid_pasc_index_dates = a.sql_statement_01(long_covid_silver_standard)
@@ -42,8 +43,15 @@ def main():
     hosp_and_non = a.sql_statement_06(cohort, hosp_cases)
 
     Feature_Table_Builder_v0 = a.sql_statement_03(covid_pasc_index_dates, hosp_and_non, microvisits_to_macrovisits)
-    ICU_visits = a.sql_statement_05(microvisits_to_macrovisits)
-    inpatient_visits = spark.sql(sql_statement_07())
+    icu_visits = a.sql_statement_05(microvisits_to_macrovisits, concept) # empty for some reason
+    inpatient_visits = a.sql_statement_07(microvisits_to_macrovisits, concept)
+
+    tot_icu_days_calc = a.sql_statement_09(Feature_Table_Builder_v0, icu_visits)
+    tot_ip_days_calc = a.sql_statement_10(Feature_Table_Builder_v0, inpatient_visits)
+
+    Feature_Table_Builder = a.sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_calc)
+
+    # 2_med_feature_table
 
 
 
