@@ -79,3 +79,29 @@ covid_measures = spark.sql(sql_statement_01())
 
 average_lengths_covid = spark.sql() #missing?
 average_lengths_post = spark.sql() # missing?
+
+# 7_nlp
+
+# 8_device
+# tables created in the original sql file"
+#   device_pre_pre, device_pr, device_covid, device_post, device_count
+
+device_filtered = spark.sql(sql_statement_05()) 
+
+device_covid = spark.sql(sql_statement_04())
+device_post = spark.sql(sql_statement_06()) 
+device_pre = spark.sql(sql_statement_07()) 
+device_pre_pre = spark.sql(sql_statement_08()) 
+
+device_count = spark.sql(sql_statement_00()) 
+device_count = spark.sql(sql_statement_01())  # called distinct on former device_count
+device_count = spark.sql(sql_statement_02()) 
+device_count = spark.sql(sql_statement_03()) # ???  not sure the diff between sql_statement_03 and (00, 01,02)
+ 
+# 9_obs_person
+obs_person = spark.sql(sql_statement_00())
+
+obs_person_clean = spark.sql(sql_statement_01())
+
+obs_person_pivot = spark.sql() #missing?
+
