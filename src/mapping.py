@@ -46,3 +46,36 @@ post_condition = spark.sql(sql_statement_02())
 four_windows_dx_counts = spark.sql(sql_statement_01())
 
 pre_post_dx_count_clean = spark.sql(sql_statement_04())
+
+# 4_lab_measure_table
+measurement_person = spark.sql() #missing?
+
+pre_pre_measurement = spark.sql(sql_statement_05())
+pre_measurement = spark.sql(sql_statement_04())
+covid_measurement = spark.sql(sql_statement_00())
+post_measurement = spark.sql(sql_statement_03())
+
+four_windows_measure = spark.sql(sql_statement_01())
+
+lab_measures_clean = spark.sql(sql_statement_02())
+
+# 5_comorbidity_table
+high_level_condition_occur = spark.sql(sql_statement_01())
+
+comorbidity_counts = spark.sql(sql_statement_00())
+
+# 6_covid_measures
+covid_person = spark.sql(sql_statement_02())
+
+covid_measure_indicators = spark.sql(sql_statement_00())
+covid_window = spark.sql(sql_statement_03())
+post_covid = spark.sql(sql_statement_05())
+
+pos_neg_date = spark.sql(sql_statement_04()) # wrong input file location? 
+
+start_end_date = spark.sql() #missing?
+
+covid_measures = spark.sql(sql_statement_01())
+
+average_lengths_covid = spark.sql() #missing?
+average_lengths_post = spark.sql() # missing?
