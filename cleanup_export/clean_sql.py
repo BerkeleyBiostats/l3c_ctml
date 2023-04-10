@@ -6,9 +6,6 @@ for path, subdirs, files in os.walk(folder):
     for name in files:
         full_file = (os.path.join(path, name))
 
-        # TODO: comment all the transform thing
-
-        # TODO: remove the blank space before def
         # read the original file into a list of strings
         with open(full_file, "r", errors='ignore') as f:
             lines = f.readlines()
