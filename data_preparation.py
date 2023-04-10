@@ -31,7 +31,6 @@ def main():
                 print(full_file)
                 globals()[var_name] = df
 
-    concept = spark.read.csv("synthetic_data/concept.csv", header=True, inferSchema=True)
     
     # 1_cohort_and_features
 
