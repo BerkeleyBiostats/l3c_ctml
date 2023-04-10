@@ -1,4 +1,4 @@
-from src.STEP1_feature import *
+from src.STEP1_feature import a_cohort_sql, b_medication_sql as a, b
 import os
 from pyspark.sql import SparkSession
 
