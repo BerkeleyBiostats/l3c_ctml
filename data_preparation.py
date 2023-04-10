@@ -1,4 +1,4 @@
-from src.STEP1_feature import a_cohort as a, b_medication_sql as b
+from src.STEP1_feature import a_cohort as a
 import os
 from pyspark.sql import SparkSession
 from pyspark.sql import SparkSession
@@ -34,7 +34,16 @@ def main():
     # 1_cohort_and_features
 
     covid_pasc_index_dates = a.sql_statement_01(long_covid_silver_standard)
-    Collect_the_Cohort = a.sql_statement_00(covid_pasc_index_dates, person)
+    cohort = a.sql_statement_00(covid_pasc_index_dates, person)
+    long_covid_patients = a.sql_statement_08(covid_pasc_index_dates)
+
+    hosp_cases = a.sql_statement_04(cohort, condition_occurrence, microvisits_to_macrovisits)
+
+    hosp_and_non = a.sql_statement_06(cohort, hosp_cases)
+
+    Feature_Table_Builder_v0 = a.sql_statement_03(covid_pasc_index_dates, hosp_and_non, microvisits_to_macrovisits)
+    ICU_visits = a.sql_statement_05(microvisits_to_macrovisits)
+    inpatient_visits = spark.sql(sql_statement_07())
 
 
 

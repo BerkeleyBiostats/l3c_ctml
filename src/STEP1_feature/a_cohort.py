@@ -12,21 +12,20 @@ def sql_statement_00(covid_pasc_index_dates, person):
     df = covid_pasc_index_dates.join(person, "person_id")
 
     # Calculate age based on year of birth and run date from manifest_safe_harbor table
-    df = df.withColumn("apprx_age", year(col("run_date")) - col("year_of_birth"))
+    df = df.withColumn("apprx_age", year(lit("2023-01-01")) - col("year_of_birth"))
 
     # Select distinct columns
     df = df.select(
         col("person_id"),
         col("apprx_age"),
-        col("gender_concept_name").alias("sex"),
-        col("race_concept_name").alias("race"),
-        col("ethnicity_concept_name").alias("ethn"),
-        col("data_partner_id").alias("site_id"),
+        col("gender_source_value").alias("sex"),
+        col("race_source_value").alias("race"),
+        col("ethnicity_source_value").alias("ethn"),
         col("covid_index").alias("min_covid_dt")
     )
 
     # Filter based on the amount of post-covid data available
-    df = df.filter(datediff(col("run_date"), array_min(array(col("covid_index"), col("death_date")))) >= 100)
+    # df = df.filter(datediff(lit("2023-01-01"), array_min(array(col("covid_index"), col("death_date")))) >= 100)
     return df
 
 
@@ -39,7 +38,7 @@ def sql_statement_01(long_covid_silver_standard):
     long_covid_silver_standard = long_covid_silver_standard.withColumn("time_to_pasc", col("time_to_pasc").cast("int")) \
         .fillna({"time_to_pasc": 0}) \
         .withColumn("pasc_index", expr("date_add(covid_index, time_to_pasc)")) \
-        .filter(col("pasc_code_prior_four_weeks") != 1).show()
+        .filter(col("pasc_code_prior_four_weeks") != 1)
     return long_covid_silver_standard
 
 
@@ -69,55 +68,49 @@ LEFT\ JOIN\ tot_icu_days_calc\ tot_icu\ ON\ feat\.person_id\ =\ tot_icu\.person_
 ####     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
 ####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
-def sql_statement_03():
-    statement = '''/\*\ \
-Shareable\ N3C\ PASC\ Phenotype\ code\
-V1\.0,\ last\ updated\ May\ 2022\ by\ Emily\ Pfaff\
-PLEASE\ READ\ THE\ NOTES\ BELOW\ AND\ THE\ COMMENTS\ ABOVE\ EACH\ CTE\ BEFORE\ EXECUTING\
-Assumptions:\
-\-\-\ You\ have\ built\ out\ a\ "macrovisit"\ table\.\ \(Code\ to\ create\ this\ table\ is\ included\ in\ this\ GitHub\ repository\.\)\ In\ this\ script,\ the\ macrovisit\ table\ is\ called\ "microvisit_to_macrovisit_lds"\.\ If\ you\ use\ a\ different\ name,\ you\ will\ need\ to\ CTRL\+F\ for\ this\ string\ and\ replace\ with\ your\ table\ name\.\
-\-\-\ You\ are\ receiving\ data\ from\ multiple\ sites,\ and\ \(1\)\ have\ some\ mechanism\ to\ identify\ which\ rows\ of\ data\ come\ from\ which\ site,\ and\ \(2\)\ have\ a\ table\ that\ stores\ the\ most\ recent\ date\ that\ each\ site's\ data\ was\ updated\.\ We\ call\ this\ table\ our\ "manifest"\ table;\ if\ you\ use\ a\ different\ table\ name,\ or\ column\ names,\ you\ may\ need\ to\ make\ some\ edits\.\ I\ have\ marked\ all\ instances\ where\ this\ our\ site\ ID\ variable\ or\ the\ manifest\ table\ appears\ with\ "\-\-\ SITE_INFO"\.\ You\ can\ find\ all\ instances\ in\ the\ code\ if\ you\ CTRL\+F\ for\ that\ string\.\
-Notes:\
-\-\-\ This\ is\ written\ in\ Spark\ SQL,\ which\ is\ mostly\ similar\ to\ other\ SQL\ dialects,\ but\ certainly\ differs\ in\ syntax\ for\ particular\ functions\.\ One\ that\ I\ already\ know\ will\ be\ an\ issue\ is\ the\ date_add\ function,\ and\ most\ likely\ the\ datediff\ function\.\ You\ will\ need\ to\ CTRL\+F\ for\ each\ problematic\ function\ and\ replace\ each\ one\ with\ the\ equivalent\ from\ your\ RDBNMS\.\
-\-\-\ For\ efficiency,\ we\ have\ pre\-joined\ the\ OMOP\ CONCEPT\ table\ to\ all\ of\ the\ core\ OMOP\ tables\ using\ all\ possible\ foreign\ keys\.\ Thus,\ you\ will\ see\ that\ we,\ e\.g\.,\ select\ "race_concept_name"\ directly\ from\ the\ PERSON\ table,\ when\ that\ would\ usually\ require\ a\ join\ to\ CONCEPT\ on\ race_concept_id\ to\ get\ the\ name\.\ If\ you\ do\ not\ wish\ to\ pre\-join\ in\ your\ own\ repository,\ you\ will\ need\ to\ add\ in\ one\ or\ more\ JOINs\ to\ one\ or\ more\ aliases\ of\ the\ CONCEPT\ table\ in\ all\ areas\ where\ this\ occurs\.\ \
-\-\-\ I\ have\ written\ this\ script\ as\ a\ series\ of\ CTEs\.\ This\ is\ likely\ not\ performant\-\-it\ will\ almost\ certainly\ be\ better\ to\ stop\ at\ certain\ points\ in\ this\ flow\ and\ create\ materialized\ tables\ so\ you\ don't\ have\ to\ hold\ everything\ in\ memory\.\ I\ have\ not\ done\ this\ ahead\ of\ time\ because\ every\ RDBMS\ handles\ this\ differently\.\ \
-\*/\
-/\*\
-SELECT\ \*\ FROM\ \
-\	\(\
-\ \*/\ \ \ \-\-\ calcualte\ percentage\ of\ visits\
-\	SELECT\ ottbl\.\*,\ nvl\(count\(distinct\ visit_start_date\),\ 0\)\ as\ post_visits_count,\ datediff\(ottbl\.post_window_end_dt,ottbl\.post_window_start_dt\)\ as\ tot_post_days,\ datediff\(ottbl\.post_window_start_dt,ottbl\.pre_window_end_dt\)\ as\ tot_covid_days,\ nvl\(count\(distinct\ visit_start_date\),0\)/14\ as\ op_post_visit_ratio\
-\	FROM\ \
-\	\	\(\
-\ \ \ \ \ \ \ \ \-\-\ calculate\ pre\-covid,\ post\-covid\ windows\
-\	\	SELECT\ distinct\ \
-\	\	hc\.\*,\ \
-\	\	datediff\(max\(mm\.visit_start_date\),min\(mm\.visit_start_date\)\)\ as\ tot_long_data_days,\ \
-\	\	date_add\(hc\.min_covid_dt,\-365\)\ as\ pre_pre_window_start_dt,\ \
-\ \ \ \ \ \ \ \ date_add\(hc\.min_covid_dt,\-37\)\ as\ pre_window_start_dt,\ \
-\	\	date_add\(hc\.min_covid_dt,\ \-7\)\ as\ pre_window_end_dt,\
-\	\	date_add\(hc\.min_covid_dt,\ 14\)\ as\ post_window_start_dt,\ \
-\ \ \ \ \ \ \ \ date_add\(hc\.min_covid_dt,\ 28\)\ as\ post_window_end_dt\
-\	\	\-\-case\ when\ date_add\(hc\.min_covid_dt,\ 300\)\ <\ msh\.run_date\ \
-\	\	\	\-\-then\ date_add\(hc\.min_covid_dt,\ 300\)\ \
-\	\	\	\-\-else\ msh\.run_date\ end\ as\ post_window_end_dt\ \	\	\	\-\-\ SITE_INFO:\ Using\ the\ most\ recent\ site\ data\ update\ date\ to\ determine\ number\ of\ longitudinal\ patient\ days\
-\	\	FROM\ hosp_and_non\ hc\ LEFT\ JOIN\ manifest_safe_harbor\ msh\ ON\ hc\.site_id\ =\ msh\.data_partner_id\ \ \ \ \ \ \ \ \ \ \ \ \-\-\ SITE_INFO:\ Pulls\ in\ site\ ID\ for\ each\ patient\ row;\ useful\ for\ troubleshooting\ later\
-\ \ \ \ \	\	\	LEFT\ JOIN\ microvisits_to_macrovisits\ mm\ ON\ hc\.person_id\ =\ mm\.person_id\
-\ \ \ \ \	\	\	JOIN\ Covid_Pasc_Index_Dates\ lc\ ON\ hc\.person_id\ =\ lc\.person_id\
-\	\	GROUP\ BY\
-\	\	hc\.person_id,\ hc\.patient_group,\ hc\.apprx_age,\ hc\.sex,\ hc\.race,\ hc\.ethn,\ hc\.site_id,\ hc\.min_covid_dt,\ msh\.run_date,\ lc\.pasc_index\
-\	\	\)\ \
-\ \ \ \ \ \ \ \ ottbl\
-\	LEFT\ JOIN\ microvisits_to_macrovisits\ mmpost\ ON\ \(ottbl\.person_id\ =\ mmpost\.person_id\ and\ mmpost\.visit_start_date\ between\ ottbl\.post_window_start_dt\ and\ \
-\ \ \ \ \ \ \ \ \	ottbl\.post_window_end_dt\ and\ mmpost\.macrovisit_id\ is\ null\)\
-\	\-\-\ WHERE\ tot_long_data_days\ >\ 0\ \
-\	GROUP\ BY\ ottbl\.person_id,\ ottbl\.patient_group,\ ottbl\.apprx_age,\ ottbl\.sex,\ ottbl\.race,\ ottbl\.ethn,\ ottbl\.site_id,\ ottbl\.min_covid_dt,\ ottbl\.tot_long_data_days,\ ottbl\.pre_pre_window_start_dt,\ ottbl\.pre_window_start_dt,\ ottbl\.pre_window_end_dt,\ \	\
-\	ottbl\.post_window_start_dt,\ ottbl\.post_window_end_dt\
-/\*\	\)\ pts\
-WHERE\ post_visits_count\ >=1\
-\*/\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_03(Covid_Pasc_Index_Dates, hosp_and_non, microvisits_to_macrovisits):
+    # calculate pre-covid, post-covid windows
+    hc = hosp_and_non
+    mm = microvisits_to_macrovisits
+    lc = Covid_Pasc_Index_Dates.drop("ctc.min_covid_dt")
+
+    ottbl = hc.alias('hc').join(lc, "person_id").join(mm, 'person_id').groupBy(
+        hc.person_id, hc.patient_group, hc.apprx_age, hc.sex, hc.race, hc.ethn, hc.min_covid_dt, lc.pasc_index
+    ).agg(
+        min("hc.min_covid_dt").alias("min_covid_dt_2"),
+        max("visit_start_date").alias("max_visit_start_date"),
+        countDistinct("visit_start_date").alias("tot_long_data_days")
+    ).drop("min_covid_dt") \
+    .withColumn(
+        "pre_pre_window_start_dt", date_add(col("min_covid_dt_2"), -365)
+    ).withColumn(
+        "pre_window_start_dt", date_add(col("min_covid_dt_2"), -37)
+    ).withColumn(
+        "pre_window_end_dt", date_add(col("min_covid_dt_2"), -7)
+    ).withColumn(
+        "post_window_start_dt", date_add(col("min_covid_dt_2"), 14)
+    ).withColumn(
+        "post_window_end_dt", date_add(col("min_covid_dt_2"), 28)
+    )
+
+    result_df = (
+        ottbl.alias("o").join(mm, (
+                (ottbl.person_id == mm.person_id) &
+                (mm.visit_start_date.between(ottbl.post_window_start_dt, ottbl.post_window_end_dt)) &
+                (mm.visit_occurrence_id.isNull())
+        ), how="left").groupBy(
+            "o.person_id", "patient_group", "apprx_age", "sex", "race", "ethn",
+            "min_covid_dt_2", "tot_long_data_days", "pre_pre_window_start_dt", "pre_window_start_dt",
+            "pre_window_end_dt", "post_window_start_dt", "post_window_end_dt"
+        ).agg(
+            countDistinct("visit_start_date").alias("post_visits_count"),
+            datediff(col("post_window_end_dt"), col("post_window_start_dt")).alias("tot_post_days"),
+            datediff(col("post_window_start_dt"), col("pre_window_end_dt")).alias("tot_covid_days"),
+            (countDistinct("visit_start_date") / 14).alias("op_post_visit_ratio")
+        )
+    )
+
+    return result_df
 
 
 #### @transform_pandas(
@@ -126,38 +119,35 @@ WHERE\ post_visits_count\ >=1\
 ####     condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
 ####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
-def sql_statement_04():
-    statement = '''SELECT\ b\.person_id,\ b\.apprx_age,\ b\.sex,\ b\.race,\ b\.ethn,\ site_id,\ min_covid_dt \
-FROM\ Collect_the_Cohort\ b\ JOIN\ microvisits_to_macrovisits\ mac\ ON\ b\.person_id\ =\ mac\.person_id \
-WHERE\
-\ \ \ \ mac\.macrovisit_start_date\ between\ date_add\(b\.min_covid_dt,\ \-14\)\ and\ date_add\(b\.min_covid_dt,\ 14\) \
-\
-UNION \
-\
-SELECT\ b\.person_id,\ b\.apprx_age,\ b\.sex,\ b\.race,\ b\.ethn,\ site_id,\ min_covid_dt \
-FROM\ Collect_the_Cohort\ b\ JOIN\ microvisits_to_macrovisits\ mac\ ON\ b\.person_id\ =\ mac\.person_id \
-\ \ \ \ JOIN\ condition_occurrence\ cond\ ON\ mac\.visit_occurrence_id\ =\ cond\.visit_occurrence_id \
-WHERE\
-\ \ \ \ mac\.macrovisit_id\ is\ not\ null \
-\ \ \ \ and\ condition_concept_id\ =\ 37311061\ \
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_04(cohort, cond_occ, micro_to_macro):
+    cohort = cohort.join(micro_to_macro, "person_id", "left") \
+        .filter((micro_to_macro.visit_start_date >= date_add(cohort.min_covid_dt, -14)) &
+                (micro_to_macro.visit_start_date <= date_add(cohort.min_covid_dt, 14))) \
+        .select("person_id", "apprx_age", "sex", "race", "ethn", "min_covid_dt") \
+        .union(
+        cohort.alias('c').join(micro_to_macro, "person_id", "left")
+            .join(cond_occ, cond_occ.visit_occurrence_id == micro_to_macro.visit_occurrence_id, "inner")
+            .filter(cond_occ.condition_concept_id == 37311061)
+            .select("c.person_id", "apprx_age", "sex", "race", "ethn", "min_covid_dt")
+    )
+    return cohort
 
 
 #### @transform_pandas(
 ####     Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
 ####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
-def sql_statement_05():
-    statement = '''SELECT\ distinct\ \
-\ \ \ \ person_id,\ visit_concept_name,\ macrovisit_id,\ macrovisit_start_date,\ macrovisit_end_date\
-\ \ \ \ \ \ \ \ FROM\ microvisits_to_macrovisits\
-\ \ \ \ \ \ \ \ WHERE\ visit_concept_name\ IN\ \(\ 'Inpatient\ Critical\ Care\ Facility',\ \
-\ \ \ \ \ \ \ \ 'Emergency\ Room\ and\ Inpatient\ Visit',\ \
-\ \ \ \ \ \ \ \ 'Emergency\ Room\ Visit',\ 'Intensive\ Care',\ 'Emergency\ Room\ \-\ Hospital'\)\
-\ \ \ \ \ \ \ \ and\ macrovisit_id\ is\ not\ null\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_05(microvisits_to_macrovisits):
+
+    df = microvisits_to_macrovisits.select('person_id', 'visit_concept_name', 'macrovisit_id', 'macrovisit_start_date',
+                                      'macrovisit_end_date') \
+        .where(col('visit_concept_id').isin('Inpatient Critical Care Facility',
+                                              'Emergency Room and Inpatient Visit',
+                                              'Emergency Room Visit',
+                                              'Intensive Care',
+                                              'Emergency Room - Hospital')) \
+        .where(col('macrovisit_id').isNotNull())
+    return(df)
 
 
 #### @transform_pandas(
@@ -165,16 +155,18 @@ def sql_statement_05():
 ####     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
 ####     Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
 # )
-def sql_statement_06():
-    statement = '''\-\-\ add\ flag\ to\ show\ whether\ patients\ were\ in\ the\ hospitalized\ group\ or\ the\ non\-hospitalized\ group;\ this\ becomes\ a\ model\ feature\
-SELECT\ ctc\.\*,\
-case\ when\ hc\.person_id\ is\ not\ null\ \
-\ \ \ \ then\ 'CASE_HOSP'\ else\ 'CASE_NONHOSP'\ end\ as\ patient_group\
-FROM\ Collect_the_Cohort\ ctc\
-LEFT\ JOIN\ \
-Hospitalized_Cases\ hc\ ON\ ctc\.person_id\ =\ hc\.person_id\
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_06(cohort, hosp_cases):
+    cohort = cohort.alias("ctc").join(hosp_cases.alias('hc'), "person_id", "left") \
+        .select(col("ctc.person_id"),
+                col("ctc.apprx_age"),
+                col("ctc.sex"),
+                col("ctc.race"),
+                col("ctc.ethn"),
+                col("ctc.min_covid_dt"),
+                when(col("hc.apprx_age").isNull(), "CASE_NONHOSP")
+                .otherwise("CASE_HOSP").alias("patient_group"))
+
+    return cohort
 
 
 #### @transform_pandas(
@@ -196,12 +188,12 @@ def sql_statement_07():
 ####     Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
 ####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
 # )
-def sql_statement_08():
-    statement = '''SELECT\ person_id,\ pasc_code_after_four_weeks\ as\ long_covid,\ pasc_index \
-FROM\ Covid_Pasc_Index_Dates \
-WHERE\ pasc_code_prior_four_weeks\ !=\ 1\ \-\-\ exclude\ patients\ positive\ prior\ code \
-'''
-    return (statement.replace("\\", ''))
+def sql_statement_08(covid_pasc_index_dates):
+    long_covid_df = covid_pasc_index_dates.select(col("person_id"),
+                                                  col("pasc_code_after_four_weeks").alias("long_covid"),
+                                                  col("pasc_index")) \
+        .filter(col("pasc_code_prior_four_weeks") != 1)
+    return long_covid_df
 
 
 #### @transform_pandas(
