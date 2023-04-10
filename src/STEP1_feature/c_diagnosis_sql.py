@@ -1,9 +1,9 @@
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+#)
+def sql_statement_00():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ acute\ covid\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
@@ -12,16 +12,16 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    covid_condition=Input(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
-    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
-    post_condition=Input(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
-    pre_condition=Input(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
-    pre_pre_condition=Input(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e")
-)
-	def sql_statement_01():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    covid_condition=Input(rid="ri.vector.main.execute.d23e00b9-b656-4f87-8374-682fce8bd41d"),
+##    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa"),
+##    post_condition=Input(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+##    pre_condition=Input(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+##    pre_pre_condition=Input(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e")
+#)
+def sql_statement_01():
 	      statement = '''\-\-\ full\ outer\ join\ pre\ and\ post\ in\ order\ to\ compare\
 SELECT\ \
 prepretbl\.person_id\ as\ pre_pre_person_id,\ prepretbl\.patient_group\ as\ pre_pre_patient_group,\ prepretbl\.condition_concept_name\ as\ pre_pre_condition_concept_name,\ prepretbl\.condition_concept_id\ as\ pre_pre_condition_concept_id,\ prepretbl\.count_type\ as\ pre_pre_count_type,\ prepretbl\.dx_count\ as\ pre_pre_dx_count,\
@@ -79,12 +79,12 @@ FULL\ JOIN\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
-)
-	def sql_statement_02():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.e622f396-e4d0-4b55-83b7-f9d2c4682b7b"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+#)
+def sql_statement_02():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ post\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
@@ -93,12 +93,12 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
-)
-	def sql_statement_03():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.b71fb942-8c0b-4f2d-8c77-1d2c6c0cfcfe"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+#)
+def sql_statement_03():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
@@ -107,12 +107,12 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    four_windows_dx_counts=Input(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1")
-)
-	def sql_statement_04():
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    four_windows_dx_counts=Input(rid="ri.vector.main.execute.2509036e-28dc-4fcc-9206-9aeb7ad296e1")
+#)
+def sql_statement_04():
 	      statement = '''\-\-\ clean\ up\ the\ full\ outer\ join\ for\ meds\.\ this\ table\ will\ be\ handed\ off\ as\ is\ to\ the\ next\ part\ of\ the\ pipeline\
 \-\-\ STOP:\ The\ results\ of\ the\ query\ below\ need\ to\ be\ stored\ in\ a\ table\ called\ "pre_post_dx_count_clean"\.\ Once\ you\ have\ this\ table\ created,\ move\ to\ the\ next\ script\ in\ the\ sequence\.\
 select\ distinct\ tbl\.\*,\ feat\.apprx_age,\ feat\.sex,\ feat\.race,\ feat\.ethn,\ feat\.tot_long_data_days,\ feat\.op_post_visit_ratio\ as\ op_post_visit_ratio,\ feat\.post_ip_visit_ratio,\ feat\.covid_ip_visit_ratio,\ feat\.post_icu_visit_ratio,\ feat\.covid_icu_visit_ratio\
@@ -133,12 +133,12 @@ ON\ feat\.person_id\ =\ tbl\.person_id\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
-)
-	def sql_statement_05():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.052c1047-92d1-4c5a-96b5-c39efb023e6e"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2")
+#)
+def sql_statement_05():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \

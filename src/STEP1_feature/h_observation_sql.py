@@ -1,9 +1,9 @@
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    observation=Input(rid="ri.foundry.main.dataset.f9d8b08e-3c9f-4292-b603-f1bfa4336516")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    observation=Input(rid="ri.foundry.main.dataset.f9d8b08e-3c9f-4292-b603-f1bfa4336516")
+#)
+def sql_statement_00():
 	      statement = '''SELECT\ o\.person_id,\ CASE\ WHEN\ o\.observation_concept_name\ ==\ 'Marital\ status\ \[NHANES\]'\ THEN\ first\(o\.value_as_concept_name\)\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ELSE\ o\.observation_concept_name\ END\ AS\ observation_concept_name\
 FROM\ observation\ o\
@@ -19,11 +19,11 @@ GROUP\ BY\ o\.person_id,\ observation_concept_name\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.6b72ca05-314e-44a8-bf4d-b16482206e54"),
-    obs_person=Input(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1")
-)
-	def sql_statement_01():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.6b72ca05-314e-44a8-bf4d-b16482206e54"),
+##    obs_person=Input(rid="ri.vector.main.execute.bb5738c9-628e-4466-a2ce-cde2c411aef1")
+#)
+def sql_statement_01():
 	      statement = '''SELECT\ \*\ \
 FROM\ obs_person\ op\
 WHERE\ op\.observation_concept_name\ IN\

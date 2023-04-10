@@ -1,8 +1,8 @@
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
-#     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
-#     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
-#     person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+####     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+####     person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
 # )
 def sql_statement_00():
 	      statement = '''\-\-\ determine\ earliest\ index\ date,\ filter\ base\ population\ on\ amount\ of\ post\-covid\ data\ available,\ add\ demographic\ variables\
@@ -23,9 +23,9 @@ FROM\ Covid_Pasc_Index_Dates\ vc\ \
 '''
 	      return(statement)
 #
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
-#     Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+####     Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
 # )
 def sql_statement_01():
 	      statement = '''SELECT\ l\.\*,\
@@ -35,11 +35,11 @@ WHERE\ pasc_code_prior_four_weeks\ !=\ 1\ \-\-\ exclude\ patients\ positive\ pri
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-#     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-#     tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
-#     tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
+#### @transform_pandas(
+####     Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+####     tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+####     tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
 # )
 def sql_statement_02():
 	      statement = '''SELECT\ feat\.\*,\ \
@@ -53,12 +53,12 @@ LEFT\ JOIN\ tot_icu_days_calc\ tot_icu\ ON\ feat\.person_id\ =\ tot_icu\.person_
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-#     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
-#     hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
-#     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
-#     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
+####     hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+####     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
+####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
 def sql_statement_03():
 	      statement = '''/\*\ \
@@ -110,11 +110,11 @@ WHERE\ post_visits_count\ >=1\
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
-#     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
-#     condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
-#     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
+####     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+####     condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
+####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
 def sql_statement_04():
 	      statement = '''\-\-\ hospitalization\ close\ to\ index\ date\
@@ -135,9 +135,9 @@ WHERE\
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
-#     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
+####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
 def sql_statement_05():
 	      statement = '''SELECT\ distinct\ \
@@ -150,10 +150,10 @@ def sql_statement_05():
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
-#     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
-#     Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
+####     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
+####     Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
 # )
 def sql_statement_06():
 	      statement = '''\-\-\ add\ flag\ to\ show\ whether\ patients\ were\ in\ the\ hospitalized\ group\ or\ the\ non\-hospitalized\ group;\ this\ becomes\ a\ model\ feature\
@@ -166,9 +166,9 @@ Hospitalized_Cases\ hc\ ON\ ctc\.person_id\ =\ hc\.person_id\
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
-#     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
+####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
 # )
 def sql_statement_07():
 	      statement = '''SELECT\ \*\ \
@@ -180,9 +180,9 @@ def sql_statement_07():
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
-#     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
+#### @transform_pandas(
+####     Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
 # )
 def sql_statement_08():
 	      statement = '''SELECT\ person_id,\ pasc_code_after_four_weeks\ as\ long_covid,\ pasc_index\
@@ -191,10 +191,10 @@ WHERE\ pasc_code_prior_four_weeks\ !=\ 1\ \-\-\ exclude\ patients\ positive\ pri
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
-#     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-#     ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
+####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+####     ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
 # )
 def sql_statement_09():
 	      statement = '''\-\-\ find\ the\ total\ number\ of\ inpatient\ days\ in\ the\ covid\ window\ and\ the\ post\ covid\ window\ for\ use\ later\
@@ -243,10 +243,10 @@ ON\ post_tbl\.person_id\ =\ covid_tbl\.person_id\ and\ post_tbl\.post_window_sta
 '''
 	      return(statement)
 
-# @transform_pandas(
-#     Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
-#     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-#     inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
+#### @transform_pandas(
+####     Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
+####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
+####     inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
 # )
 def sql_statement_10():
 	      statement = '''\-\-\ find\ the\ total\ number\ of\ inpatient\ days\ in\ the\ covid\ window\ and\ the\ post\ covid\ window\ for\ use\ later\

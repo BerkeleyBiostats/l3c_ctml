@@ -169,11 +169,11 @@ def build_final_feature_table(med_df, dx_df, add_labels, count_dx_pre_and_post, 
     result = result.drop(*drop_cols)
     return result
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39"),
-    final_rollups=Input(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
-    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39"),
+##    final_rollups=Input(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+##    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+#)
 # STEP 7: add_alt_rollup ######################################################################################
 
 from pyspark.sql import functions as F
@@ -194,13 +194,13 @@ def add_alt_rollup(final_rollups, pre_post_dx_count_clean):
 
     return df
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
-    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
-    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc"),
-    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+##    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+##    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc"),
+##    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+#)
 # STEP 2: add_labels ##################################################################################### 
 # union the med and diagnosis, encode categorical variables, add labels
 from pyspark.sql import functions as F
@@ -302,13 +302,13 @@ def add_labels(pre_post_dx_count_clean, pre_post_med_count_clean, Long_COVID_Sil
 
     return df
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
-    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
-    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
-    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
-    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+##    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+##    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+##    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+##    pre_post_dx_count_clean=Input(rid="ri.vector.main.execute.73433ca0-fec4-4210-a0b9-2946683617bc")
+#)
 # STEP 4:  condition_rollup #####################################################################################
 
 # Output pyspark dataframe:  condition_rollup
@@ -363,10 +363,10 @@ def condition_rollup(Long_COVID_Silver_Standard_Blinded, pre_post_dx_count_clean
 
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
-    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+##    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948")
+#)
 # STEP 9: count_dx_pre_and_post ######################################################################################
 # calculate total diagnosis counts in 4 windows by person
 
@@ -404,20 +404,20 @@ def count_dx_pre_and_post(pre_post_dx_final):
     return result
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13"),
-    add_labels=Input(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
-    comorbidity_counts=Input(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
-    count_dx_pre_and_post=Input(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
-    covid_measures=Input(rid="ri.foundry.main.dataset.00f71213-03c7-44f8-be40-520411e33272"),
-    device_count_clean=Input(rid="ri.foundry.main.dataset.bfb42402-89ee-4333-9677-40d88ea630dd"),
-    features=Input(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b"),
-    lab_measures_clean=Input(rid="ri.foundry.main.dataset.26ad74be-fcb8-4a41-b373-501854feb6c3"),
-    obs_person_pivot=Input(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
-    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
-    pre_post_med_final_distinct=Input(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
-    severity_table=Input(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13"),
+##    add_labels=Input(rid="ri.foundry.main.dataset.94b738b9-5d98-4b1b-bcff-cad647b2456d"),
+##    comorbidity_counts=Input(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+##    count_dx_pre_and_post=Input(rid="ri.foundry.main.dataset.db50925d-bf61-4ca3-8bb8-a2fdd705e0af"),
+##    covid_measures=Input(rid="ri.foundry.main.dataset.00f71213-03c7-44f8-be40-520411e33272"),
+##    device_count_clean=Input(rid="ri.foundry.main.dataset.bfb42402-89ee-4333-9677-40d88ea630dd"),
+##    features=Input(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b"),
+##    lab_measures_clean=Input(rid="ri.foundry.main.dataset.26ad74be-fcb8-4a41-b373-501854feb6c3"),
+##    obs_person_pivot=Input(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+##    pre_post_dx_final=Input(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+##    pre_post_med_final_distinct=Input(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+##    severity_table=Input(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9")
+#)
  # STEP 10: feature_table_all_patients ######################################################################################
 
 # Output pyspark dataframe:  feature_table_all_patients
@@ -447,11 +447,11 @@ def feature_table_all_patients_dx_drug(features, add_labels, pre_post_dx_final, 
     return result
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.a000ff39-5346-446b-bae0-774be581f4e2"),
-    Feature_table_all_patients_dx_drug_train=Input(rid="ri.foundry.main.dataset.280e0507-3677-4071-9953-58e698b78c92"),
-    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.a000ff39-5346-446b-bae0-774be581f4e2"),
+##    Feature_table_all_patients_dx_drug_train=Input(rid="ri.foundry.main.dataset.280e0507-3677-4071-9953-58e698b78c92"),
+##    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.da151535-e48f-4c94-a8ca-3638125d5c13")
+#)
 from pyspark.sql import functions as F
 import pandas as pd
 from pyspark.context import SparkContext
@@ -466,19 +466,19 @@ def feature_table_final_testing_set(Feature_table_all_patients_dx_drug_train, fe
     df = spark.createDataFrame(df)  # convert pandas back to spark
     return df
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.fae33c93-0560-420c-9766-fb68e86eb88b")
+#)
 from pyspark.sql.types import *
 def features():
     schema = StructType([StructField("features", StringType(), True)])
     return spark.createDataFrame([["difficulty_breathing"],["apprx_age"],["fatigue"],["op_post_visit_ratio"],["dyspnea"],["ip_post_visit_ratio"],["albuterol"],["hospitalized"],["sex_male"],["fluticasone"],["palpitations"],["mental_disorder"],["uncomplicated_asthma"],["chronic_pain"],["malaise"],["chronic_fatigue_syndrome"],["formoterol"],["tachycardia"],["metabolic_disease"],["chest_pain"],["inflammation_of_specific_body_organs"],["impaired_cognition"],["diarrhea"],["acetaminophen"],["dyssomnia"],["anxiety_disorder"],["cough"],["anxiety"],["muscle_pain"],["interstitial_lung_disease"],["migraine"],["degenerative_disorder"],["viral_lower_respiratory_infection"],["promethazine"],["deficiency_of_micronutrients"],["asthma"],["disorder_characterized_by_pain"],["apixaban"],["lesion_of_lung"],["inflammation_of_specific_body_systems"],["breathing_related_sleep_disorder"],["chronic_nervous_system_disorder"],["iopamidol"],["loss_of_sense_of_smell"],["amitriptyline"],["sleep_disorder"],["pain_of_truncal_structure"],["neurosis"],["headache"],["tracheobronchial_disorder"],["communication_disorder"],["amnesia"],["hypoxemia"],["lower_respiratory_infection_caused_by_sars_cov_2"],["bleeding"],["amoxicillin"],["disorder_due_to_infection"],["chronic_sinusitis"],["pain_in_lower_limb"],["furosemide"],["buspirone"],["vascular_disorder"],["memory_impairment"],["insomnia"],["budesonide"],["prednisone"],["pneumonia_caused_by_sars_cov_2"],["clavulanate"],["dizziness"],["neuropathy"],["iron_deficiency_anemia_due_to_blood_loss"],["estradiol"],["ceftriaxone"],["shoulder_joint_pain"],["sexually_active"],["abdominal_pain"],["skin_sensation_disturbance"],["ketorolac"],["depressive_disorder"],["hyperlipidemia"],["chronic_kidney_disease_due_to_hypertension"],["spondylosis"],["vascular_headache"],["fibrosis_of_lung"],["acute_respiratory_disease"],["chronic_cough"],["osteoporosis"],["lorazepam"],["connective_tissue_disorder_by_body_site"],["adjustment_disorder"],["benzonatate"],["shoulder_pain"],["mineral_deficiency"],["obesity"],["epinephrine"],["dependence_on_enabling_machine_or_device"],["dependence_on_respiratory_device"],["inflammation_of_specific_body_structures_or_tissue"],["spironolactone"],["cholecalciferol"],["heart_disease"],["pain"],["major_depression__single_episode"],["meloxicam"],["hydrocortisone"],["collagen_disease"],["headache_disorder"],["hypoxemic_respiratory_failure"],["morphine"],["cardiac_arrhythmia"],["seborrheic_keratosis"],["gabapentin"],["dulaglutide"],["hypertensive_disorder"],["effusion_of_joint"],["moderate_persistent_asthma"],["morbid_obesity"],["seborrheic_dermatitis"],["rbc_count_low"],["blood_chemistry_abnormal"],["acute_digestive_system_disorder"],["sars_cov_2__covid_19__vaccine__mrna_spike_protein"],["influenza_b_virus_antigen"],["pulmonary_function_studies_abnormal"],["sleep_apnea"],["abnormal_presence_of_protein"],["sodium_chloride"],["atropine"],["aspirin"],["cognitive_communication_disorder"],["metronidazole"],["ethinyl_estradiol"],["gadopentetate_dimeglumine"],["traumatic_and_or_non_traumatic_injury_of_anatomical_site"],["colchicine"],["anomaly_of_eye"],["oxycodone"],["osteoarthritis"],["complication_of_pregnancy__childbirth_and_or_the_puerperium"],["allergic_rhinitis"],["dizziness_and_giddiness"],["genitourinary_tract_hemorrhage"],["duloxetine"],["bipolar_disorder"],["vitamin_disease"],["respiratory_obstruction"],["genuine_stress_incontinence"],["chronic_disease_of_respiratory_systemx"],["traumatic_and_or_non_traumatic_injury"],["drug_related_disorder"],["nortriptyline"],["involuntary_movement"],["knee_pain"],["peripheral_nerve_disease"],["gastroesophageal_reflux_disease_without_esophagitis"],["mupirocin"],["fluconazole"],["pure_hypercholesterolemia"],["kidney_disease"],["injury_of_free_lower_limb"],["glaucoma"],["backache"],["tachyarrhythmia"],["myocarditis"],["nitrofurantoin"],["prediabetes"],["sodium_acetate"],["apnea"],["losartan"],["radiology_result_abnormal"],["pantoprazole"],["hemoglobin_low"],["mixed_hyperlipidemia"],["mass_of_soft_tissue"],["levonorgestrel"],["omeprazole"],["allergic_disposition"],["metformin"],["fentanyl"],["spinal_stenosis_of_lumbar_region"],["cyst"],["soft_tissue_lesion"],["altered_bowel_function"],["skin_lesion"],["triamcinolone"],["pain_in_upper_limb"],["acute_respiratory_infections"],["neck_pain"],["guaifenesin"],["disorders_of_initiating_and_maintaining_sleep"],["loratadine"],["vitamin_b12"],["hypercholesterolemia"],["potassium_chloride"],["arthropathy"],["chronic_kidney_disease_due_to_type_2_diabetes_mellitus"],["disease_of_non_coronary_systemic_artery"],["soft_tissue_injury"],["cytopenia"],["fever"]], schema=schema)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
-    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
-    parent_condition_rollup=Input(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.53c19bcb-beaa-4427-bf2e-5c3739088003"),
+##    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124"),
+##    parent_condition_rollup=Input(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8")
+#)
 # STEP 6: final_rollup ######################################################################################
 
 # Output pyspark dataframe:  final_rollup
@@ -494,11 +494,11 @@ def final_rollups(condition_rollup, parent_condition_rollup):
     return df
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.b58177f1-cd68-4be9-be4b-715f899c2a0b"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
-    measurement=Input(rid="ri.foundry.main.dataset.b7749e49-cf01-4d0a-a154-2f00eecab21e")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.b58177f1-cd68-4be9-be4b-715f899c2a0b"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+##    measurement=Input(rid="ri.foundry.main.dataset.b7749e49-cf01-4d0a-a154-2f00eecab21e")
+#)
 def measurement_person(Feature_table_builder, measurement):
     # select measurements between dates
     targets = ['Respiratory rate', 'Oxygen saturation in Arterial blood by Pulse oximetry', 'Oxygen saturation in blood', 'Heart rate', 'Systolic blood pressure',
@@ -555,10 +555,10 @@ def measurement_person(Feature_table_builder, measurement):
     # df = df.union(df_biomarkers)
     return df
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
-    obs_person_clean=Input(rid="ri.vector.main.execute.9baea4ea-ef0d-4496-bacf-c34d0cba82f7")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.61c2f4cd-04e7-4e27-948c-035771aba47b"),
+##    obs_person_clean=Input(rid="ri.vector.main.execute.9baea4ea-ef0d-4496-bacf-c34d0cba82f7")
+#)
 from pyspark.sql import functions as F
 def obs_person_pivot(obs_person_clean):
     df = obs_person_clean
@@ -570,10 +570,10 @@ def obs_person_pivot(obs_person_clean):
     return df
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8"),
-    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.59d55b71-6d6a-4778-8e21-675e5bf645c8"),
+##    condition_rollup=Input(rid="ri.vector.main.execute.5424f030-d12d-482a-9a50-0dea98c1e124")
+#)
 # STEP 5: parent_condition_rollup ######################################################################################
 
 # Output pyspark dataframe:  parent_condition_rollup
@@ -590,10 +590,10 @@ def parent_condition_rollup(condition_rollup):
 
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
-    add_alt_rollup=Input(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.bd5cdf89-b394-401b-98f8-60371eaa2948"),
+##    add_alt_rollup=Input(rid="ri.vector.main.execute.99b5685a-2193-4bf1-be8e-e8fd2eefcd39")
+#)
 # STEP 8: pre_post_dx_final ######################################################################################
 
 from pyspark.sql import functions as F
@@ -637,10 +637,10 @@ def pre_post_dx_final(add_alt_rollup):
 
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
-    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.070f2bc2-af22-4a7d-ab18-f49037d80aed"),
+##    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.c729b93f-caf1-4a7d-ac0d-569188c4526e")
+#)
 # STEP 1: pre_post_med_final_distinct #####################################################################################
 
 from pyspark.sql import functions as F
@@ -663,10 +663,10 @@ def pre_post_med_final_distinct(pre_post_med_count_clean):
     
     return df
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9"),
-    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.955b03ad-9aff-46db-9ad5-41d0c4f4fdb9"),
+##    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+#)
 import pandas as pd
 from pyspark.sql import functions as F
 
@@ -684,10 +684,10 @@ def severity_table(Covid_patient_summary_table):
 
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.24643c26-4692-4225-92be-b81a187ae80e"),
-    pos_neg_date=Input(rid="ri.vector.main.execute.2cf5493c-fc3e-40da-a018-52f37934e2fe")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.24643c26-4692-4225-92be-b81a187ae80e"),
+##    pos_neg_date=Input(rid="ri.vector.main.execute.2cf5493c-fc3e-40da-a018-52f37934e2fe")
+#)
 from pyspark.sql.functions import when, date_add, datediff, expr
 def start_end_date(pos_neg_date):
     df = pos_neg_date

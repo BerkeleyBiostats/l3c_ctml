@@ -1,12 +1,12 @@
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.8599371f-a219-4a0d-be3a-345e200197be"),
-    device_covid=Input(rid="ri.foundry.main.dataset.c71ca392-9117-4940-a9ba-0ec468ed35f7"),
-    device_filtered=Input(rid="ri.vector.main.execute.c4f0173a-942b-4c1e-b6b4-b1b7183e0d91"),
-    device_post=Input(rid="ri.foundry.main.dataset.9e04d829-d626-4640-b157-1633e8dec074"),
-    device_pre=Input(rid="ri.foundry.main.dataset.86a8ce34-1c75-4e4c-8512-c0b3dfb2ba4e"),
-    device_pre_pre=Input(rid="ri.foundry.main.dataset.6027a85f-b97f-40ea-b125-92f65183484e")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.8599371f-a219-4a0d-be3a-345e200197be"),
+##    device_covid=Input(rid="ri.foundry.main.dataset.c71ca392-9117-4940-a9ba-0ec468ed35f7"),
+##    device_filtered=Input(rid="ri.vector.main.execute.c4f0173a-942b-4c1e-b6b4-b1b7183e0d91"),
+##    device_post=Input(rid="ri.foundry.main.dataset.9e04d829-d626-4640-b157-1633e8dec074"),
+##    device_pre=Input(rid="ri.foundry.main.dataset.86a8ce34-1c75-4e4c-8512-c0b3dfb2ba4e"),
+##    device_pre_pre=Input(rid="ri.foundry.main.dataset.6027a85f-b97f-40ea-b125-92f65183484e")
+#)
+def sql_statement_00():
 	      statement = '''\-\-\ OLD\ QUERY\ WAS\ TAKING\ HOURS\ TO\ RUN\ OR\ WAS\ COMPLETELY\ BREAKING\.\ QUERY\ HAS\ BEEN\ REFACTORED\
 SELECT\ DISTINCT\
 \ \ \ \ D\.person_id,\
@@ -41,9 +41,9 @@ WHERE\ NOT\ \(\
 	      return(statement)
 
 
-	def sql_statement_01():
+def sql_statement_01():
 	      statement = '''\
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.3dedc0a1\-f9dc\-441c\-9f1c\-eee2ee5176ba"\),\
 \ \ \ \ Device_Count=Input\(rid="ri\.foundry\.main\.dataset\.8599371f\-a219\-4a0d\-be3a\-345e200197be"\)\
 \)\
@@ -53,11 +53,11 @@ FROM\ Device_Count\ tbl\
 	      return(statement)
 
 
-	def sql_statement_02():
+def sql_statement_02():
 	      statement = '''select\ distinct\ tbl\.\*\
 FROM\ Device_Count\ tbl\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.35e1f908\-2de8\-491c\-adee\-1dc194672d55"\)\
 \)\
 \-\-\ ORIGINAL\ CODE\ FROM\ TEAM\
@@ -83,7 +83,7 @@ WHERE\ tbl\.device_concept_name\ is\ not\ null\
 	      return(statement)
 
 
-	def sql_statement_03():
+def sql_statement_03():
 	      statement = '''\-\-\ ORIGINAL\ CODE\ FROM\ TEAM\
 select\ distinct\ tbl\.\*\
 FROM\ Feature_table_builder\ feat\ \
@@ -104,7 +104,7 @@ FROM\ device_count\
 ON\ feat\.person_id\ =\ tbl\.person_id\
 WHERE\ tbl\.device_concept_name\ is\ not\ null\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.bac2e802\-7da6\-4faf\-a887\-5d0e7e03a67b"\)\
 \)\
 \-\-\ do\ a\ full\ outer\ join\ between\ pre\ and\ post\ drugs\ so\ as\ to\ compare\
@@ -136,7 +136,7 @@ FROM\ \
 	      return(statement)
 
 
-	def sql_statement_04():
+def sql_statement_04():
 	      statement = '''\-\-\ do\ a\ full\ outer\ join\ between\ pre\ and\ post\ drugs\ so\ as\ to\ compare\
 \
 SELECT\ \
@@ -163,7 +163,7 @@ FROM\ \
 \ \ \ \ \-\-\ post\ drug\ table\
 \ \ \ \ device_post\ posttbl\ ON\ covidtbl\.person_id\ =\ posttbl\.person_id\ \ AND\ covidtbl\.device_concept_name\ =\ posttbl\.device_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.c71ca392\-9117\-4940\-a9ba\-0ec468ed35f7"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.ce7a93a0\-4140\-4fdb\-b97d\-fb78c0caf345"\),\
 \ \ \ \ device_filtered=Input\(rid="ri\.vector\.main\.execute\.c4f0173a\-942b\-4c1e\-b6b4\-b1b7183e0d91"\)\
@@ -180,7 +180,7 @@ FROM\ device_filtered\ d\
 	      return(statement)
 
 
-	def sql_statement_05():
+def sql_statement_05():
 	      statement = '''select\ distinct\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ covid_device_count\
 FROM\ device_filtered\ d\
 \ \ \ \ JOIN\ \
@@ -190,7 +190,7 @@ FROM\ device_filtered\ d\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.pre_window_end_dt\ and\ d\.device_exposure_end_date\ >\ feat\.post_window_start_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.c4f0173a\-942b\-4c1e\-b6b4\-b1b7183e0d91"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.ce7a93a0\-4140\-4fdb\-b97d\-fb78c0caf345"\),\
 \ \ \ \ device_exposure=Input\(rid="ri\.foundry\.main\.dataset\.c1fd6d67\-fc80\-4747\-89ca\-8eb04efcb874"\)\
@@ -202,12 +202,12 @@ WHERE\ device_concept_name\ IN\('Ventilator',\ 'Basic\ nasal\ oxygen\ cannula',\
 	      return(statement)
 
 
-	def sql_statement_06():
+def sql_statement_06():
 	      statement = '''SELECT\ d\.person_id,\ d\.device_exposure_start_date,\ d\.device_exposure_end_date,\ d\.device_concept_name\ \
 \ \ \ \ FROM\ device_exposure\ d\
 WHERE\ device_concept_name\ IN\('Ventilator',\ 'Basic\ nasal\ oxygen\ cannula',\ 'High\ flow\ oxygen\ nasal\ cannula',\ 'N3C:Other\ oxygen\ device'\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.9e04d829\-d626\-4640\-b157\-1633e8dec074"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.ce7a93a0\-4140\-4fdb\-b97d\-fb78c0caf345"\),\
 \ \ \ \ device_filtered=Input\(rid="ri\.vector\.main\.execute\.c4f0173a\-942b\-4c1e\-b6b4\-b1b7183e0d91"\)\
@@ -224,7 +224,7 @@ FROM\ device_filtered\ d\
 	      return(statement)
 
 
-	def sql_statement_07():
+def sql_statement_07():
 	      statement = '''select\ distinct\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ post_device_count\
 FROM\ device_filtered\ d\
 \ \ \ \ JOIN\ \
@@ -234,7 +234,7 @@ FROM\ device_filtered\ d\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.post_window_start_dt\ and\ d\.device_exposure_end_date\ >\ feat\.post_window_end_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.86a8ce34\-1c75\-4e4c\-8512\-c0b3dfb2ba4e"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.ce7a93a0\-4140\-4fdb\-b97d\-fb78c0caf345"\),\
 \ \ \ \ device_filtered=Input\(rid="ri\.vector\.main\.execute\.c4f0173a\-942b\-4c1e\-b6b4\-b1b7183e0d91"\)\
@@ -251,7 +251,7 @@ FROM\ device_filtered\ d\
 	      return(statement)
 
 
-	def sql_statement_08():
+def sql_statement_08():
 	      statement = '''select\ distinct\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ pre_device_count\
 FROM\ device_filtered\ d\
 \ \ \ \ JOIN\ \
@@ -261,7 +261,7 @@ FROM\ device_filtered\ d\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.pre_window_start_dt\ and\ feat\.pre_window_end_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.pre_window_start_dt\ and\ d\.device_exposure_end_date\ >\ feat\.pre_window_end_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.6027a85f\-b97f\-40ea\-b125\-92f65183484e"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.ce7a93a0\-4140\-4fdb\-b97d\-fb78c0caf345"\),\
 \ \ \ \ device_filtered=Input\(rid="ri\.vector\.main\.execute\.c4f0173a\-942b\-4c1e\-b6b4\-b1b7183e0d91"\)\

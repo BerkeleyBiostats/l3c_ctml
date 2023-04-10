@@ -1,9 +1,9 @@
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
+#)
+def sql_statement_00():
 	      statement = '''SELECT\ person_id,\ nvl\(prediabetes,\ 0\)\ as\ prediabetes,\ \ nvl\(nvl\(diabetes,\ diabetes_complications\),\ 0\)\ as\ diabetes,\ nvl\(chronic_kidney_disease,\ 0\)\ as\ chronic_kidney_disease,\ nvl\(congestive_heart_failure,\ 0\)\ as\ congestive_heart_failure,\ nvl\(chronic_pulmonary_disease,\ 0\)\ as\ chronic_pulmonary_disease\
 FROM\
 \(\
@@ -25,7 +25,7 @@ PIVOT\ \(\
 	      return(statement)
 
 
-	def sql_statement_01():
+def sql_statement_01():
 	      statement = '''PIVOT\ \(\
 \ \ \ \ SUM\(comorbidity_count\)\
 \ \ \ \ FOR\ high_level_condition\ IN\ \(\
@@ -35,7 +35,7 @@ PIVOT\ \(\
 \ \
 \	\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.272bff24\-17cd\-4c3c\-acc1\-6972bc51deea"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.ce7a93a0\-4140\-4fdb\-b97d\-fb78c0caf345"\),\
 \ \ \ \ condition_occurrence=Input\(rid="ri\.foundry\.main\.dataset\.2f496793\-6a4e\-4bf4\-b0fc\-596b277fb7e2"\)\

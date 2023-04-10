@@ -1,9 +1,9 @@
 
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
-    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
-)
+###@transform_pandas(
+###    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
+###    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
+#)
 from pyspark.sql.functions import when, date_add, datediff, expr
 def start_end_date(pos_neg_date):
     df = pos_neg_date

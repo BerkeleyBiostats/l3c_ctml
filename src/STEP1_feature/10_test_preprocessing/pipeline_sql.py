@@ -1,10 +1,10 @@
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
-    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
-    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
-    person=Input(rid="ri.foundry.main.dataset.06629068-25fc-4802-9b31-ead4ed515da4")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+##    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+##    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+##    person=Input(rid="ri.foundry.main.dataset.06629068-25fc-4802-9b31-ead4ed515da4")
+#)
+def sql_statement_00():
 	      statement = '''\-\-\ determine\ earliest\ index\ date,\ filter\ base\ population\ on\ amount\ of\ post\-covid\ data\ available,\ add\ demographic\ variables\
 \-\-\ this\ is\ a\ query\ you\ will\ need\ to\ adjust,\ join\-wise,\ if\ you\ have\ not\ pre\-joined\ the\ concept\ table\ to\ your\ person\ table\.\
 SELECT\ distinct\ \
@@ -23,37 +23,37 @@ FROM\ Long_COVID_Silver_Standard_Blinded\ vc\ \
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.60346ff3-e886-4714-9402-81b6c2e328ba"),
-    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
-)
-	def sql_statement_01():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.60346ff3-e886-4714-9402-81b6c2e328ba"),
+##    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772")
+#)
+def sql_statement_01():
 	      statement = '''SELECT\ \*\
 FROM\ concept\
 where\ domain_id\ =\ 'Drug'\ and\ lower\(vocabulary_id\)\ =\ 'rxnorm'\ and\ concept_class_id\ =\ 'Ingredient'\ and\ standard_concept\ =\ 'S'\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.16e9328b-7dfa-48d8-b60b-ea5b945ea683"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
-    drug_exposure=Input(rid="ri.foundry.main.dataset.26a51cab-0279-45a6-bbc0-f44a12b52f9c")
-)
-	def sql_statement_02():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.16e9328b-7dfa-48d8-b60b-ea5b945ea683"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+##    drug_exposure=Input(rid="ri.foundry.main.dataset.26a51cab-0279-45a6-bbc0-f44a12b52f9c")
+#)
+def sql_statement_02():
 	      statement = '''\-\-\ another\ performance\ assist;\ this\ subsets\ the\ giant\ drug_exposure\ table\ just\ to\ those\ drugs\ that\ are\ associated\ with\ a\ patient\ in\ our\ cohort\
 SELECT\ d\.\*\
 FROM\ drug_exposure\ d\ JOIN\ Feature_table_builder\ f\ ON\ d\.person_id\ =\ f\.person_id\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
-    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
-    hosp_and_non=Input(rid="ri.vector.main.execute.d357092e-6841-48fb-8d5f-809b4a1ae4fb"),
-    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
-    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
-)
-	def sql_statement_03():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+##    Long_COVID_Silver_Standard_Blinded=Input(rid="ri.foundry.main.dataset.cb65632b-bdff-4aa9-8696-91bc6667e2ba"),
+##    hosp_and_non=Input(rid="ri.vector.main.execute.d357092e-6841-48fb-8d5f-809b4a1ae4fb"),
+##    manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.7a5c5585-1c69-4bf5-9757-3fd0d0a209a2"),
+##    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+#)
+def sql_statement_03():
 	      statement = '''/\*\ \
 Shareable\ N3C\ PASC\ Phenotype\ code\
 V1\.0,\ last\ updated\ May\ 2022\ by\ Emily\ Pfaff\
@@ -103,13 +103,13 @@ WHERE\ post_visits_count\ >=1\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
-    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
-    tot_icu_days_calc=Input(rid="ri.vector.main.execute.fde6567c-4e53-42e9-b07a-d733fb443471"),
-    tot_ip_days_calc=Input(rid="ri.vector.main.execute.692f0334-6976-4043-9038-27e2d8836f79")
-)
-	def sql_statement_04():
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+##    Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e167e968-4f04-4205-8339-0336930dd83f"),
+##    tot_icu_days_calc=Input(rid="ri.vector.main.execute.fde6567c-4e53-42e9-b07a-d733fb443471"),
+##    tot_ip_days_calc=Input(rid="ri.vector.main.execute.692f0334-6976-4043-9038-27e2d8836f79")
+#)
+def sql_statement_04():
 	      statement = '''SELECT\ feat\.\*,\ \
 \(nvl\(tot_ip\.post_tot_ip_days,\ 0\)/feat\.tot_post_days\)\ as\ post_ip_visit_ratio,\ \
 \(nvl\(tot_ip\.covid_tot_ip_days,\ 0\)/feat\.tot_covid_days\)\ as\ covid_ip_visit_ratio,\ \
@@ -121,13 +121,13 @@ LEFT\ JOIN\ tot_icu_days_calc\ tot_icu\ ON\ feat\.person_id\ =\ tot_icu\.person_
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.02850990-abf4-4b63-82b7-dbad6fda7ed7"),
-    Collect_the_Cohort=Input(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
-    condition_occurrence=Input(rid="ri.foundry.main.dataset.3e01546f-f110-4c67-a6db-9063d2939a74"),
-    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
-)
-	def sql_statement_05():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.02850990-abf4-4b63-82b7-dbad6fda7ed7"),
+##    Collect_the_Cohort=Input(rid="ri.vector.main.execute.2fef4d8c-9e31-463a-b919-d9ea3e2f78b9"),
+##    condition_occurrence=Input(rid="ri.foundry.main.dataset.3e01546f-f110-4c67-a6db-9063d2939a74"),
+##    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+#)
+def sql_statement_05():
 	      statement = '''\-\-\ hospitalization\ close\ to\ index\ date\
 SELECT\ b\.person_id,\ b\.apprx_age,\ b\.sex,\ b\.race,\ b\.ethn,\ site_id,\ min_covid_dt\
 FROM\ Collect_the_Cohort\ b\ JOIN\ microvisits_to_macrovisits\ mac\ ON\ b\.person_id\ =\ mac\.person_id\
@@ -146,11 +146,11 @@ WHERE\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.192a0bb9-7930-4f8a-8227-405ff5d0f6a0"),
-    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
-)
-	def sql_statement_06():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.192a0bb9-7930-4f8a-8227-405ff5d0f6a0"),
+##    microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.f5008fa4-e736-4244-88e1-1da7a68efcdb")
+#)
+def sql_statement_06():
 	      statement = '''SELECT\ distinct\ \
 \ \ \ \ person_id,\ visit_concept_name,\ macrovisit_id,\ macrovisit_start_date,\ macrovisit_end_date\
 \ \ \ \ \ \ \ \ FROM\ microvisits_to_macrovisits\
@@ -161,12 +161,12 @@ WHERE\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
-    high_level_condition_occur=Input(rid="ri.vector.main.execute.e7aa7bae-473d-44bb-8869-9fa53186e2f7")
-)
-	def sql_statement_07():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.1b318b0b-fa44-4315-90c7-509b4bedc06b"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.e0264d38-57aa-4509-9245-3d008b0526c4"),
+##    high_level_condition_occur=Input(rid="ri.vector.main.execute.e7aa7bae-473d-44bb-8869-9fa53186e2f7")
+#)
+def sql_statement_07():
 	      statement = '''SELECT\ person_id,\ nvl\(prediabetes,\ 0\)\ as\ prediabetes,\ \ nvl\(nvl\(diabetes,\ diabetes_complications\),\ 0\)\ as\ diabetes,\ nvl\(chronic_kidney_disease,\ 0\)\ as\ chronic_kidney_disease,\ nvl\(congestive_heart_failure,\ 0\)\ as\ congestive_heart_failure,\ nvl\(chronic_pulmonary_disease,\ 0\)\ as\ chronic_pulmonary_disease\
 FROM\
 \(\
@@ -188,7 +188,7 @@ PIVOT\ \(\
 	      return(statement)
 
 
-	def sql_statement_08():
+def sql_statement_08():
 	      statement = '''PIVOT\ \(\
 \ \ \ \ SUM\(comorbidity_count\)\
 \ \ \ \ FOR\ high_level_condition\ IN\ \(\
@@ -198,7 +198,7 @@ PIVOT\ \(\
 \ \
 \	\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.b8332970\-286e\-4e80\-ac5f\-61e50b0ba286"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ condition_occurrence=Input\(rid="ri\.foundry\.main\.dataset\.3e01546f\-f110\-4c67\-a6db\-9063d2939a74"\)\
@@ -212,14 +212,14 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 	      return(statement)
 
 
-	def sql_statement_09():
+def sql_statement_09():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ acute\ covid\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
 JOIN\ \
 condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condition_start_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.e128cac3\-b76d\-430a\-8c8e\-ed2b0a9eae2a"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ drugRollUp=Input\(rid="ri\.vector\.main\.execute\.e79d57fa\-0fc2\-4e7a\-9940\-603568a40ae9"\)\
@@ -231,12 +231,12 @@ FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\
 	      return(statement)
 
 
-	def sql_statement_10():
+def sql_statement_10():
 	      statement = '''\-\-\ pull\ all\ the\ drugs\ associated\ with\ the\ patient\ in\ their\ pre\ window\
 SELECT\ feat\.\*,\ co\.ancestor_drug_concept_name,\ co\.ancestor_drug_concept_id,\ co\.drug_exposure_start_date,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.drug_exposure_start_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.ced6c707\-79e8\-416f\-81f5\-7c7f2a0548f6"\),\
 \ \ \ \ covid_person=Input\(rid="ri\.foundry\.main\.dataset\.e5aa8575\-e263\-4cd1\-97cd\-a768cb7f975c"\)\
 \)\
@@ -268,7 +268,7 @@ ON\ covidtbl\.person_id\ =\ posttbl\.person_id\ AND\ covidtbl\.measure_type\ =\ 
 	      return(statement)
 
 
-	def sql_statement_11():
+def sql_statement_11():
 	      statement = '''SELECT\ nvl\(covidtbl\.person_id,\ posttbl\.person_id\)\ as\ person_id,\ nvl\(covidtbl\.measure_type,\ posttbl\.measure_type\)\ as\ measure_type,\ covidtbl\.c_any_pos,\ covidtbl\.c_any_measure,\ posttbl\.post_any_pos,\ posttbl\.post_any_measure\
 \
 FROM\
@@ -294,7 +294,7 @@ FULL\ JOIN\ \
 \
 ON\ covidtbl\.person_id\ =\ posttbl\.person_id\ AND\ covidtbl\.measure_type\ =\ posttbl\.measure_type\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.ee965a9d\-9d2f\-4175\-aba8\-3c842882c7cb"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ measurement_person=Input\(rid="ri\.vector\.main\.execute\.b58177f1\-cd68\-4be9\-be4b\-715f899c2a0b"\)\
@@ -311,7 +311,7 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 	      return(statement)
 
 
-	def sql_statement_12():
+def sql_statement_12():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -321,7 +321,7 @@ JOIN\ \
 measurement_person\ m\ ON\ feat\.person_id\ =\ m\.person_id\ and\ m\.visit_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\
 GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.00f71213\-03c7\-44f8\-be40\-520411e33272"\),\
 \ \ \ \ covid_measure_indicators=Input\(rid="ri\.vector\.main\.execute\.ced6c707\-79e8\-416f\-81f5\-7c7f2a0548f6"\),\
 \ \ \ \ start_end_date=Input\(rid="ri\.vector\.main\.execute\.24643c26\-4692\-4225\-92be\-b81a187ae80e"\)\
@@ -358,7 +358,7 @@ ON\ cmi\.person_id\ =\ sed\.person_id\ AND\ cmi\.measure_type\ =\ sed\.measure_t
 	      return(statement)
 
 
-	def sql_statement_13():
+def sql_statement_13():
 	      statement = '''SELECT\ nvl\(cmi\.person_id,\ sed\.person_id\)\ as\ person_id,\ nvl\(cmi\.measure_type,\ sed\.measure_type\)\ as\ measure_type,\ \
 \ \ \ \ \ \ \ \ cmi\.c_any_measure,\ cmi\.c_any_pos,\ sed\.c_covid_length,\ sed\.c_impute_covid_length,\
 \ \ \ \ \ \ \ \ cmi\.post_any_measure,\ cmi\.post_any_pos,\ sed\.post_covid_length,\ sed\.post_impute_covid_length\
@@ -388,7 +388,7 @@ FROM\ \
 \
 ON\ cmi\.person_id\ =\ sed\.person_id\ AND\ cmi\.measure_type\ =\ sed\.measure_type\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.e5aa8575\-e263\-4cd1\-97cd\-a768cb7f975c"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ measurement=Input\(rid="ri\.foundry\.main\.dataset\.b7749e49\-cf01\-4d0a\-a154\-2f00eecab21e"\)\
@@ -410,7 +410,7 @@ GROUP\ BY\ ft\.person_id,\ m\.measurement_date,\ m\.measurement_concept_name\
 	      return(statement)
 
 
-	def sql_statement_14():
+def sql_statement_14():
 	      statement = '''SELECT\ ft\.person_id,\ max\(ft\.pre_window_end_dt\)\ as\ pre_window_end_dt,\ max\(ft\.post_window_start_dt\)\ as\ post_window_start_dt,\ max\(ft\.post_window_end_dt\)\ as\ post_window_end_dt,\ \
 \ \ \ \ m\.measurement_date,\ m\.measurement_concept_name,\
 \ \ \ \ max\(CASE\ WHEN\ m\.value_as_concept_name\ IN\ \('Detected',\ 'Positive'\)\
@@ -425,7 +425,7 @@ AND\ m\.measurement_date\ IS\ NOT\ NULL\
 AND\ m\.measurement_concept_name\ IN\ \('SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ \[Presence\]\ in\ Respiratory\ specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ \[Presence\]\ in\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ N\ gene\ \[Presence\]\ in\ Specimen\ by\ Nucleic\ acid\ amplification\ using\ CDC\ primer\-probe\ set\ N1',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ ORF1ab\ region\ \[Presence\]\ in\ Respiratory\ specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ Ag\ \[Presence\]\ in\ Respiratory\ specimen\ by\ Rapid\ immunoassay',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RdRp\ gene\ \[Presence\]\ in\ Respiratory\ specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RdRp\ gene\ \[Presence\]\ in\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\+SARS\-CoV\-2\ \(COVID\-19\)\ Ag\ \[Presence\]\ in\ Respiratory\ specimen\ by\ Rapid\ immunoassay',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ panel\ \-\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ \[Presence\]\ in\ Nasopharynx\ by\ NAA\ with\ non\-probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ N\ gene\ \[Presence\]\ in\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ IgG\ Ab\ \[Presence\]\ in\ Serum\ or\ Plasma\ by\ Immunoassay'\)\
 GROUP\ BY\ ft\.person_id,\ m\.measurement_date,\ m\.measurement_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.518c5020\-2537\-4606\-a367\-d0ec24710869"\),\
 \ \ \ \ covid_person=Input\(rid="ri\.foundry\.main\.dataset\.e5aa8575\-e263\-4cd1\-97cd\-a768cb7f975c"\)\
 \)\
@@ -444,7 +444,7 @@ WHERE\ cp\.measurement_date\ >\ cp\.pre_window_end_dt\ and\ cp\.measurement_date
 	      return(statement)
 
 
-	def sql_statement_15():
+def sql_statement_15():
 	      statement = '''SELECT\ cp\.person_id,\ cp\.measurement_concept_name\ as\ measure_type,\
 \ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 1\
 \ \ \ \ THEN\ cp\.measurement_date\
@@ -457,7 +457,7 @@ WHERE\ cp\.measurement_date\ >\ cp\.pre_window_end_dt\ and\ cp\.measurement_date
 FROM\ covid_person\ cp\
 WHERE\ cp\.measurement_date\ >\ cp\.pre_window_end_dt\ and\ cp\.measurement_date\ <=\ cp\.post_window_start_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.dea2bc63\-0ae2\-4699\-81d4\-41fdf7f188b2"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ covid_drugs=Input\(rid="ri\.vector\.main\.execute\.e128cac3\-b76d\-430a\-8c8e\-ed2b0a9eae2a"\),\
@@ -473,7 +473,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 	      return(statement)
 
 
-	def sql_statement_16():
+def sql_statement_16():
 	      statement = '''SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id,\ 'covid\ count'\ as\ count_type,\ count\(distinct\ nvl\(mml\.macrovisit_id,\ mml\.visit_occurrence_id\)\)\ as\ med_count\
 \ \ \ \ FROM\ Feature_table_builder\ feat\
 \ \ \ \ \ \ \ \ \ \ \ \ JOIN\ microvisits_to_macrovisits\ mml\ on\ feat\.person_id\ =\ mml\.person_id\
@@ -481,7 +481,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 \ \ \ \ GROUP\ BY\ \
 \	feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.667ee0fd\-96b1\-41f0\-a31a\-384ba84c4354"\),\
 \ \ \ \ device_covid=Input\(rid="ri\.vector\.main\.execute\.d9deca03\-c0e0\-4dd4\-ac6c\-2e5c778d8f66"\),\
 \ \ \ \ device_post=Input\(rid="ri\.vector\.main\.execute\.80391b6d\-de0d\-433b\-8f97\-a8a57478b5da"\),\
@@ -517,7 +517,7 @@ FROM\ \
 	      return(statement)
 
 
-	def sql_statement_17():
+def sql_statement_17():
 	      statement = '''\-\-\ do\ a\ full\ outer\ join\ between\ pre\ and\ post\ drugs\ so\ as\ to\ compare\
 \
 SELECT\ \
@@ -544,7 +544,7 @@ FROM\ \
 \ \ \ \ \-\-\ post\ drug\ table\
 \ \ \ \ device_post\ posttbl\ ON\ covidtbl\.person_id\ =\ posttbl\.person_id\ \ AND\ covidtbl\.device_concept_name\ =\ posttbl\.device_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.bfb42402\-89ee\-4333\-9677\-40d88ea630dd"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ device_count=Input\(rid="ri\.vector\.main\.execute\.667ee0fd\-96b1\-41f0\-a31a\-384ba84c4354"\)\
@@ -567,7 +567,7 @@ WHERE\ tbl\.device_concept_name\ is\ not\ null\
 	      return(statement)
 
 
-	def sql_statement_18():
+def sql_statement_18():
 	      statement = '''select\ distinct\ tbl\.\*\
 FROM\ Feature_table_builder\ feat\ \
 JOIN\
@@ -583,7 +583,7 @@ FROM\ device_count\
 ON\ feat\.person_id\ =\ tbl\.person_id\
 WHERE\ tbl\.device_concept_name\ is\ not\ null\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.d9deca03\-c0e0\-4dd4\-ac6c\-2e5c778d8f66"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ device_exposure=Input\(rid="ri\.foundry\.main\.dataset\.7e24a101\-2206\-45d9\-bcaa\-b9d84bd2f990"\)\
@@ -603,7 +603,7 @@ FROM\
 	      return(statement)
 
 
-	def sql_statement_19():
+def sql_statement_19():
 	      statement = '''select\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ device_count\
 FROM\
 \ \ \ \ \(SELECT\ person_id,\ device_exposure_start_date,\ device_exposure_end_date,\ device_concept_name\ \
@@ -616,7 +616,7 @@ FROM\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.pre_window_end_dt\ and\ feat\.post_window_start_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.pre_window_end_dt\ and\ d\.device_exposure_end_date\ >\ feat\.post_window_start_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.80391b6d\-de0d\-433b\-8f97\-a8a57478b5da"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ device_exposure=Input\(rid="ri\.foundry\.main\.dataset\.7e24a101\-2206\-45d9\-bcaa\-b9d84bd2f990"\)\
@@ -636,7 +636,7 @@ FROM\
 	      return(statement)
 
 
-	def sql_statement_20():
+def sql_statement_20():
 	      statement = '''select\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ device_count\
 FROM\
 \ \ \ \ \(SELECT\ person_id,\ device_exposure_start_date,\ device_exposure_end_date,\ device_concept_name\ \
@@ -649,7 +649,7 @@ FROM\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.post_window_start_dt\ and\ d\.device_exposure_end_date\ >\ feat\.post_window_end_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.274b82d5\-654e\-4135\-83ff\-12c2ed782e73"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ device_exposure=Input\(rid="ri\.foundry\.main\.dataset\.7e24a101\-2206\-45d9\-bcaa\-b9d84bd2f990"\)\
@@ -669,7 +669,7 @@ FROM\
 	      return(statement)
 
 
-	def sql_statement_21():
+def sql_statement_21():
 	      statement = '''select\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ device_count\
 FROM\
 \ \ \ \ \(SELECT\ person_id,\ device_exposure_start_date,\ device_exposure_end_date,\ device_concept_name\ \
@@ -682,7 +682,7 @@ FROM\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.pre_window_start_dt\ and\ feat\.pre_window_end_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.pre_window_start_dt\ and\ d\.device_exposure_end_date\ >\ feat\.pre_window_end_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.1c02331a\-1df2\-49be\-bbd9\-c8f2abac6fdd"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ device_exposure=Input\(rid="ri\.foundry\.main\.dataset\.7e24a101\-2206\-45d9\-bcaa\-b9d84bd2f990"\)\
@@ -702,7 +702,7 @@ FROM\
 	      return(statement)
 
 
-	def sql_statement_22():
+def sql_statement_22():
 	      statement = '''select\ d\.person_id,\ d\.device_concept_name,\ 1\ as\ device_count\
 FROM\
 \ \ \ \ \(SELECT\ person_id,\ device_exposure_start_date,\ device_exposure_end_date,\ device_concept_name\ \
@@ -715,7 +715,7 @@ FROM\
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_end_date\ between\ feat\.pre_pre_window_start_dt\ and\ feat\.pre_window_start_dt\)\ \
 \ \ \ \ \ \ \ \ \ \ \ \ \ or\ \(d\.device_exposure_start_date\ <\ feat\.pre_pre_window_start_dt\ and\ d\.device_exposure_end_date\ >\ feat\.pre_window_start_dt\)\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.e79d57fa\-0fc2\-4e7a\-9940\-603568a40ae9"\),\
 \ \ \ \ DrugConcepts=Input\(rid="ri\.vector\.main\.execute\.60346ff3\-e886\-4714\-9402\-81b6c2e328ba"\),\
 \ \ \ \ Drugs_for_These_Patients=Input\(rid="ri\.vector\.main\.execute\.16e9328b\-7dfa\-48d8\-b60b\-ea5b945ea683"\),\
@@ -731,7 +731,7 @@ FROM\ DrugConcepts\ dc\ JOIN\ concept_ancestor\ ca\ ON\ dc\.concept_id\ =\ ca\.a
 	      return(statement)
 
 
-	def sql_statement_23():
+def sql_statement_23():
 	      statement = '''\-\-\ roll\ up\ all\ drugs\ to\ RxNorm\ ingredient\ level\ for\ consistency\
 SELECT\ distinct\ ds\.person_id,\ ds\.drug_exposure_start_date,\ ds\.visit_occurrence_id,\ ds\.drug_concept_id\ as\ original_drug_concept_id,\ ds\.drug_concept_name\ as\ original_drug_concept_name,\ dc\.concept_id\ as\ ancestor_drug_concept_id,\ dc\.concept_name\ as\ ancestor_drug_concept_name\
 \-\-\ sing\ only\ the\ portion\ of\ concept_ancestor\ where\ the\ ancestors\ are\ rxnorm\ ingredients\ and\ are\ standard\ concepts\.\
@@ -739,7 +739,7 @@ FROM\ DrugConcepts\ dc\ JOIN\ concept_ancestor\ ca\ ON\ dc\.concept_id\ =\ ca\.a
 \-\-\ if\ a\ med\ for\ one\ of\ our\ patients\ is\ a\ descendent\ of\ one\ of\ those\ ingredients\
 \ \ \ \ JOIN\ Drugs_for_These_Patients\ ds\ ON\ ds\.drug_concept_id\ =\ ca\.descendant_concept_id\ \-\-\ the\ original\ meds\ are\ the\ descendents\ \
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.c65dde9f\-1306\-48e5\-8bde\-748eaec89f88"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ covid_condition=Input\(rid="ri\.vector\.main\.execute\.b8332970\-286e\-4e80\-ac5f\-61e50b0ba286"\),\
@@ -806,7 +806,7 @@ FULL\ JOIN\
 	      return(statement)
 
 
-	def sql_statement_24():
+def sql_statement_24():
 	      statement = '''\-\-\ full\ outer\ join\ pre\ and\ post\ in\ order\ to\ compare\
 SELECT\ \
 prepretbl\.person_id\ as\ pre_pre_person_id,\ prepretbl\.patient_group\ as\ pre_pre_patient_group,\ prepretbl\.condition_concept_name\ as\ pre_pre_condition_concept_name,\ prepretbl\.condition_concept_id\ as\ pre_pre_condition_concept_id,\ prepretbl\.count_type\ as\ pre_pre_count_type,\ prepretbl\.dx_count\ as\ pre_pre_dx_count,\
@@ -862,7 +862,7 @@ FULL\ JOIN\
 \ \ \ \ ON\ \
 \	pretbl\.person_id\ =\ posttbl\.person_id\ AND\ pretbl\.condition_concept_name\ =\ posttbl\.condition_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.2b963a2e\-59b2\-480a\-9d86\-553513b25a89"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ covid_measurement=Input\(rid="ri\.vector\.main\.execute\.ee965a9d\-9d2f\-4175\-aba8\-3c842882c7cb"\),\
@@ -900,7 +900,7 @@ ON\ pm\.person_id\ =\ pom\.person_id\ AND\ pm\.measurement_concept_name\ =\ pom\
 	      return(statement)
 
 
-	def sql_statement_25():
+def sql_statement_25():
 	      statement = '''SELECT\ \
 ppm\.person_id\ as\ pre_pre_person_id,\ ppm\.measurement_concept_name\ as\ pre_pre_measurement_concept_name,\ ppm\.measurement_concept_id\ as\ pre_pre_measurement_concept_id,\ \ \
 ppm\.max_measure\ as\ pre_pre_max,\ ppm\.min_measure\ as\ pre_pre_min,\ ppm\.avg_measure\ as\ pre_pre_avg,\
@@ -928,7 +928,7 @@ FULL\ JOIN\
 \ post_measurement\ pom\
 ON\ pm\.person_id\ =\ pom\.person_id\ AND\ pm\.measurement_concept_name\ =\ pom\.measurement_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.e7aa7bae\-473d\-44bb\-8869\-9fa53186e2f7"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ condition_occurrence=Input\(rid="ri\.foundry\.main\.dataset\.3e01546f\-f110\-4c67\-a6db\-9063d2939a74"\)\
@@ -1012,7 +1012,7 @@ WHERE\ \
 	      return(statement)
 
 
-	def sql_statement_26():
+def sql_statement_26():
 	      statement = '''\-\-\ find\ all\ high\ level\ conditions\ associated\ with\ patients\ in\ their\ pre\ window\ or\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ feat\.pre_window_start_dt,\ feat\.pre_window_end_dt,\ glc\.high_level_condition,\ glc\.condition_start_date,\ glc\.condition_end_date\
 FROM\ Feature_table_builder\ feat\ \
@@ -1089,7 +1089,7 @@ WHERE\ \
 \ \ \ \ glc\.high_level_condition\ is\ not\ null\
 \ \ \ \ and\ \(glc\.condition_end_date\ >=\ feat\.pre_window_start_dt\ or\ glc\.condition_end_date\ is\ null\)\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.d357092e\-6841\-48fb\-8d5f\-809b4a1ae4fb"\),\
 \ \ \ \ Collect_the_Cohort=Input\(rid="ri\.vector\.main\.execute\.2fef4d8c\-9e31\-463a\-b919\-d9ea3e2f78b9"\),\
 \ \ \ \ Hospitalized_Cases=Input\(rid="ri\.vector\.main\.execute\.02850990\-abf4\-4b63\-82b7\-dbad6fda7ed7"\)\
@@ -1105,7 +1105,7 @@ Hospitalized_Cases\ hc\ ON\ ctc\.person_id\ =\ hc\.person_id\
 	      return(statement)
 
 
-	def sql_statement_27():
+def sql_statement_27():
 	      statement = '''\-\-\ add\ flag\ to\ show\ whether\ patients\ were\ in\ the\ hospitalized\ group\ or\ the\ non\-hospitalized\ group;\ this\ becomes\ a\ model\ feature\
 SELECT\ ctc\.\*,\
 case\ when\ hc\.person_id\ is\ not\ null\ \
@@ -1114,7 +1114,7 @@ FROM\ Collect_the_Cohort\ ctc\
 LEFT\ JOIN\ \
 Hospitalized_Cases\ hc\ ON\ ctc\.person_id\ =\ hc\.person_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.8ef58a55\-93a1\-4cf9\-bebd\-fac579b61dfb"\),\
 \ \ \ \ microvisits_to_macrovisits=Input\(rid="ri\.foundry\.main\.dataset\.f5008fa4\-e736\-4244\-88e1\-1da7a68efcdb"\)\
 \)\
@@ -1128,7 +1128,7 @@ SELECT\ \*\ \
 	      return(statement)
 
 
-	def sql_statement_28():
+def sql_statement_28():
 	      statement = '''SELECT\ \*\ \
 \ \ \ \ \ \ \ \ FROM\ microvisits_to_macrovisits\
 \ \ \ \ \ \ \ \ WHERE\ visit_concept_name\ IN\ \('Inpatient\ Visit',\ 'Inpatient\ Hospital',\ 'Inpatient\ Critical\ Care\ Facility',\ \
@@ -1136,7 +1136,7 @@ SELECT\ \*\ \
 \ \ \ \ \ \ \ \ 'Emergency\ Room\ Visit',\ 'Intensive\ Care',\ 'Emergency\ Room\ \-\ Hospital'\)\ \
 \ \ \ \ \ \ \ \ and\ macrovisit_id\ is\ not\ null\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.26ad74be\-fcb8\-4a41\-b373\-501854feb6c3"\),\
 \ \ \ \ four_windows_measure=Input\(rid="ri\.vector\.main\.execute\.2b963a2e\-59b2\-480a\-9d86\-553513b25a89"\)\
 \)\
@@ -1163,7 +1163,7 @@ FROM\ four_windows_measure\
 	      return(statement)
 
 
-	def sql_statement_29():
+def sql_statement_29():
 	      statement = '''SELECT\ \
 \	nvl\(nvl\(nvl\(pre_pre_person_id,\ pre_person_id\),\ covid_person_id\),\ post_person_id\)\ as\ person_id,\ \
 \	nvl\(nvl\(nvl\(pre_pre_measurement_concept_name,\ pre_measurement_concept_name\),\ covid_measurement_concept_name\),\ post_measurement_concept_name\)\ as\ measurement_concept_name,\ \
@@ -1184,7 +1184,7 @@ FROM\ four_windows_measure\
 \ \ \ \ post_avg\ as\ post_avg\
 FROM\ four_windows_measure\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.56bdc9d2\-12a2\-4e87\-be07\-65b3c2b7783d"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ observation=Input\(rid="ri\.foundry\.main\.dataset\.fc1ce22e\-9cf6\-4335\-8ca7\-aa8c733d506d"\)\
@@ -1205,7 +1205,7 @@ GROUP\ BY\ o\.person_id,\ observation_concept_name\
 	      return(statement)
 
 
-	def sql_statement_30():
+def sql_statement_30():
 	      statement = '''SELECT\ o\.person_id,\ CASE\ WHEN\ o\.observation_concept_name\ ==\ 'Marital\ status\ \[NHANES\]'\ THEN\ first\(o\.value_as_concept_name\)\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ELSE\ o\.observation_concept_name\ END\ AS\ observation_concept_name\
 FROM\ observation\ o\
@@ -1219,7 +1219,7 @@ WHERE\ o\.observation_concept_name\ IN\ \('Never\ smoker',\ \
 AND\ \(o\.value_as_concept_name\ IS\ NOT\ NULL\ OR\ o\.observation_concept_name\ NOT\ IN\ \('Marital\ status\ \[NHANES\]'\)\)\
 GROUP\ BY\ o\.person_id,\ observation_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.9baea4ea\-ef0d\-4496\-bacf\-c34d0cba82f7"\),\
 \ \ \ \ obs_person=Input\(rid="ri\.vector\.main\.execute\.56bdc9d2\-12a2\-4e87\-be07\-65b3c2b7783d"\)\
 \)\
@@ -1234,7 +1234,7 @@ HAVING\ COUNT\(\*\)\ >\ 10\)\ \-\-\ exclude\ sparse\ concepts\
 	      return(statement)
 
 
-	def sql_statement_31():
+def sql_statement_31():
 	      statement = '''SELECT\ \*\ \
 FROM\ obs_person\ op\
 WHERE\ op\.observation_concept_name\ IN\
@@ -1243,7 +1243,7 @@ FROM\ obs_person\ op\
 GROUP\ BY\ observation_concept_name\
 HAVING\ COUNT\(\*\)\ >\ 10\)\ \-\-\ exclude\ sparse\ concepts\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.2cf5493c\-fc3e\-40da\-a018\-52f37934e2fe"\),\
 \ \ \ \ covid_window=Input\(rid="ri\.vector\.main\.execute\.518c5020\-2537\-4606\-a367\-d0ec24710869"\),\
 \ \ \ \ post_covid=Input\(rid="ri\.vector\.main\.execute\.af40d95d\-42dc\-4fe2\-a8f6\-4fd87d1f703c"\)\
@@ -1281,7 +1281,7 @@ GROUP\ BY\ t\.person_id,\ t\.measure_type,\ t\.first_pos_dt,\ t\.last_pos_dt\
 	      return(statement)
 
 
-	def sql_statement_32():
+def sql_statement_32():
 	      statement = '''\-\-\ first\ \(min\)\ postive\ date,\ last\ \(max\)\ postive\ date,\ first\ negative\ date\ after\ the\ first\ positive\ date,\ number\ of\ tests\
 \-\-\ covid\
 SELECT\ t\.\*,\ min\(c\.measure_neg_date\)\ as\ first_neg_dt,\ 'covid'\ as\ window_type\
@@ -1312,7 +1312,7 @@ WHERE\ p\.measure_neg_date\ >\ t\.first_pos_dt\ \-\-\ first\ negative\ date\ aft
 \ \ \ \ OR\ p\.measure_neg_date\ IS\ NULL\ \
 GROUP\ BY\ t\.person_id,\ t\.measure_type,\ t\.first_pos_dt,\ t\.last_pos_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.0fe62ec5\-fdaf\-482e\-aed0\-df5e7ea4130d"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ condition_occurrence=Input\(rid="ri\.foundry\.main\.dataset\.3e01546f\-f110\-4c67\-a6db\-9063d2939a74"\)\
@@ -1326,14 +1326,14 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 	      return(statement)
 
 
-	def sql_statement_33():
+def sql_statement_33():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ post\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
 JOIN\ \
 condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condition_start_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.af40d95d\-42dc\-4fe2\-a8f6\-4fd87d1f703c"\),\
 \ \ \ \ covid_person=Input\(rid="ri\.foundry\.main\.dataset\.e5aa8575\-e263\-4cd1\-97cd\-a768cb7f975c"\)\
 \)\
@@ -1352,7 +1352,7 @@ WHERE\ cp\.measurement_date\ >\ cp\.post_window_start_dt\ and\ cp\.measurement_d
 	      return(statement)
 
 
-	def sql_statement_34():
+def sql_statement_34():
 	      statement = '''SELECT\ cp\.person_id,\ cp\.measurement_concept_name\ as\ measure_type,\
 \ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 1\
 \ \ \ \ THEN\ cp\.measurement_date\
@@ -1365,7 +1365,7 @@ WHERE\ cp\.measurement_date\ >\ cp\.post_window_start_dt\ and\ cp\.measurement_d
 FROM\ covid_person\ cp\
 WHERE\ cp\.measurement_date\ >\ cp\.post_window_start_dt\ and\ cp\.measurement_date\ <=\ cp\.post_window_end_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.c3dc502d\-6732\-4c94\-a137\-5ba0259fefac"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ drugRollUp=Input\(rid="ri\.vector\.main\.execute\.e79d57fa\-0fc2\-4e7a\-9940\-603568a40ae9"\)\
@@ -1377,12 +1377,12 @@ FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\
 	      return(statement)
 
 
-	def sql_statement_35():
+def sql_statement_35():
 	      statement = '''\-\-\ pull\ all\ the\ drugs\ associated\ with\ the\ patient\ in\ their\ post\ window\
 SELECT\ feat\.\*,\ co\.ancestor_drug_concept_name,\ co\.ancestor_drug_concept_id,\ co\.drug_exposure_start_date,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.drug_exposure_start_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.c247cc21\-4fbc\-419c\-affe\-bc7d560dd149"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ measurement_person=Input\(rid="ri\.vector\.main\.execute\.b58177f1\-cd68\-4be9\-be4b\-715f899c2a0b"\)\
@@ -1399,7 +1399,7 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 	      return(statement)
 
 
-	def sql_statement_36():
+def sql_statement_36():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -1409,7 +1409,7 @@ JOIN\ \
 measurement_person\ m\ ON\ feat\.person_id\ =\ m\.person_id\ and\ m\.visit_date\ between\ feat\.post_window_start_dt\ and\ feat\.post_window_end_dt\
 GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.c69da2fd\-2170\-410e\-bba6\-be51c2b3f852"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ microvisits_to_macrovisits=Input\(rid="ri\.foundry\.main\.dataset\.f5008fa4\-e736\-4244\-88e1\-1da7a68efcdb"\),\
@@ -1425,7 +1425,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 	      return(statement)
 
 
-	def sql_statement_37():
+def sql_statement_37():
 	      statement = '''SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id,\ 'post\ count'\ as\ count_type,\ count\(distinct\ nvl\(mml\.macrovisit_id,\ mml\.visit_occurrence_id\)\)\ as\ med_count\
 \	FROM\ Feature_table_builder\ feat\ \
 \ \ \ \ \	\	JOIN\ microvisits_to_macrovisits\ mml\ ON\ feat\.person_id\ =\ mml\.person_id\
@@ -1433,7 +1433,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 \	GROUP\ BY\ \
 \	feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.7941d9bb\-4846\-4863\-8b22\-6013668847b4"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ condition_occurrence=Input\(rid="ri\.foundry\.main\.dataset\.3e01546f\-f110\-4c67\-a6db\-9063d2939a74"\)\
@@ -1447,14 +1447,14 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 	      return(statement)
 
 
-	def sql_statement_38():
+def sql_statement_38():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
 JOIN\ \
 condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condition_start_date\ between\ feat\.pre_window_start_dt\ and\ feat\.pre_window_end_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.cda9dabb\-7a23\-4cc8\-8eb9\-6e5abe4b3fe6"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ drugRollUp=Input\(rid="ri\.vector\.main\.execute\.e79d57fa\-0fc2\-4e7a\-9940\-603568a40ae9"\)\
@@ -1466,12 +1466,12 @@ FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\
 	      return(statement)
 
 
-	def sql_statement_39():
+def sql_statement_39():
 	      statement = '''\-\-\ pull\ all\ the\ drugs\ associated\ with\ the\ patient\ in\ their\ pre\ window\
 SELECT\ feat\.\*,\ co\.ancestor_drug_concept_name,\ co\.ancestor_drug_concept_id,\ co\.drug_exposure_start_date,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.drug_exposure_start_date\ between\ feat\.pre_window_start_dt\ and\ feat\.pre_window_end_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.09fc9cc5\-5778\-4c21\-90a7\-8b8550a63f10"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ measurement_person=Input\(rid="ri\.vector\.main\.execute\.b58177f1\-cd68\-4be9\-be4b\-715f899c2a0b"\)\
@@ -1488,7 +1488,7 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 	      return(statement)
 
 
-	def sql_statement_40():
+def sql_statement_40():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -1498,7 +1498,7 @@ JOIN\ \
 measurement_person\ m\ ON\ feat\.person_id\ =\ m\.person_id\ and\ m\.visit_date\ between\ feat\.pre_window_start_dt\ and\ feat\.pre_window_end_dt\
 GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.73433ca0\-fec4\-4210\-a0b9\-2946683617bc"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ four_windows_dx_counts=Input\(rid="ri\.vector\.main\.execute\.c65dde9f\-1306\-48e5\-8bde\-748eaec89f88"\)\
@@ -1524,7 +1524,7 @@ ON\ feat\.person_id\ =\ tbl\.person_id\
 	      return(statement)
 
 
-	def sql_statement_41():
+def sql_statement_41():
 	      statement = '''\-\-\ clean\ up\ the\ full\ outer\ join\ for\ meds\.\ this\ table\ will\ be\ handed\ off\ as\ is\ to\ the\ next\ part\ of\ the\ pipeline\
 \-\-\ STOP:\ The\ results\ of\ the\ query\ below\ need\ to\ be\ stored\ in\ a\ table\ called\ "pre_post_dx_count_clean"\.\ Once\ you\ have\ this\ table\ created,\ move\ to\ the\ next\ script\ in\ the\ sequence\.\
 select\ distinct\ tbl\.\*,\ feat\.apprx_age,\ feat\.sex,\ feat\.race,\ feat\.ethn,\ feat\.tot_long_data_days,\ feat\.op_post_visit_ratio\ as\ op_post_visit_ratio,\ feat\.post_ip_visit_ratio,\ feat\.covid_ip_visit_ratio,\ feat\.post_icu_visit_ratio,\ feat\.covid_icu_visit_ratio\
@@ -1543,7 +1543,7 @@ Feature_table_builder\ feat\ JOIN\
 \	\)\ tbl\ \
 ON\ feat\.person_id\ =\ tbl\.person_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.b7524cd5\-89b3\-43b9\-9eef\-5db82836ffef"\),\
 \ \ \ \ covidtbl=Input\(rid="ri\.vector\.main\.execute\.dea2bc63\-0ae2\-4699\-81d4\-41fdf7f188b2"\),\
 \ \ \ \ posttbl=Input\(rid="ri\.vector\.main\.execute\.c69da2fd\-2170\-410e\-bba6\-be51c2b3f852"\),\
@@ -1580,7 +1580,7 @@ FROM\ \
 	      return(statement)
 
 
-	def sql_statement_42():
+def sql_statement_42():
 	      statement = '''\-\-\ do\ a\ full\ outer\ join\ between\ pre\ and\ post\ drugs\ so\ as\ to\ compare\
 \
 SELECT\ \
@@ -1608,7 +1608,7 @@ FROM\ \
 \ \ \ \ posttbl\
 \	ON\ \ covidtbl\.person_id\ =\ posttbl\.person_id\ \ AND\ covidtbl\.ancestor_drug_concept_name\ =\ posttbl\.ancestor_drug_concept_name\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.foundry\.main\.dataset\.c729b93f\-caf1\-4a7d\-ac0d\-569188c4526e"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ pre_post_med_count=Input\(rid="ri\.vector\.main\.execute\.b7524cd5\-89b3\-43b9\-9eef\-5db82836ffef"\)\
@@ -1634,7 +1634,7 @@ ON\ feat\.person_id\ =\ tbl\.person_id\
 	      return(statement)
 
 
-	def sql_statement_43():
+def sql_statement_43():
 	      statement = '''\-\-\ clean\ up\ the\ full\ outer\ join\ for\ meds\.\ this\ table\ will\ be\ handed\ off\ as\ is\ to\ the\ next\ part\ of\ the\ pipeline\
 \-\-\ STOP:\ The\ results\ of\ the\ query\ below\ need\ to\ be\ stored\ in\ a\ table\ called\ "pre_post_med_count_clean"\.\ Once\ you\ have\ this\ table\ created,\ move\ to\ the\ next\ script\ in\ the\ sequence\.\
 select\ distinct\ tbl\.\*,\ feat\.apprx_age,\ feat\.sex,\ feat\.race,\ feat\.ethn,\ feat\.tot_long_data_days,\ feat\.op_post_visit_ratio\ as\ op_post_visit_ratio,\ feat\.post_ip_visit_ratio,\ feat\.covid_ip_visit_ratio,\ feat\.post_icu_visit_ratio,\ feat\.covid_icu_visit_ratio\
@@ -1653,7 +1653,7 @@ FROM\ pre_post_med_count\
 \)\ tbl\ \
 ON\ feat\.person_id\ =\ tbl\.person_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.3e73242f\-f520\-4115\-9631\-bdbd0d73e6e0"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ condition_occurrence=Input\(rid="ri\.foundry\.main\.dataset\.3e01546f\-f110\-4c67\-a6db\-9063d2939a74"\)\
@@ -1667,14 +1667,14 @@ condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condit
 	      return(statement)
 
 
-	def sql_statement_44():
+def sql_statement_44():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.\*,\ co\.condition_concept_name,\ co\.condition_concept_id,\ co\.condition_start_date,\ co\.condition_source_value,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ \
 JOIN\ \
 condition_occurrence\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.condition_start_date\ between\ feat\.pre_pre_window_start_dt\ and\ feat\.pre_window_start_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.ebe96072\-83d0\-4281\-bb16\-d0422a63f93c"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ drugRollUp=Input\(rid="ri\.vector\.main\.execute\.e79d57fa\-0fc2\-4e7a\-9940\-603568a40ae9"\)\
@@ -1686,12 +1686,12 @@ FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\
 	      return(statement)
 
 
-	def sql_statement_45():
+def sql_statement_45():
 	      statement = '''\-\-\ pull\ all\ the\ drugs\ associated\ with\ the\ patient\ in\ their\ pre\ window\
 SELECT\ feat\.\*,\ co\.ancestor_drug_concept_name,\ co\.ancestor_drug_concept_id,\ co\.drug_exposure_start_date,\ co\.visit_occurrence_id\
 FROM\ Feature_table_builder\ feat\ JOIN\ drugRollUp\ co\ ON\ feat\.person_id\ =\ co\.person_id\ and\ co\.drug_exposure_start_date\ between\ feat\.pre_pre_window_start_dt\ and\ feat\.pre_window_start_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.c49ca582\-65b0\-49de\-822d\-55287579ddf8"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ measurement_person=Input\(rid="ri\.vector\.main\.execute\.b58177f1\-cd68\-4be9\-be4b\-715f899c2a0b"\)\
@@ -1708,7 +1708,7 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 	      return(statement)
 
 
-	def sql_statement_46():
+def sql_statement_46():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -1718,7 +1718,7 @@ JOIN\ \
 measurement_person\ m\ ON\ feat\.person_id\ =\ m\.person_id\ and\ m\.visit_date\ between\ feat\.pre_pre_window_start_dt\ and\ feat\.pre_window_start_dt\
 GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.09ac4344\-c222\-4e01\-844c\-c175483401fd"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ microvisits_to_macrovisits=Input\(rid="ri\.foundry\.main\.dataset\.f5008fa4\-e736\-4244\-88e1\-1da7a68efcdb"\),\
@@ -1734,7 +1734,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 	      return(statement)
 
 
-	def sql_statement_47():
+def sql_statement_47():
 	      statement = '''SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id,\ 'pre\ pre\ count'\ as\ count_type,\ count\(distinct\ nvl\(mml\.macrovisit_id,\ mml\.visit_occurrence_id\)\)\ as\ med_count\
 \	FROM\ Feature_table_builder\ feat\ \
 \ \ \ \ \	\	JOIN\ microvisits_to_macrovisits\ mml\ ON\ feat\.person_id\ =\ mml\.person_id\
@@ -1742,7 +1742,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 \	GROUP\ BY\ \
 \	feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.908b30b4\-244d\-4c6f\-82fb\-c9847e3ba74f"\),\
 \ \ \ \ Feature_table_builder=Input\(rid="ri\.foundry\.main\.dataset\.e0264d38\-57aa\-4509\-9245\-3d008b0526c4"\),\
 \ \ \ \ microvisits_to_macrovisits=Input\(rid="ri\.foundry\.main\.dataset\.f5008fa4\-e736\-4244\-88e1\-1da7a68efcdb"\),\
@@ -1758,7 +1758,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 	      return(statement)
 
 
-	def sql_statement_48():
+def sql_statement_48():
 	      statement = '''SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id,\ 'pre\ count'\ as\ count_type,\ count\(distinct\ nvl\(mml\.macrovisit_id,\ mml\.visit_occurrence_id\)\)\ as\ med_count\
 \	FROM\ Feature_table_builder\ feat\ \
 \ \ \ \ \	\	JOIN\ microvisits_to_macrovisits\ mml\ ON\ feat\.person_id\ =\ mml\.person_id\
@@ -1766,7 +1766,7 @@ SELECT\ feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,
 \	GROUP\ BY\ \
 \	feat\.person_id,\ feat\.patient_group,\ prc\.ancestor_drug_concept_name,\ prc\.ancestor_drug_concept_id\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.fde6567c\-4e53\-42e9\-b07a\-d733fb443471"\),\
 \ \ \ \ Feature_Table_Builder_v0=Input\(rid="ri\.vector\.main\.execute\.e167e968\-4f04\-4205\-8339\-0336930dd83f"\),\
 \ \ \ \ ICU_visits=Input\(rid="ri\.vector\.main\.execute\.192a0bb9\-7930\-4f8a\-8227\-405ff5d0f6a0"\)\
@@ -1818,7 +1818,7 @@ ON\ post_tbl\.person_id\ =\ covid_tbl\.person_id\ and\ post_tbl\.post_window_sta
 	      return(statement)
 
 
-	def sql_statement_49():
+def sql_statement_49():
 	      statement = '''\-\-\ find\ the\ total\ number\ of\ inpatient\ days\ in\ the\ covid\ window\ and\ the\ post\ covid\ window\ for\ use\ later\
 SELECT\ nvl\(post_tbl\.person_id,\ covid_tbl\.person_id\)\ as\ person_id,\ nvl\(post_tbl\.post_window_start_dt,\ covid_tbl\.post_window_start_dt\)\ as\ post_window_start_dt,\ post_tbl\.post_window_end_dt,\ post_tot_icu_days,\ covid_tbl\.pre_window_end_dt,\ covid_tot_icu_days\
 FROM\
@@ -1863,7 +1863,7 @@ GROUP\ BY\ person_id,\ pre_window_end_dt,\ post_window_start_dt\)\
 \
 ON\ post_tbl\.person_id\ =\ covid_tbl\.person_id\ and\ post_tbl\.post_window_start_dt\ =\ covid_tbl\.post_window_start_dt\
 \
-@transform_pandas\(\
+##@transform_pandas\(\
 \ \ \ \ Output\(rid="ri\.vector\.main\.execute\.692f0334\-6976\-4043\-9038\-27e2d8836f79"\),\
 \ \ \ \ Feature_Table_Builder_v0=Input\(rid="ri\.vector\.main\.execute\.e167e968\-4f04\-4205\-8339\-0336930dd83f"\),\
 \ \ \ \ inpatient_visits=Input\(rid="ri\.vector\.main\.execute\.8ef58a55\-93a1\-4cf9\-bebd\-fac579b61dfb"\)\

@@ -1,8 +1,8 @@
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
-    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+#)
+def sql_statement_00():
 	      statement = '''SELECT\ nvl\(covidtbl\.person_id,\ posttbl\.person_id\)\ as\ person_id,\ nvl\(covidtbl\.measure_type,\ posttbl\.measure_type\)\ as\ measure_type,\ covidtbl\.c_any_pos,\ covidtbl\.c_any_measure,\ posttbl\.post_any_pos,\ posttbl\.post_any_measure\
 \
 FROM\
@@ -30,12 +30,12 @@ ON\ covidtbl\.person_id\ =\ posttbl\.person_id\ AND\ covidtbl\.measure_type\ =\ 
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
-    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
-    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
-)
-	def sql_statement_01():
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+##    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
+##    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
+#)
+def sql_statement_01():
 	      statement = '''SELECT\ nvl\(cmi\.person_id,\ sed\.person_id\)\ as\ person_id,\ nvl\(cmi\.measure_type,\ sed\.measure_type\)\ as\ measure_type,\ \
 \ \ \ \ \ \ \ \ cmi\.c_any_measure,\ cmi\.c_any_pos,\ sed\.c_covid_length,\ sed\.c_impute_covid_length,\
 \ \ \ \ \ \ \ \ cmi\.post_any_measure,\ cmi\.post_any_pos,\ sed\.post_covid_length,\ sed\.post_impute_covid_length\
@@ -67,12 +67,12 @@ ON\ cmi\.person_id\ =\ sed\.person_id\ AND\ cmi\.measure_type\ =\ sed\.measure_t
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
-)
-	def sql_statement_02():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
+#)
+def sql_statement_02():
 	      statement = '''SELECT\ ft\.person_id,\ max\(ft\.pre_window_end_dt\)\ as\ pre_window_end_dt,\ max\(ft\.post_window_start_dt\)\ as\ post_window_start_dt,\ max\(ft\.post_window_end_dt\)\ as\ post_window_end_dt,\ \
 \ \ \ \ m\.measurement_date,\ m\.measurement_concept_name,\
 \ \ \ \ max\(CASE\ WHEN\ m\.value_as_concept_name\ IN\ \('Detected',\ 'Positive'\)\
@@ -89,11 +89,11 @@ GROUP\ BY\ ft\.person_id,\ m\.measurement_date,\ m\.measurement_concept_name\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
-    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
-)
-	def sql_statement_03():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+#)
+def sql_statement_03():
 	      statement = '''SELECT\ cp\.person_id,\ cp\.measurement_concept_name\ as\ measure_type,\
 \ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 1\
 \ \ \ \ THEN\ cp\.measurement_date\
@@ -108,12 +108,12 @@ WHERE\ cp\.measurement_date\ >\ cp\.pre_window_end_dt\ and\ cp\.measurement_date
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
-    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
-    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
-)
-	def sql_statement_04():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
+##    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
+##    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
+#)
+def sql_statement_04():
 	      statement = '''\-\-\ first\ \(min\)\ postive\ date,\ last\ \(max\)\ postive\ date,\ first\ negative\ date\ after\ the\ first\ positive\ date,\ number\ of\ tests\
 \-\-\ covid\
 SELECT\ t\.\*,\ min\(c\.measure_neg_date\)\ as\ first_neg_dt,\ 'covid'\ as\ window_type\
@@ -146,11 +146,11 @@ GROUP\ BY\ t\.person_id,\ t\.measure_type,\ t\.first_pos_dt,\ t\.last_pos_dt\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
-    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
-)
-	def sql_statement_05():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
+##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
+#)
+def sql_statement_05():
 	      statement = '''SELECT\ cp\.person_id,\ cp\.measurement_concept_name\ as\ measure_type,\
 \ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 1\
 \ \ \ \ THEN\ cp\.measurement_date\

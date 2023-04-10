@@ -164,11 +164,11 @@ def build_final_feature_table(med_df, dx_df, add_labels, count_dx_pre_and_post, 
     result = result.drop(*drop_cols)
     return result
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80"),
-    final_rollups=Input(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
-    pre_post_more_in_dx_calc=Input(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80"),
+##    final_rollups=Input(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+##    pre_post_more_in_dx_calc=Input(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191")
+#)
 # STEP 7: add_alt_rollup ######################################################################################
 
 from pyspark.sql import functions as F
@@ -189,11 +189,11 @@ def add_alt_rollup(final_rollups, pre_post_more_in_dx_calc):
 
     return df
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49")
+#)
 # STEP 2: add_labels ##################################################################################### 
 # union the med and diagnosis, encode categorical variables, add labels
 from pyspark.sql import functions as F
@@ -291,21 +291,21 @@ def add_labels(Feature_table_builder, long_covid_patients):
     return df
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4")
+#)
 from pyspark.sql.types import *
 def biological_pathways():
     schema = StructType([StructField("row_ind", StringType(), True), StructField("pathway", StringType(), True)])
     return spark.createDataFrame([["0","* demographics_anthro"],["1","   * apprx_age"],["2","   * sex_male"],["3","   * sexually_active"],["4","   * Obesity"],["5","   * Body Mass Index (BMI) [Ratio]"],["6","   * morbid_obesity"],["7","   * person_id"],["8","   * sex_unknown"],["9","   * race_american_indian_or_alaska_native"],["10","   * race_asian_or_pacific_islander"],["11","   * race_black_or_african_american"],["12","   * race_other"],["13","   * race_unknown"],["14","   * race_white"],["15","   * ethn_hispanic_or_latino"],["16","   * ethn_unknown"],["17","   * admits_alcohol_use"],["18","   * body_mass_index_40____severely_obese"],["19","   * current_every_day_smoker"],["20","   * denies_alcohol_use"],["21","   * divorced"],["22","   * former_smoker"],["23","   * living_with_partner"],["24","   * married"],["25","   * never_married"],["26","   * never_smoker"],["27","   * refused"],["28","   * separated"],["29","   * single"],["30","   * widowed"],["31","   * state"],["32","   * postal_code"],["33","   * TOBACCOSMOKER_before_or_day_of_covid_indicator"],["34","* visitation_procedures"],["35","   * Op_post_visit_ratio"],["36","   * Ip_post_visit_ratio"],["37","   * hospitalized"],["38","   * iopamidol"],["39","   * furosemide"],["40","   * atropine"],["41","   * gadopentetate_dimeglumine"],["42","   * tot_long_data_days"],["43","   * total"],["44","   * post_ip_visit_ratio"],["45","   * covid_ip_visit_ratio"],["46","   * post_icu_visit_ratio"],["47","   * covid_icu_visit_ratio"],["48","   * date_encode"],["49","   * season_covid"],["50","* respiratory"],["51","   * Inspired oxygen concentration"],["52","   * Respiratory rate"],["53","   * Oxygen saturation in Arterial blood by Pulse oximetry"],["54","   * Oxygen saturation in blood"],["55","   * difficulty_breathing"],["56","   * dyspnea"],["57","   * albuterol"],["58","   * fluticasone"],["59","   * palpitations"],["60","   * uncomplicated_asthma"],["61","   * formoterol"],["62","   * cough"],["63","   * interstitial_lung_disease"],["64","   * viral_lower_respiratory_infection"],["65","   * promethazine"],["66","   * asthma"],["67","   * lesion_of_lung"],["68","   * breathing_related_sleep_disorder"],["69","   * tracheobronchial_disorder"],["70","   * hypoxemia"],["71","   * lower_respiratory_infection_caused_by_sars_cov_2"],["72","   * chronic_sinusitis"],["73","   * pneumonia_caused_by_sars_cov_2"],["74","   * fibrosis_of_lung"],["75","   * acute_respiratory_disease"],["76","   * chronic_cough"],["77","   * benzonatate"],["78","   * hypoxemic_respiratory_failure"],["79","   * dependence_on_enabling_machine_or_device"],["80","   * dependence_on_respiratory_device"],["81","   * moderate_persistent_asthma"],["82","   * pulmonary_function_studies_abnormal"],["83","   * respiratory_obstruction"],["84","   * chronic_disease_of_respiratory_systemx"],["85","   * acute_respiratory_infections"],["86","   * guaifenesin"],["87","   * basic_nasal_oxygen_cannula"],["88","   * high_flow_oxygen_nasal_cannula"],["89","   * n3c_other_oxygen_device"],["90","   * ventilator"],["91","   * chronic_pulmonary_disease"],["92","   * PULMONARYEMBOLISM_before_or_day_of_covid_indicator"],["93","* Infection"],["94","   * clavulanate"],["95","   * amoxicillin"],["96","   * disorder_due_to_infection"],["97","   * ceftriaxone"],["98","   * influenza_b_virus_antigen"],["99","   * metronidazole"],["100","   * mupirocin"],["101","   * fluconazole"],["102","   * nitrofurantoin"],["103","* cardiovascular"],["104","      * Fibrin degradation products, D-dimer; quantitative"],["105","      * Fibrinogen [Mass/volume] in Platelet poor plasma by Coagulation assay"],["106","      * Platelets [#/volume] in Blood by Automated count"],["107","      * INR in Platelet poor plasma by Coagulation assay"],["108","      * Apixaban"],["109","      * long_term_current_use_of_anticoagulant"],["110","      * Heart rate"],["111","      * Systolic blood pressure"],["112","      * Diastolic blood pressure"],["113","      * Body temperature"],["114","      * Hemoglobin [mass/volume] in blood"],["115","      * tachycardia"],["116","      * metabolic_disease"],["117","      * chest_pain"],["118","      * vascular_disorder"],["119","      * spironolactone"],["120","      * heart_disease"],["121","      * cardiac_arrhythmia"],["122","      * hypertensive_disorder"],["123","      * tachyarrhythmia"],["124","      * myocarditis"],["125","      * losartan"],["126","      * disease_of_non_coronary_systemic_artery"],["127","      * congestive_heart_failure"],["128","      * CARDIOMYOPATHIES_before_or_day_of_covid_indicator"],["129","      * PERIPHERALVASCULARDISEASE_before_or_day_of_covid_indicator"],["130","      * HEARTFAILURE_before_or_day_of_covid_indicator"],["131","      * Troponin, quantitative "],["132","      * Creatine kinase [Enzymatic activity/volume] in Serum or Plasma"],["133","* female"],["134","   * complication_of_pregnancy__childbirth_and_or_the_puerperium"],["135","   * estradiol"],["136","   * ethinyl_estradiol"],["137","   * levonorgestrel"],["138","   * PREGNANCY_before_or_day_of_covid_indicator"],["139","* mental"],["140","   * Cortisol [Mass/volume] in Serum or Plasma "],["141","   * fatigue"],["142","   * mental_disorder"],["143","   * malaise"],["144","   * chronic_fatigue_syndrome"],["145","   * impaired_cognition"],["146","   * dyssomnia"],["147","   * anxiety_disorder"],["148","   * anxiety"],["149","   * loss_of_sense_of_smell"],["150","   * amitriptyline"],["151","   * sleep_disorder"],["152","   * neurosis"],["153","   * communication_disorder"],["154","   * amnesia"],["155","   * buspirone"],["156","   * memory_impairment"],["157","   * insomnia"],["158","   * dizziness"],["159","   * depressive_disorder"],["160","   * lorazepam"],["161","   * adjustment_disorder"],["162","   * epinephrine"],["163","   * major_depression__single_episode"],["164","   * gabapentin"],["165","   * sleep_apnea"],["166","   * cognitive_communication_disorder"],["167","   * dizziness_and_giddiness"],["168","   * duloxetine"],["169","   * bipolar_disorder"],["170","   * drug_related_disorder"],["171","   * nortriptyline"],["172","   * apnea"],["173","   * disorders_of_initiating_and_maintaining_sleep"],["174","   * SUBSTANCEABUSE_before_or_day_of_covid_indicator"],["175","* pain"],["176","   * Pain intensity rating scale"],["177","   * chronic_pain"],["178","   * muscle_pain"],["179","   * disorder_characterized_by_pain"],["180","   * pain_of_truncal_structure"],["181","   * neuropathy"],["182","   * shoulder_joint_pain"],["183","   * abdominal_pain"],["184","   * skin_sensation_disturbance"],["185","   * ketorolac"],["186","   * pain_in_lower_limb"],["187","   * spondylosis"],["188","   * vascular_headache"],["189","   * shoulder_pain"],["190","   * pain"],["191","   * headache_disorder"],["192","   * migraine"],["193","   * headache"],["194","   * morphine"],["195","   * seborrheic_keratosis"],["196","   * effusion_of_joint"],["197","   * seborrheic_dermatitis"],["198","   * aspirin"],["199","   * acetaminophen"],["200","   * oxycodone"],["201","   * knee_pain"],["202","   * backache"],["203","   * fentanyl"],["204","   * pain_in_upper_limb"],["205","   * neck_pain"],["206","* digestive"],["207","   * diarrhea"],["208","   * acute_digestive_system_disorder"],["209","   * gastroesophageal_reflux_disease_without_esophagitis"],["210","   * pantoprazole"],["211","   * omeprazole"],["212","   * altered_bowel_function"],["213","* inflammation"],["214","   * IL-6 "],["215","   * inflammation_of_specific_body_organs"],["216","   * inflammation_of_specific_body_systems"],["217","   * prednisone"],["218","   * inflammation_of_specific_body_structures_or_tissue"],["219","   * meloxicam"],["220","   * Antinuclear antibody (ANA) "],["221","   * connective_tissue_disorder_by_body_site"],["222","   * hydrocortisone"],["223","   * collagen_disease"],["224","   * allergic_rhinitis"],["225","   * allergic_disposition"],["226","   * triamcinolone"],["227","   * loratadine"],["228","   * interleukin_6__mass_volume__in_serum_or_plasma"],["229","   * fever"],["230","   * SOLIDORGANORBLOODSTEMCELLTRANSPLANT_before_or_day_of_covid_indicator"],["231","   * OTHERIMMUNOCOMPROMISED_before_or_day_of_covid_indicator"],["232","   * SYSTEMICCORTICOSTEROIDS_before_or_day_of_covid_indicator"],["233","* renal_liver"],["234","      * dulaglutide"],["235","      * prediabetes"],["236","      * metformin"],["237","      * diabetes"],["238","      * long_term_current_use_of_insulin"],["239","      * Creatinine renal clearance predicted by Cockcroft-Gault formula "],["240","      * Creatinine [Mass/volume] in Serum or Plasma "],["241","      * Glomerular filtration rate/1.73 sq M.predicted [Volume Rate/Area] in Serum, Plasma or Blood by Creatinine-based formula (MDRD) "],["242","      * chronic_kidney_disease_due_to_hypertension"],["243","      * kidney_disease"],["244","      * chronic_kidney_disease_due_to_type_2_diabetes_mellitus"],["245","      * Budesonide"],["246","      * dependence_on_renal_dialysis"],["247","      * creatinine__blood"],["248","      * Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"],["249","      * MILDLIVERDISEASE_before_or_day_of_covid_indicator"],["250","      * MODERATESEVERELIVERDISEASE_before_or_day_of_covid_indicator"],["251","* nutrition "],["252","   * Vitamin D "],["253","   * Potassium [Moles/volume] in serum or plasma"],["254","   * Sodium [Moles/volume] in serum or plasma"],["255","   * Calcium [Mass/volume] in serum or plasma"],["256","   * Glucose [mass/volume] in Serum or Plasma"],["257","   * deficiency_of_micronutrients"],["258","   * iron_deficiency_anemia_due_to_blood_loss"],["259","   * hyperlipidemia"],["260","   * mineral_deficiency"],["261","   * cholecalciferol"],["262","   * rbc_count_low"],["263","   * sodium_chloride"],["264","   * vitamin_disease"],["265","   * pure_hypercholesterolemia"],["266","   * sodium_acetate"],["267","   * hemoglobin_low"],["268","   * mixed_hyperlipidemia"],["269","   * vitamin_b12"],["270","   * hypercholesterolemia"],["271","   * potassium_chloride"],["272","* covid"],["273","   * SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by NAA with probe detection "],["274","   * SARS-CoV-2 (COVID-19) RNA [Presence] in Specimen by NAA with probe detection "],["275","   * SARS-CoV-2 (COVID-19) N gene [Presence] in Specimen by Nucleic acid amplification using CDC primer-probe set N1 "],["276","   * SARS-CoV-2 (COVID-19) ORF1ab region [Presence] in Respiratory specimen by NAA with probe detection"],["277","   * SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay "],["278","   * SARS-CoV-2 (COVID-19) RdRp gene [Presence] in Respiratory specimen by NAA with probe detection "],["279","   * SARS-CoV-2 (COVID-19) RdRp gene [Presence] in Specimen by NAA with probe detection "],["280","   * SARS-CoV+SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay "],["281","   * SARS-CoV-2 (COVID-19) RNA panel - Specimen by NAA with probe detection"],["282","   * SARS-CoV-2 (COVID-19) RNA [Presence] in Nasopharynx by NAA with non-probe detection "],["283","   * SARS-CoV-2 (COVID-19) N gene [Presence] in Specimen by NAA with probe detection "],["284","   * SARS-CoV-2 (COVID-19) IgG Ab [Presence] in Serum or Plasma by Immunoassay "],["285","   * sars_cov_2__covid_19__vaccine__mrna_spike_protein"],["286","   * long_covid"],["287","   * Severity_Type"],["288","   * REMDISIVIR_during_covid_hospitalization_indicator"],["289","   * COVIDREGIMENCORTICOSTEROIDS_during_covid_hospitalization_indicator"],["290","   * number_of_COVID_vaccine_doses_before_or_day_of_covid"],["291","   * Antibody_Neg_before_or_day_of_covid_indicator"],["292","* ageing_general"],["293","   * blood_chemistry_abnormal"],["294","   * abnormal_presence_of_protein"],["295","   * bleeding"],["296","   * degenerative_disorder"],["297","   * chronic_nervous_system_disorder"],["298","   * osteoporosis"],["299","   * traumatic_and_or_non_traumatic_injury_of_anatomical_site"],["300","   * colchicine"],["301","   * anomaly_of_eye"],["302","   * osteoarthritis"],["303","   * genitourinary_tract_hemorrhage"],["304","   * genuine_stress_incontinence"],["305","   * traumatic_and_or_non_traumatic_injury"],["306","   * involuntary_movement"],["307","   * peripheral_nerve_disease"],["308","   * injury_of_free_lower_limb"],["309","   * glaucoma"],["310","   * radiology_result_abnormal"],["311","   * mass_of_soft_tissue"],["312","   * spinal_stenosis_of_lumbar_region"],["313","   * cyst"],["314","   * soft_tissue_lesion"],["315","   * skin_lesion"],["316","   * arthropathy"],["317","   * soft_tissue_injury"],["318","   * cytopenia"],["319","   * RHEUMATOLOGICDISEASE_before_or_day_of_covid_indicator"]], schema=schema)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
-    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
-    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
-    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
-    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+##    concept=Input(rid="ri.foundry.main.dataset.5cb3c4a3-327a-47bf-a8bf-daf0cafe6772"),
+##    concept_ancestor=Input(rid="ri.foundry.main.dataset.c5e0521a-147e-4608-b71e-8f53bcdbe03c"),
+##    long_covid_patients=Input(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
+##    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+#)
 # STEP 4:  condition_rollup #####################################################################################
 
 # Output pyspark dataframe:  condition_rollup
@@ -360,10 +360,10 @@ def condition_rollup(pre_post_dx_count_clean, concept_ancestor, concept, long_co
 
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
-    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+##    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7")
+#)
 # STEP 9: count_dx_pre_and_post ######################################################################################
 # calculate total diagnosis counts in 4 windows by person
 
@@ -401,20 +401,20 @@ def count_dx_pre_and_post(pre_post_dx_final):
     return result
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
-    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
-    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
-    Device_count_clean=Input(rid="ri.foundry.main.dataset.3dedc0a1-f9dc-441c-9f1c-eee2ee5176ba"),
-    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
-    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
-    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
-    count_dx_pre_and_post=Input(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
-    features=Input(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb"),
-    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
-    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
-    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+##    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+##    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+##    Device_count_clean=Input(rid="ri.foundry.main.dataset.3dedc0a1-f9dc-441c-9f1c-eee2ee5176ba"),
+##    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+##    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+##    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+##    count_dx_pre_and_post=Input(rid="ri.vector.main.execute.fbb15d5f-bb7b-426f-9056-2bf0fa4b068d"),
+##    features=Input(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb"),
+##    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+##    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+##    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+#)
  # STEP 10: feature_table_all_patients ######################################################################################
 
 # Output pyspark dataframe:  feature_table_all_patients
@@ -445,19 +445,19 @@ def feature_table_all_patients_dx_drug(features, add_labels, pre_post_dx_final, 
     return result
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.02867ee7-ced4-4d6f-913f-1d81785e66fb")
+#)
 from pyspark.sql.types import *
 def features():
     schema = StructType([StructField("features", StringType(), True)])
     return spark.createDataFrame([["difficulty_breathing"],["apprx_age"],["fatigue"],["op_post_visit_ratio"],["dyspnea"],["ip_post_visit_ratio"],["albuterol"],["hospitalized"],["sex_male"],["fluticasone"],["palpitations"],["mental_disorder"],["uncomplicated_asthma"],["chronic_pain"],["malaise"],["chronic_fatigue_syndrome"],["formoterol"],["tachycardia"],["metabolic_disease"],["chest_pain"],["inflammation_of_specific_body_organs"],["impaired_cognition"],["diarrhea"],["acetaminophen"],["dyssomnia"],["anxiety_disorder"],["cough"],["anxiety"],["muscle_pain"],["interstitial_lung_disease"],["migraine"],["degenerative_disorder"],["viral_lower_respiratory_infection"],["promethazine"],["deficiency_of_micronutrients"],["asthma"],["disorder_characterized_by_pain"],["apixaban"],["lesion_of_lung"],["inflammation_of_specific_body_systems"],["breathing_related_sleep_disorder"],["chronic_nervous_system_disorder"],["iopamidol"],["loss_of_sense_of_smell"],["amitriptyline"],["sleep_disorder"],["pain_of_truncal_structure"],["neurosis"],["headache"],["tracheobronchial_disorder"],["communication_disorder"],["amnesia"],["hypoxemia"],["lower_respiratory_infection_caused_by_sars_cov_2"],["bleeding"],["amoxicillin"],["disorder_due_to_infection"],["chronic_sinusitis"],["pain_in_lower_limb"],["furosemide"],["buspirone"],["vascular_disorder"],["memory_impairment"],["insomnia"],["budesonide"],["prednisone"],["pneumonia_caused_by_sars_cov_2"],["clavulanate"],["dizziness"],["neuropathy"],["iron_deficiency_anemia_due_to_blood_loss"],["estradiol"],["ceftriaxone"],["shoulder_joint_pain"],["sexually_active"],["abdominal_pain"],["skin_sensation_disturbance"],["ketorolac"],["depressive_disorder"],["hyperlipidemia"],["chronic_kidney_disease_due_to_hypertension"],["spondylosis"],["vascular_headache"],["fibrosis_of_lung"],["acute_respiratory_disease"],["chronic_cough"],["osteoporosis"],["lorazepam"],["connective_tissue_disorder_by_body_site"],["adjustment_disorder"],["benzonatate"],["shoulder_pain"],["mineral_deficiency"],["obesity"],["epinephrine"],["dependence_on_enabling_machine_or_device"],["dependence_on_respiratory_device"],["inflammation_of_specific_body_structures_or_tissue"],["spironolactone"],["cholecalciferol"],["heart_disease"],["pain"],["major_depression__single_episode"],["meloxicam"],["hydrocortisone"],["collagen_disease"],["headache_disorder"],["hypoxemic_respiratory_failure"],["morphine"],["cardiac_arrhythmia"],["seborrheic_keratosis"],["gabapentin"],["dulaglutide"],["hypertensive_disorder"],["effusion_of_joint"],["moderate_persistent_asthma"],["morbid_obesity"],["seborrheic_dermatitis"],["rbc_count_low"],["blood_chemistry_abnormal"],["acute_digestive_system_disorder"],["sars_cov_2__covid_19__vaccine__mrna_spike_protein"],["influenza_b_virus_antigen"],["pulmonary_function_studies_abnormal"],["sleep_apnea"],["abnormal_presence_of_protein"],["sodium_chloride"],["atropine"],["aspirin"],["cognitive_communication_disorder"],["metronidazole"],["ethinyl_estradiol"],["gadopentetate_dimeglumine"],["traumatic_and_or_non_traumatic_injury_of_anatomical_site"],["colchicine"],["anomaly_of_eye"],["oxycodone"],["osteoarthritis"],["complication_of_pregnancy__childbirth_and_or_the_puerperium"],["allergic_rhinitis"],["dizziness_and_giddiness"],["genitourinary_tract_hemorrhage"],["duloxetine"],["bipolar_disorder"],["vitamin_disease"],["respiratory_obstruction"],["genuine_stress_incontinence"],["chronic_disease_of_respiratory_systemx"],["traumatic_and_or_non_traumatic_injury"],["drug_related_disorder"],["nortriptyline"],["involuntary_movement"],["knee_pain"],["peripheral_nerve_disease"],["gastroesophageal_reflux_disease_without_esophagitis"],["mupirocin"],["fluconazole"],["pure_hypercholesterolemia"],["kidney_disease"],["injury_of_free_lower_limb"],["glaucoma"],["backache"],["tachyarrhythmia"],["myocarditis"],["nitrofurantoin"],["prediabetes"],["sodium_acetate"],["apnea"],["losartan"],["radiology_result_abnormal"],["pantoprazole"],["hemoglobin_low"],["mixed_hyperlipidemia"],["mass_of_soft_tissue"],["levonorgestrel"],["omeprazole"],["allergic_disposition"],["metformin"],["fentanyl"],["spinal_stenosis_of_lumbar_region"],["cyst"],["soft_tissue_lesion"],["altered_bowel_function"],["skin_lesion"],["triamcinolone"],["pain_in_upper_limb"],["acute_respiratory_infections"],["neck_pain"],["guaifenesin"],["disorders_of_initiating_and_maintaining_sleep"],["loratadine"],["vitamin_b12"],["hypercholesterolemia"],["potassium_chloride"],["arthropathy"],["chronic_kidney_disease_due_to_type_2_diabetes_mellitus"],["disease_of_non_coronary_systemic_artery"],["soft_tissue_injury"],["cytopenia"],["fever"]], schema=schema)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
-    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
-    parent_condition_rollup=Input(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.4d979157-b9d2-4467-9ff5-652a17ef76a3"),
+##    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b"),
+##    parent_condition_rollup=Input(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5")
+#)
 # STEP 6: final_rollup ######################################################################################
 
 # Output pyspark dataframe:  final_rollup
@@ -473,19 +473,19 @@ def final_rollups(condition_rollup, parent_condition_rollup):
     return df
     
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.6f1d6d9a-9bc8-437c-8a4b-ce02d6ec5ef4"),
-    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
-    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
-    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
-    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
-    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
-    biological_pathways=Input(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4"),
-    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
-    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
-    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
-    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
-)
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.6f1d6d9a-9bc8-437c-8a4b-ce02d6ec5ef4"),
+##    Comorbidity_counts=Input(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
+##    Covid_measures=Input(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
+##    Lab_measures_clean=Input(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+##    Obs_person_pivot=Input(rid="ri.foundry.main.dataset.bf7621a4-7d12-4846-99bd-61b518242b14"),
+##    add_labels=Input(rid="ri.vector.main.execute.89c76680-b684-4139-8c4e-967cbb8b274c"),
+##    biological_pathways=Input(rid="ri.foundry.main.dataset.a46f7b5a-55b6-4ac5-9ede-6fef340e53b4"),
+##    feature_table_all_patients_dx_drug=Input(rid="ri.foundry.main.dataset.1ef41f96-7291-4a0b-9cd7-1d7e24a5a5d8"),
+##    pre_post_dx_final=Input(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+##    pre_post_med_final_distinct=Input(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+##    severity_table=Input(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305")
+#)
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType,StructField, StringType
 from pyspark.sql.functions import udf
@@ -597,10 +597,10 @@ def metatable(feature_table_all_patients_dx_drug, Lab_measures_clean, Covid_meas
 
     return table
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5"),
-    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.c529efa8-86ea-415f-8498-8c1725c5b9a5"),
+##    condition_rollup=Input(rid="ri.vector.main.execute.aa067352-f27e-4d5d-9b1b-a7a53183c28b")
+#)
 # STEP 5: parent_condition_rollup ######################################################################################
 
 # Output pyspark dataframe:  parent_condition_rollup
@@ -617,10 +617,10 @@ def parent_condition_rollup(condition_rollup):
 
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
-    add_alt_rollup=Input(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.435bf8d5-1d90-4bce-9864-2aee8744aad7"),
+##    add_alt_rollup=Input(rid="ri.vector.main.execute.2f844f9b-376d-41a0-84f9-9809f3fc0b80")
+#)
 # STEP 8: pre_post_dx_final ######################################################################################
 
 from pyspark.sql import functions as F
@@ -664,10 +664,10 @@ def pre_post_dx_final(add_alt_rollup):
 
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
-    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.90ed968a-8e05-4075-80b8-8c485bcb989a"),
+##    pre_post_med_count_clean=Input(rid="ri.foundry.main.dataset.fa3fe17e-58ac-4615-a238-0fc24ecd9b6e")
+#)
 # STEP 1: pre_post_med_final_distinct #####################################################################################
 
 from pyspark.sql import functions as F
@@ -690,10 +690,10 @@ def pre_post_med_final_distinct(pre_post_med_count_clean):
     
     return df
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191"),
-    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.71b347f9-e199-4653-a33a-ead6cedae191"),
+##    pre_post_dx_count_clean=Input(rid="ri.foundry.main.dataset.993922b2-c5f2-4508-9ec7-b25aaa0c9750")
+#)
 # STEP 3:  pre_post_more_in_dx_calc #####################################################################################
 
 # Output pyspark dataframe:  pre_post_dx_more_in_post_calc
@@ -716,10 +716,10 @@ def pre_post_more_in_dx_calc(pre_post_dx_count_clean):
     return result
     
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305"),
-    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
-)
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.158df43a-aa01-4c5a-be09-bcf738387305"),
+##    Covid_patient_summary_table=Input(rid="ri.foundry.main.dataset.acd8b822-7179-407d-9828-911c3a7749e0")
+#)
 import pandas as pd
 from pyspark.sql import functions as F
 

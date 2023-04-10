@@ -1,9 +1,9 @@
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
-)
-	def sql_statement_00():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+#)
+def sql_statement_00():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -15,14 +15,14 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5"),
-    covid_measurement=Input(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
-    post_measurement=Input(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
-    pre_measurement=Input(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
-    pre_pre_measurement=Input(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b")
-)
-	def sql_statement_01():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5"),
+##    covid_measurement=Input(rid="ri.vector.main.execute.10148bd6-5cdc-4c88-831a-5d41fb3c43d4"),
+##    post_measurement=Input(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+##    pre_measurement=Input(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+##    pre_pre_measurement=Input(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b")
+#)
+def sql_statement_01():
 	      statement = '''SELECT\ \
 ppm\.person_id\ as\ pre_pre_person_id,\ ppm\.measurement_concept_name\ as\ pre_pre_measurement_concept_name,\ ppm\.measurement_concept_id\ as\ pre_pre_measurement_concept_id,\ \ \
 ppm\.max_measure\ as\ pre_pre_max,\ ppm\.min_measure\ as\ pre_pre_min,\ ppm\.avg_measure\ as\ pre_pre_avg,\
@@ -52,11 +52,11 @@ ON\ pm\.person_id\ =\ pom\.person_id\ AND\ pm\.measurement_concept_name\ =\ pom\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
-    four_windows_measure=Input(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5")
-)
-	def sql_statement_02():
+##@transform_pandas(
+##    Output(rid="ri.foundry.main.dataset.b6344895-930e-4c2c-a065-2078d950abff"),
+##    four_windows_measure=Input(rid="ri.vector.main.execute.425747f0-a16e-4568-ae64-e4c637311ea5")
+#)
+def sql_statement_02():
 	      statement = '''SELECT\ \
 \	nvl\(nvl\(nvl\(pre_pre_person_id,\ pre_person_id\),\ covid_person_id\),\ post_person_id\)\ as\ person_id,\ \
 \	nvl\(nvl\(nvl\(pre_pre_measurement_concept_name,\ pre_measurement_concept_name\),\ covid_measurement_concept_name\),\ post_measurement_concept_name\)\ as\ measurement_concept_name,\ \
@@ -79,12 +79,12 @@ FROM\ four_windows_measure\
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
-)
-	def sql_statement_03():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.e981f20a-6b6d-48bd-973c-3b5a3ecc47a5"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+#)
+def sql_statement_03():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -96,12 +96,12 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
-)
-	def sql_statement_04():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.938e04da-7ae1-43b6-a973-f3781c98edcf"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+#)
+def sql_statement_04():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
@@ -113,12 +113,12 @@ GROUP\ BY\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concep
 '''
 	      return(statement)
 
-@transform_pandas(
-    Output(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b"),
-    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
-)
-	def sql_statement_05():
+##@transform_pandas(
+##    Output(rid="ri.vector.main.execute.88dcef06-2537-4c90-a39f-a42ffa4b461b"),
+##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
+##    measurement_person=Input(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0")
+#)
+def sql_statement_05():
 	      statement = '''\-\-\ find\ all\ conditions\ associated\ with\ patients\ in\ their\ pre\-pre\ window\
 SELECT\ feat\.person_id,\ m\.measurement_concept_name,\ m\.measurement_concept_id,\ \
 max\(m\.harmonized_value_as_number\)\ as\ max_measure,\ min\(m\.harmonized_value_as_number\)\ as\ min_measure,\ \
