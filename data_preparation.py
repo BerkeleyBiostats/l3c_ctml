@@ -1,10 +1,7 @@
-from src.STEP1_feature import a_cohort as a
-from src.STEP1_feature import b_medication as b
-from src.STEP1_feature import c_diagnosis as c
-from src.STEP1_feature import d_lab_measures as d
-from src.STEP1_feature import e_comorbidity as e
+from src.STEP1_feature import a_cohort as a, b_medication as b, c_diagnosis as c, \
+    d_lab_measures as d, e_comorbidity as e, f_covid_measures as f, h_observation as h
+
 import os
-from pyspark.sql import SparkSession
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType,StructField, StringType
 
@@ -55,7 +52,7 @@ def main():
 
     Feature_Table_Builder = a.sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_calc)
 
-    # 2_med_feature_table# 2_med_feature_table
+    # 2_med_feature_table
     DrugConcepts = b.sql_statement_00(concept)
     Drugs_for_These_Patients = b.sql_statement_01(Feature_Table_Builder, drug_exposure)
 
@@ -67,8 +64,8 @@ def main():
     post_drugs = b.sql_statement_05(Feature_Table_Builder, drugRollUp)
 
     covidtbl = b.sql_statement_03(Feature_Table_Builder, covid_drugs, microvisits_to_macrovisits)
-    prepretbl = b.sql_statement_11(Feature_Table_Builder, covid_drugs, microvisits_to_macrovisits)
-    pretbl = b.sql_statement_12(Feature_Table_Builder, pre_pre_drugs, microvisits_to_macrovisits)
+    prepretbl = b.sql_statement_11(Feature_Table_Builder, pre_pre_drugs microvisits_to_macrovisits)
+    pretbl = b.sql_statement_12(Feature_Table_Builder, pre_drugs, microvisits_to_macrovisits)
     posttbl = b.sql_statement_06(Feature_Table_Builder, post_drugs, microvisits_to_macrovisits)
 
     pre_post_med_count = b.sql_statement_08(covidtbl, posttbl, prepretbl, pretbl)
@@ -102,17 +99,22 @@ def main():
     comorbidity_counts = e.sql_statement_00(Feature_Table_Builder, high_level_condition_occur)
 
     # 6_covid_measures
-    covid_person = spark.sql(sql_statement_02())
+    covid_person = f.sql_statement_02(Feature_table_builder, measurement, concept)
 
-    covid_measure_indicators = spark.sql(sql_statement_00())
-    covid_window = spark.sql(sql_statement_03())
-    post_covid = spark.sql(sql_statement_05())
+    covid_measure_indicators = f.sql_statement_00(covid_person)
+    covid_window = f.sql_statement_03(covid_person)
+    post_covid = f.sql_statement_05(covid_person)
 
-    pos_neg_date = spark.sql(sql_statement_04())  # wrong input file location?
+    pos_neg_date = f.spark.sql(sql_statement_04())  # wrong input file location?
 
-    start_end_date_df = start_end_date(pos_neg_date)  # missing?
+    start_end_date_df = f.start_end_date(pos_neg_date)  # missing?
 
-    covid_measures = spark.sql(sql_statement_01())
+    covid_measures = f.sql_statement_01(covid_measure_indicators, start_end_date)
+
+    # 9_obs_person: empty observation file
+    obs_person = h.sql_statement_00(Feature_Table_Builder, observation, concept)
+    obs_person_clean = h.sql_statement_01(obs_person)
+    obs_person_pivot_df = h.obs_person_pivot(obs_person_clean)
 
 
 
