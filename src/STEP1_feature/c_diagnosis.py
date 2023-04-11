@@ -105,6 +105,7 @@ def sql_statement_03(Feature_table_builder, condition_occurrence):
     return(joined_df)
 
 
+
 def sql_statement_04(Feature_Table_Builder, four_windows_dx_counts):
 
     feat = Feature_Table_Builder
@@ -118,12 +119,12 @@ def sql_statement_04(Feature_Table_Builder, four_windows_dx_counts):
         coalesce(col("post_dx_count"), lit(0)).alias("post_dx_count")
     )
 
-    result = feat.join(
-        tbl,
+    result = tbl.join(
+        feat,
         on="person_id",
         how="inner"
     ).select(
-        feat["*"],
+        tbl["*"],
         col("apprx_age"),
         col("sex"),
         col("race"),
