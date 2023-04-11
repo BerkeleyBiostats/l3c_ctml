@@ -88,41 +88,44 @@ ON\ cmi\.person_id\ =\ sed\.person_id\ AND\ cmi\.measure_type\ =\ sed\.measure_t
 ##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
 ##    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
 #)
-def sql_statement_02():
-	      statement = '''SELECT\ ft\.person_id,\ max\(ft\.pre_window_end_dt\)\ as\ pre_window_end_dt,\ max\(ft\.post_window_start_dt\)\ as\ post_window_start_dt,\ max\(ft\.post_window_end_dt\)\ as\ post_window_end_dt,\ \
-\ \ \ \ m\.measurement_date,\ m\.measurement_concept_name,\
-\ \ \ \ max\(CASE\ WHEN\ m\.value_as_concept_name\ IN\ \('Detected',\ 'Positive'\)\
-\ \ \ \ \ \ \ \ \ \ \ THEN\ 1\ \
-\ \ \ \ \ \ \ \ \ \ \ ELSE\ 0\
-\ \ \ \ \ \ \ \ \ \ \ END\)\ as\ pos_or_neg\
-FROM\ Feature_table_builder\ ft\
-JOIN\ measurement\ m\
-on\ ft\.person_id\ =\ m\.person_id\
-WHERE\ m\.value_as_concept_name\ IN\ \('Not\ detected',\ 'Detected',\ 'Positive',\ 'Negative'\)\
-AND\ m\.measurement_date\ IS\ NOT\ NULL\
-AND\ m\.measurement_concept_name\ IN\ \('SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ \[Presence\]\ in\ Respiratory\ specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ \[Presence\]\ in\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ N\ gene\ \[Presence\]\ in\ Specimen\ by\ Nucleic\ acid\ amplification\ using\ CDC\ primer\-probe\ set\ N1',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ ORF1ab\ region\ \[Presence\]\ in\ Respiratory\ specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ Ag\ \[Presence\]\ in\ Respiratory\ specimen\ by\ Rapid\ immunoassay',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RdRp\ gene\ \[Presence\]\ in\ Respiratory\ specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RdRp\ gene\ \[Presence\]\ in\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\+SARS\-CoV\-2\ \(COVID\-19\)\ Ag\ \[Presence\]\ in\ Respiratory\ specimen\ by\ Rapid\ immunoassay',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ panel\ \-\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ RNA\ \[Presence\]\ in\ Nasopharynx\ by\ NAA\ with\ non\-probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ N\ gene\ \[Presence\]\ in\ Specimen\ by\ NAA\ with\ probe\ detection',\ 'SARS\-CoV\-2\ \(COVID\-19\)\ IgG\ Ab\ \[Presence\]\ in\ Serum\ or\ Plasma\ by\ Immunoassay'\)\-\-\ there\ are\ 12\
-GROUP\ BY\ ft\.person_id,\ m\.measurement_date,\ m\.measurement_concept_name\
-'''
-	      return(statement)
+def sql_statement_02(Feature_table_builder, measurement, concept):
+	ft = Feature_table_builder
+	m = measurement.join(concept,(measurement.measurement_concept_id == concept.concept_id), 'left')
+	df = ft.join(m, ft.person_id == m.person_id) \
+		.where(m.value_as_concept_id.isin("Not detected", "Detected", "Positive",
+											"Negative") & m.measurement_date.isNotNull() & m.concept_name.isin(
+		"SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by NAA with probe detection",
+		"SARS-CoV-2 (COVID-19) RNA [Presence] in Specimen by NAA with probe detection",
+		"SARS-CoV-2 (COVID-19) N gene [Presence] in Specimen by Nucleic acid amplification using CDC primer-probe set N1",
+		"SARS-CoV-2 (COVID-19) ORF1ab region [Presence] in Respiratory specimen by NAA with probe detection",
+		"SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay",
+		"SARS-CoV-2 (COVID-19) RdRp gene [Presence] in Respiratory specimen by NAA with probe detection",
+		"SARS-CoV-2 (COVID-19) RdRp gene [Presence] in Specimen by NAA with probe detection",
+		"SARS-CoV+SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay",
+		"SARS-CoV-2 (COVID-19) RNA panel - Specimen by NAA with probe detection",
+		"SARS-CoV-2 (COVID-19) RNA [Presence] in Nasopharynx by NAA with non-probe detection",
+		"SARS-CoV-2 (COVID-19) N gene [Presence] in Specimen by NAA with probe detection",
+		"SARS-CoV-2 (COVID-19) IgG Ab [Presence] in Serum or Plasma by Immunoassay")) \
+		.groupBy("person_id", "measurement_date", "m.concept_name") \
+		.agg(max(when(m.value_as_concept_id.isin("Detected", "Positive"), 1).otherwise(0)).alias("pos_or_neg"), \
+			 max(ft.pre_window_end_dt).alias("pre_window_end_dt"), \
+			 max(ft.post_window_start_dt).alias("post_window_start_dt"), \
+			 max(ft.post_window_end_dt).alias("post_window_end_dt"))
+	return df
 
 ##@transform_pandas(
 ##    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
 ##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
 #)
-def sql_statement_03():
-	      statement = '''SELECT\ cp\.person_id,\ cp\.measurement_concept_name\ as\ measure_type,\
-\ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 1\
-\ \ \ \ THEN\ cp\.measurement_date\
-\ \ \ \ ELSE\ NULL\
-\ \ \ \ END\ as\ measure_pos_date,\
-\ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 0\
-\ \ \ \ THEN\ cp\.measurement_date\
-\ \ \ \ ELSE\ NULL\
-\ \ \ \ END\ as\ measure_neg_date\
-FROM\ covid_person\ cp\
-WHERE\ cp\.measurement_date\ >\ cp\.pre_window_end_dt\ and\ cp\.measurement_date\ <=\ cp\.post_window_start_dt\
-'''
-	      return(statement)
+def sql_statement_03(covid_person):
+	df = covid_person.selectExpr(
+		"person_id",
+		"concept_name as measure_type",
+		when(covid_person.pos_or_neg == 1, covid_person.measurement_date).otherwise(None).alias("measure_pos_date"),
+		when(covid_person.pos_or_neg == 0, covid_person.measurement_date).otherwise(None).alias("measure_neg_date")
+	).filter((covid_person.measurement_date > covid_person.pre_window_end_dt) & (
+				covid_person.measurement_date <= covid_person.post_window_start_dt))
+	return df
 
 ##@transform_pandas(
 ##    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
@@ -166,18 +169,12 @@ GROUP\ BY\ t\.person_id,\ t\.measure_type,\ t\.first_pos_dt,\ t\.last_pos_dt\
 ##    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
 ##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
 #)
-def sql_statement_05():
-	      statement = '''SELECT\ cp\.person_id,\ cp\.measurement_concept_name\ as\ measure_type,\
-\ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 1\
-\ \ \ \ THEN\ cp\.measurement_date\
-\ \ \ \ ELSE\ NULL\
-\ \ \ \ END\ as\ measure_pos_date,\
-\ \ \ \ CASE\ WHEN\ cp\.pos_or_neg\ =\ 0\
-\ \ \ \ THEN\ cp\.measurement_date\
-\ \ \ \ ELSE\ NULL\
-\ \ \ \ END\ as\ measure_neg_date\
-FROM\ covid_person\ cp\
-WHERE\ cp\.measurement_date\ >\ cp\.post_window_start_dt\ and\ cp\.measurement_date\ <=\ cp\.post_window_end_dt\
-\
-'''
-	      return(statement)
+def sql_statement_05(covid_person):
+	df = covid_person.selectExpr(
+		"person_id",
+		"concept_name as measure_type",
+		when(covid_person.pos_or_neg == 1, covid_person.measurement_date).otherwise(None).alias("measure_pos_date"),
+		when(covid_person.pos_or_neg == 0, covid_person.measurement_date).otherwise(None).alias("measure_neg_date")
+	).filter((covid_person.measurement_date > covid_person.post_window_start_dt) & (
+			covid_person.measurement_date <= covid_person.post_window_end_dt))
+	return df
