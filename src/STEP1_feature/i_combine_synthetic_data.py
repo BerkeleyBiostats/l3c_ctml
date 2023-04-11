@@ -5,9 +5,10 @@ from pyspark.sql import functions as F
 from pyspark.sql.types import IntegerType
 from pyspark.sql.types import *
 from pyspark.sql.functions import udf
-from pyspark.context import SparkContext
-ctx = SparkContext.getOrCreate()
-
+#from pyspark.context import SparkContext
+#from pyspark.sql.session import SparkSession
+#ctx = SparkContext.getOrCreate()
+#spark = SparkSession(ctx)
 
 #=========================================Global functions==================================================
 # Read in the file containing the list of model features, one per line
