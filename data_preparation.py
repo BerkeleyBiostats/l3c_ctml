@@ -31,7 +31,7 @@ def main():
                 print(full_file)
                 globals()[var_name] = df
 
-
+    
     # 1_cohort_and_features
 
     covid_pasc_index_dates = a.sql_statement_01(long_covid_silver_standard)
