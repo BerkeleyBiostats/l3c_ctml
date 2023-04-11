@@ -230,9 +230,9 @@ def sql_statement_09(Feature_table_builder, pre_post_med_count):
             coalesce(pp["post_med_count"], lit(0)).alias("post_med_count")
     )
 
-    result = feat.join(tbl, "person_id")\
+    result = tbl.join(feat, "person_id")\
         .select(
-            feat["*"],
+            tbl["*"],
             col("apprx_age"),
             col("sex"),
             col("race"),

@@ -184,6 +184,67 @@ def build_final_feature_table(med_df, dx_df, add_labels, count_dx_pre_and_post, 
 
 
 #=========================================combine data==================================================
+def pre_post_med_final_distinct(pre_post_med_count_clean):
+    df = pre_post_med_count_clean
+    # df = df.withColumn('post_only_med', F.when(df['pre_med_count'] > 0, 0).otherwise(1)) # indicator whether it is post only
+
+    # Not currently using this feature in the mmodel
+    df = df.withColumn('more_in_post',  F.when(df['post_med_count'] > df['pre_med_count'], 1).otherwise(0)) # indicator whether the medication has greater frequency in post-window
+
+    # df = df.select(df['person_id'], df['ancestor_drug_concept_name'].alias('ingredient'), df['post_only_med'])
+    df = df.select(df['person_id'], df['ancestor_drug_concept_name'].alias('ingredient'), df['pre_pre_med_count'], df['pre_med_count'], df['covid_med_count'], df['post_med_count'])
+    df = df.distinct()
+
+    df = df.withColumn("ingredient", F.lower(F.regexp_replace(df["ingredient"], "[^A-Za-z_0-9]", "_" )))
+    
+    return df
+
+
+
+def add_labels(pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients, Feature_table_builder):
+
+    target_columns = ['person_id', 'sex', 'patient_group', 'apprx_age', 'race', 'ethn', 'tot_long_data_days', 
+        'op_post_visit_ratio', 'post_ip_visit_ratio', "covid_ip_visit_ratio", "post_icu_visit_ratio", "covid_icu_visit_ratio", 'min_covid_dt']
+
+    df = Feature_Table_Builder.withColumnRenamed('min_covid_dt_2', 'min_covid_dt')
+    df_unique_cohort_rows = df.select(target_columns).distinct()
+
+    df =  df_unique_cohort_rows   
+
+    df = df.toPandas()
+    # df.isna().sum() # no missing values 
+    
+    # encode these caterogical variables as binaries
+    df = pd.get_dummies(df, columns=["sex","race","ethn"])
+    df = df.rename(columns = lambda c: str.lower(c.replace(" ", "_")))
+    df = spark.createDataFrame(df) # convert pandas back to spark
+
+    # Add Labels
+    final_cols = df.columns
+    final_cols.extend(["long_covid", "hospitalized", 'date_encode', 'season_covid'])
+    final_cols.remove('min_covid_dt')
+    
+    df = df.join(long_covid_patients, on='person_id', how='inner')
+    
+    # Join with the long covid clinic data to build our labels (long_covid)
+    df = df.withColumn("long_covid", F.when(df["pasc_index"].isNotNull(), 1).otherwise(0))
+    df = df.withColumn("hospitalized", F.when(df["patient_group"] == 'CASE_HOSP', 1).otherwise(0))
+
+    # add month, year based on covid_index
+    # earliest_dt = min(df['min_covid_dt'])
+    earliest_dt = df.agg({"min_covid_dt": "min"}).collect()[0][0]
+    df = df.withColumn('date_encode', F.months_between(df['min_covid_dt'], F.lit(earliest_dt), False).cast(IntegerType()))
+    df = df.withColumn('month', F.month(df['min_covid_dt']))
+    df = df.withColumn('season_covid', F.when((df['month']>=3) & (df['month']<=5), 1).\
+                                           when((df['month']>=6) & (df['month']<=8), 2).\
+                                           when((df['month']>=9) & (df['month']<=11),3).\
+                                           otherwise(4))
+
+    df = df.select(final_cols)
+    return df
+
+
+
 def condition_rollup(long_covid_patients, pre_post_dx_count_clean, concept):
    
     pp = pre_post_dx_count_clean.alias('pp')
@@ -257,10 +318,46 @@ def pre_post_more_in_dx_calc(pre_post_dx_count_clean):
     return result
 
 
+def add_alt_rollup(final_rollups, pre_post_more_in_dx_calc):
+
+    pre_post_dx_final = pre_post_more_in_dx_calc
+
+    condition = [pre_post_dx_final['condition_concept_id'] == final_rollups['concept_id'] ]
+    
+    df = pre_post_dx_final.join(final_rollups.select(['concept_name', 'concept_id']), how='left', on=condition)
+    
+    df = df.withColumnRenamed('concept_name', 'high_level_condition')
+
+    return df
 
 
+def pre_post_dx_final(add_alt_rollup):
+    
+    df = add_alt_rollup
+    df = df.filter(df['high_level_condition'] != 'EXCLUDE')
+    df = df.filter(df['high_level_condition'].isNotNull())
+    df = df.filter(~F.lower(df['high_level_condition']).like('%covid%') )
+    df = df.filter(~F.lower(df['high_level_condition']).like('%coronav%') )
+
+    df = df.filter(~F.upper(df['high_level_condition']).like('%post_infectious_disorder%') )
+    
+
+    df = df[df["patient_group"].isin('CASE_NONHOSP', 'CASE_HOSP')]
+    # df = df.withColumn("condition_concept_name", F.lower(F.regexp_replace(df["condition_concept_name"], "[^A-Za-z_0-9]", "_" )))
+    df = df.withColumn("high_level_condition", F.lower(F.regexp_replace(df["high_level_condition"], "[^A-Za-z_0-9]", "_" )))
 
 
+    # Pre-post_dx_final
+    # Multiple conditions map to each high_level_condition, so we sum there here
+    df = df.groupby(["high_level_condition", "person_id", "patient_group"]).agg(
+                            F.sum('pre_pre_dx_count').alias('pre_pre_dx_count_sum'),
+                            F.sum('pre_dx_count').alias('pre_dx_count_sum'), 
+                            F.sum('covid_dx_count').alias('covid_dx_count_sum'),
+                            F.sum('post_dx_count').alias('post_dx_count_sum')
+                            )
+    df = df.filter(df["high_level_condition"].isNotNull())
+    
+    return df
 
 
 
