@@ -1,4 +1,6 @@
 from src.STEP1_feature import a_cohort as a
+from src.STEP1_feature import b_medication as b
+from src.STEP1_feature import c_diagnosis as c
 from src.STEP1_feature import d_lab_measures as d
 from src.STEP1_feature import e_comorbidity as e
 import os
@@ -53,7 +55,35 @@ def main():
 
     Feature_Table_Builder = a.sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_calc)
 
-    # 2_med_feature_table
+    # 2_med_feature_table# 2_med_feature_table
+    DrugConcepts = b.sql_statement_00(concept)
+    Drugs_for_These_Patients = b.sql_statement_01(Feature_Table_Builder, drug_exposure)
+
+    drugRollUp = b.sql_statement_04(DrugConcepts, Drugs_for_These_Patients)
+
+    covid_drugs = b.sql_statement_02(Feature_Table_Builder, drugRollUp)
+    pre_pre_drugs = b.sql_statement_10(Feature_Table_Builder, drugRollUp)
+    pre_drugs = b.sql_statement_07(Feature_Table_Builder, drugRollUp)
+    post_drugs = b.sql_statement_05(Feature_Table_Builder, drugRollUp)
+
+    covidtbl = b.sql_statement_03(Feature_Table_Builder, covid_drugs, microvisits_to_macrovisits)
+    prepretbl = b.sql_statement_11(Feature_Table_Builder, covid_drugs, microvisits_to_macrovisits)
+    pretbl = b.sql_statement_12(Feature_Table_Builder, pre_pre_drugs, microvisits_to_macrovisits)
+    posttbl = b.sql_statement_06(Feature_Table_Builder, post_drugs, microvisits_to_macrovisits)
+
+    pre_post_med_count = b.sql_statement_08(covidtbl, posttbl, prepretbl, pretbl)
+
+    pre_post_med_count_clean = b.sql_statement_09(Feature_Table_Builder, pre_post_med_count)
+    
+    # 3_dx_feature_table
+    pre_pre_condition = c.sql_statement_05(Feature_Table_Builder, condition_occurrence)
+    pre_condition = c.sql_statement_03(Feature_Table_Builder, condition_occurrence)
+    covid_condition = c.sql_statement_00(Feature_Table_Builder, condition_occurrence)
+    post_condition = c.sql_statement_02(Feature_Table_Builder, condition_occurrence)
+
+    four_windows_dx_counts = c.sql_statement_01(Feature_Table_Builder, microvisits_to_macrovisits, pre_pre_condition, pre_condition, covid_condition, post_condition)
+
+    pre_post_dx_count_clean = c.sql_statement_04(Feature_Table_Builder, four_windows_dx_counts)
 
     # 4_lab_measure_table
     measure_person = d.measurement_person(measurement, Feature_Table_Builder, concept)
@@ -69,7 +99,7 @@ def main():
 
     # 5_comorbidity_table
     high_level_condition_occur = e.sql_statement_01(Feature_Table_Builder, condition_occurrence, concept)
-    comorbidity_counts = e.sql_statement_00()
+    comorbidity_counts = e.sql_statement_00(Feature_Table_Builder, high_level_condition_occur)
 
     # 6_covid_measures
     covid_person = spark.sql(sql_statement_02())
