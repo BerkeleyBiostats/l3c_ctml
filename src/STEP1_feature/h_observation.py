@@ -14,13 +14,14 @@ def sql_statement_00(Feature_table_builder, observation, concept):
                          'Body mass index 40+ - severely obese', 'Marital status [NHANES]',
                          'Dependence on renal dialysis']
 
-    obs = observation.join(feat, "person_id").filter(
-        observation.observation_concept_name.isin(obs_concept_names)) \
+    obs = observation.join(feat, "person_id", 'left')\
+        .join(concept, (observation.observation_concept_id == concept.concept_id), 'left')\
+        .filter(
+        observation.concept_name.isin(obs_concept_names)) \
         .filter((observation.value_as_concept_name.isNotNull()) | ~(
-            observation.observation_concept_name == 'Marital status [NHANES]')) \
-        .groupBy("person_id", when(observation.observation_concept_name == 'Marital status [NHANES]',
-                                   first(observation.value_as_concept_name)) \
-                 .otherwise(observation.observation_concept_name).alias("observation_concept_name"))
+            observation.concept_name == 'Marital status [NHANES]')) \
+        .groupBy("person_id", observation.observation_concept_name.alias("observation_concept_name"))
+    return(obs)
 
 
 ##@transform_pandas(
@@ -29,11 +30,10 @@ def sql_statement_00(Feature_table_builder, observation, concept):
 # )
 # check if this kind of observation appears more than 10 time
 def sql_statement_01(obs_person):
-	df = obs_person.filter(col("observation_concept_name").isin(
-		obs_person.groupBy("observation_concept_name").count().filter(col("count") > 10).select(
-			"observation_concept_name")))
-	return df
-
+    df = obs_person.filter(col("observation_concept_name").isin(
+        obs_person.groupBy("observation_concept_name").count().filter(col("count") > 10).select(
+            "observation_concept_name")))
+    return df
 
 
 __all__ = [sql_statement_00, sql_statement_01]
