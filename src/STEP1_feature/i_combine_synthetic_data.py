@@ -201,12 +201,17 @@ def pre_post_med_final_distinct(pre_post_med_count_clean):
 
 
 
+from pyspark.sql import functions as F
+import pandas as pd
+from pyspark.context import SparkContext
+ctx = SparkContext.getOrCreate()
+
 def add_labels(pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients, Feature_table_builder):
 
     target_columns = ['person_id', 'sex', 'patient_group', 'apprx_age', 'race', 'ethn', 'tot_long_data_days', 
         'op_post_visit_ratio', 'post_ip_visit_ratio', "covid_ip_visit_ratio", "post_icu_visit_ratio", "covid_icu_visit_ratio", 'min_covid_dt']
 
-    df = Feature_Table_Builder.withColumnRenamed('min_covid_dt_2', 'min_covid_dt')
+    df = Feature_table_builder.withColumnRenamed('min_covid_dt_2', 'min_covid_dt')
     df_unique_cohort_rows = df.select(target_columns).distinct()
 
     df =  df_unique_cohort_rows   
