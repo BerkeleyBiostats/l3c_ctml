@@ -99,17 +99,17 @@ def main():
     comorbidity_counts = e.sql_statement_00(Feature_Table_Builder, high_level_condition_occur)
 
     # 6_covid_measures
-    covid_person = f.sql_statement_02(Feature_table_builder, measurement, concept)
+    covid_person = f.sql_statement_02(Feature_Table_Builder, measurement, concept)
 
     covid_measure_indicators = f.sql_statement_00(covid_person)
     covid_window = f.sql_statement_03(covid_person)
     post_covid = f.sql_statement_05(covid_person)
 
-    pos_neg_date = f.spark.sql(sql_statement_04())  # wrong input file location?
+    pos_neg_date = f.sql_statement_04(covid_window, post_covid)  # wrong input file location?
 
-    start_end_date_df = f.start_end_date(pos_neg_date)  # missing?
+    start_end_date_df = f.start_end_date(pos_neg_date)
 
-    covid_measures = f.sql_statement_01(covid_measure_indicators, start_end_date)
+    covid_measures = f.sql_statement_01(covid_measure_indicators, start_end_date_df)
 
     # 9_obs_person: empty observation file
     obs_person = h.sql_statement_00(Feature_Table_Builder, observation, concept)
