@@ -1,6 +1,6 @@
 
 # 1_cohort_and_features
-Covid_Pasc_Index_Dates = spark.sql(sql_statement_01()) 
+Covid_Pasc_Index_Dates = spark.sql(sql_statement_01())
 
 Collect_the_Cohort = spark.sql(sql_statement_00())
 long_covid_patients = spark.sql(sql_statement_08()) 
@@ -78,8 +78,8 @@ start_end_date = spark.sql() #missing?
 
 covid_measures = spark.sql(sql_statement_01())
 
-average_lengths_covid = spark.sql() #missing?
-average_lengths_post = spark.sql() # missing?
+# average_lengths_covid = spark.sql() #missing?
+# average_lengths_post = spark.sql() # missing?
 
 # 7_nlp
 

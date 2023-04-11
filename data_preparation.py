@@ -1,4 +1,6 @@
 from src.STEP1_feature import a_cohort as a
+from src.STEP1_feature import d_lab_measures as d
+from src.STEP1_feature import e_comorbidity as e
 import os
 from pyspark.sql import SparkSession
 from pyspark.sql import SparkSession
@@ -52,6 +54,35 @@ def main():
     Feature_Table_Builder = a.sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_calc)
 
     # 2_med_feature_table
+
+    # 4_lab_measure_table
+    measure_person = d.measurement_person(measurement, Feature_Table_Builder, concept)
+    pre_pre_measurement = d.sql_statement_05(Feature_Table_Builder, measure_person )
+
+    pre_measurement = d.sql_statement_04( Feature_Table_Builder, measure_person )
+    covid_measurement = d.sql_statement_00(Feature_Table_Builder, measure_person )
+    post_measurement = d.sql_statement_03(Feature_Table_Builder, measure_person )
+
+    four_windows_measure = d.sql_statement_01(covid_measurement, post_measurement, pre_measurement, pre_pre_measurement)
+
+    lab_measures_clean = d.sql_statement_02(four_windows_measure)
+
+    # 5_comorbidity_table
+    high_level_condition_occur = e.sql_statement_01(Feature_Table_Builder, condition_occurrence, concept)
+    comorbidity_counts = e.sql_statement_00()
+
+    # 6_covid_measures
+    covid_person = spark.sql(sql_statement_02())
+
+    covid_measure_indicators = spark.sql(sql_statement_00())
+    covid_window = spark.sql(sql_statement_03())
+    post_covid = spark.sql(sql_statement_05())
+
+    pos_neg_date = spark.sql(sql_statement_04())  # wrong input file location?
+
+    start_end_date_df = start_end_date(pos_neg_date)  # missing?
+
+    covid_measures = spark.sql(sql_statement_01())
 
 
 
