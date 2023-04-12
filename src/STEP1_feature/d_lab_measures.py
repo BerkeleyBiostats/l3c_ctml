@@ -92,7 +92,7 @@ def sql_statement_01(covid_measurement, post_measurement, pre_measurement, pre_p
     ppd, pd, cd, pod = pre_pre_measurement, pre_measurement, covid_measurement, post_measurement
     k = ['person_id', 'concept_name', 'measurement_concept_id']
     dfs = [ppd, pd, cd, pod]
-    labels = ['pre_pre_', 'pre_', 'covid_', 'max_']
+    labels = ['pre_pre_', 'pre_', 'covid_', 'post_']
     for i in range(4):
         df = dfs[i]
         s = labels[i]
@@ -110,23 +110,6 @@ def sql_statement_01(covid_measurement, post_measurement, pre_measurement, pre_p
 
 def sql_statement_02(four_windows_measure):
     joined_df = four_windows_measure
-    # result_df = joined_df.select(
-    #     col("person_id"),
-    #     col("concept_name"),
-    #     col("measurement_concept_id"),
-    #     joined_df.pre_pre_max.alias('pre_pre_max'),
-    #     joined_df.pre_pre_min.alias('pre_pre_min'),
-    #     joined_df.pre_pre_avg.alias('pre_pre_avg'),
-    #     joined_df.pre_max.alias('pre_max'),
-    #     joined_df.pre_min.alias('pre_min'),
-    #     joined_df.pre_avg.alias('pre_avg'),
-    #     joined_df.covid_max.alias('covid_max'),
-    #     joined_df.covid_min.alias('covid_min'),
-    #     joined_df.covid_avg.alias('covid_avg'),
-    #     joined_df.post_max.alias('post_max'),
-    #     joined_df.post_min.alias('post_min'),
-    #     joined_df.post_avg.alias('post_avg')
-    # )
 
     return joined_df
 

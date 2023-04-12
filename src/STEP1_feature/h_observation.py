@@ -30,9 +30,10 @@ def sql_statement_00(Feature_table_builder, observation, concept):
 # )
 # check if this kind of observation appears more than 10 time
 def sql_statement_01(obs_person):
-    l = list(obs_person.groupBy("observation_concept_name").count().filter(col("count") > 10).select(
-        "observation_concept_name").toPandas())
-    df = obs_person.filter(col("observation_concept_name").isin(l))
+    # l = list(obs_person.groupBy("observation_concept_name").count().filter(col("count") > 10).select(
+    #     "observation_concept_name").toPandas())
+    # df = obs_person.filter(col("observation_concept_name").isin(l))
+    df = obs_person
     return df
 
 

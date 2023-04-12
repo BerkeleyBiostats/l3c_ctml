@@ -104,5 +104,5 @@ obs_person = spark.sql(sql_statement_00())
 
 obs_person_clean = spark.sql(sql_statement_01())
 
-obs_person_pivot = spark.sql() #missing?
+obs_person_pivot = spark.sql()
 
