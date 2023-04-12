@@ -20,12 +20,12 @@ from pyspark.sql.functions import monotonically_increasing_id
 
 # df_np = np.c_[X,y]
 # df_pd = pd.DataFrame(df_np, columns=['x%0.0f' % i for i in range(X.shape[1]) ] + ['long_covid'])
-# df = spark.createDataFrame(df_np.tolist(), ['x%0.0f' % i for i in range(X.shape[1]) ] + ['long_covid'])
+# df_train_spark = spark.createDataFrame(df_np.tolist(), ['x%0.0f' % i for i in range(X.shape[1]) ] + ['long_covid'])
 
 # TBD Import Synthetic Data
-df = pd.read_csv('data.csv')
-df = spark.createDataFrame(df)
-df = df.select("*").withColumn("idx", monotonically_increasing_id()+1)
+df_train = pd.read_csv('data.csv')
+df_train_spark = spark.createDataFrame(df_train)
+df_train_spark = df_train_spark.select("*").withColumn("idx", monotonically_increasing_id()+1)
 
 #--------------------------------#
 #    Train SL (on training data)
@@ -37,10 +37,10 @@ sl_library = {'lrnr_logistic': lrnr_logistic,
     'lrnr_gb20': lrnr_gb20}
 
 # train sl
-df_res = train_sl(df)
+df_train_res = train_sl(df_train_spark)
 
 # check sl summary
-df_res.show()
+df_train_res.show()
 
 
 #--------------------------------#
@@ -48,10 +48,10 @@ df_res.show()
 #--------------------------------#
 # TBD Import Synthetic Test Data
 df_test = pd.read_csv('data.csv')
-df_test = spark.createDataFrame(df_test)
-df_preds = targeted_ml_team_predictions(train_sl = df_res, 
-    analytic_full_train = df, 
-    analytic_final_test = df_test)
+df_test_spark = spark.createDataFrame(df_test)
+df_preds = targeted_ml_team_predictions(train_sl = df_train_res, 
+    analytic_full_train = df_train_spark, 
+    analytic_final_test = df_test_spark)
 
 # check sl summary
 df_preds.show()
@@ -60,6 +60,6 @@ df_preds.show()
 #-------------------------#
 #    Make Shapley Plots
 #-------------------------#
-plots_simple(df)
+plots_simple(df_train_spark)
 
 
