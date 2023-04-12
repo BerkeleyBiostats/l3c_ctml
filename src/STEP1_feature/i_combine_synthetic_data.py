@@ -241,7 +241,7 @@ from pyspark.context import SparkContext
 ctx = SparkContext.getOrCreate()
 
 
-def add_labels(spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients, Feature_table_builder):
+def add_labels(run_type, spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients, Feature_table_builder):
     target_columns = ['person_id', 'sex', 'patient_group', 'apprx_age', 'race', 'ethn', 'tot_long_data_days',
                       'op_post_visit_ratio', 'post_ip_visit_ratio', "covid_ip_visit_ratio", "post_icu_visit_ratio",
                       "covid_icu_visit_ratio", 'min_covid_dt']
@@ -261,13 +261,17 @@ def add_labels(spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_co
 
     # Add Labels
     final_cols = df.columns
-    final_cols.extend(["long_covid", "hospitalized", 'date_encode', 'season_covid'])
+    if run_type == "training":
+        final_cols.extend(["long_covid", "hospitalized", 'date_encode', 'season_covid'])
+    else:
+        final_cols.extend(["hospitalized", 'date_encode', 'season_covid'])
     final_cols.remove('min_covid_dt')
 
     df = df.join(long_covid_patients, on='person_id', how='inner')
 
     # Join with the long covid clinic data to build our labels (long_covid)
-    df = df.withColumn("long_covid", F.when(df["pasc_index"].isNotNull(), 1).otherwise(0))
+    if run_type == "training":
+        df = df.withColumn("long_covid", F.when(df["pasc_index"].isNotNull(), 1).otherwise(0))
     df = df.withColumn("hospitalized", F.when(df["patient_group"] == 'CASE_HOSP', 1).otherwise(0))
 
     # add month, year based on covid_index

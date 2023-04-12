@@ -25,13 +25,18 @@ def read_files(spark, type="training"):
                 globals()[var_name] = df
 
 
-def preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
+def preprocess(run_type, spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features):
     # 1_cohort_and_features
-
-    covid_pasc_index_dates = a.sql_statement_01(long_covid_silver_standard)
+    if run_type == "training":
+        covid_pasc_index_dates = a.sql_statement_01(long_covid_silver_standard)
+    else:
+        covid_pasc_index_dates = long_covid_silver_standard
     cohort = a.sql_statement_00(covid_pasc_index_dates, person)
-    long_covid_patients = a.sql_statement_08(covid_pasc_index_dates)
+    if run_type == "training":
+        long_covid_patients = a.sql_statement_08(covid_pasc_index_dates)
+    else:
+        long_covid_patients = covid_pasc_index_dates
 
     hosp_cases = a.sql_statement_04(cohort, condition_occurrence, microvisits_to_macrovisits)
 
@@ -113,7 +118,7 @@ def preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
 
     # 10: combine data
     pre_post_med_final_distinct_df = i.pre_post_med_final_distinct(pre_post_med_count_clean)
-    add_labels_df = i.add_labels(spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients,
+    add_labels_df = i.add_labels(run_type, spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients,
                                  Feature_Table_Builder)
 
     condition_rollup_df = i.condition_rollup(long_covid_patients, pre_post_dx_count_clean, concept)
@@ -142,10 +147,12 @@ def main():
         .getOrCreate()
 
     # Read CSV file into table
-    print("Start preprocessing")
+
     read_files(spark, type="training")
+    print("Start preprocessing")
     training_df = preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features)
+    print("Finish preprocessing")
     training_df.write.csv('training.csv')
     print("Training saved")
 
