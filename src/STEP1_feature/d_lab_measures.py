@@ -29,11 +29,6 @@ def get_dataframe(df, col_name, ids):
     return sub_df
 
 
-###@transform_pandas(
-###    Output(rid="ri.vector.main.execute.b6af7e97-05b8-4768-9552-1e4046b18cf0"),
-###    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-###    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
-# )
 def measurement_person(measurement, Feature_table_builder, concept):
     # select measurements between dates
     targets = ['Respiratory rate', 'Oxygen saturation in Arterial blood by Pulse oximetry',

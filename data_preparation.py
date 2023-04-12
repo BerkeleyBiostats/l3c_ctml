@@ -146,6 +146,8 @@ def main():
         .appName("l3c_ctml") \
         .getOrCreate()
 
+    spark.conf.set("spark.sql.debug.maxToStringFields", 1000)
+
     # Read CSV file into table
 
     read_files(spark, type="training")
@@ -153,6 +155,7 @@ def main():
     training_df = preprocess("training", spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features)
     print("Finish preprocessing")
+    training_df.rdd.saveAsPickleFile('training.pickle')
     training_df.write.csv('training.csv')
     print("Training saved")
 

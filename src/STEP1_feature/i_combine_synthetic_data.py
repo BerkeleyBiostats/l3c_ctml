@@ -7,11 +7,6 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import udf
 
 
-# from pyspark.context import SparkContext
-# from pyspark.sql.session import SparkSession
-# ctx = SparkContext.getOrCreate()
-# spark = SparkSession(ctx)
-
 # =========================================Global functions==================================================
 # Read in the file containing the list of model features, one per line
 # returns cols_for_model, which is used in several other functions
@@ -241,7 +236,8 @@ from pyspark.context import SparkContext
 ctx = SparkContext.getOrCreate()
 
 
-def add_labels(run_type, spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients, Feature_table_builder):
+def add_labels(run_type, spark, pre_post_dx_count_clean, pre_post_med_count_clean, long_covid_patients,
+               Feature_table_builder):
     target_columns = ['person_id', 'sex', 'patient_group', 'apprx_age', 'race', 'ethn', 'tot_long_data_days',
                       'op_post_visit_ratio', 'post_ip_visit_ratio', "covid_ip_visit_ratio", "post_icu_visit_ratio",
                       "covid_icu_visit_ratio", 'min_covid_dt']

@@ -1,8 +1,3 @@
-##@transform_pandas(
-##    Output(rid="ri.foundry.main.dataset.2513e4c2-bba0-4067-843f-dec2dfa2b858"),
-##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-##    high_level_condition_occur=Input(rid="ri.vector.main.execute.272bff24-17cd-4c3c-acc1-6972bc51deea")
-# )
 from pyspark.sql.functions import *
 
 

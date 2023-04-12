@@ -1,9 +1,3 @@
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
-####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
-####     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
-####     person=Input(rid="ri.foundry.main.dataset.f71ffe18-6969-4a24-b81c-0e06a1ae9316")
-# )
 from pyspark.sql.functions import *
 
 
@@ -24,16 +18,9 @@ def sql_statement_00(covid_pasc_index_dates, person):
         col("covid_index").alias("min_covid_dt")
     )
 
-    # Filter based on the amount of post-covid data available
-    # df = df.filter(datediff(lit("2023-01-01"), array_min(array(col("covid_index"), col("death_date")))) >= 100)
     return df
 
 
-#
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
-####     Long_COVID_Silver_Standard=Input(rid="ri.foundry.main.dataset.3ea1038c-e278-4b0e-8300-db37d3505671")
-# )
 def sql_statement_01(long_covid_silver_standard):
     long_covid_silver_standard = long_covid_silver_standard.withColumn("time_to_pasc", col("time_to_pasc").cast("int")) \
         .fillna({"time_to_pasc": 0}) \
@@ -42,12 +29,6 @@ def sql_statement_01(long_covid_silver_standard):
     return long_covid_silver_standard
 
 
-#### @transform_pandas(
-####     Output(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-####     tot_icu_days_calc=Input(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
-####     tot_ip_days_calc=Input(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade")
-# )
 def sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_calc):
     feat = Feature_Table_Builder_v0
     tot_ip = tot_ip_days_calc
@@ -58,17 +39,11 @@ def sql_statement_02(Feature_Table_Builder_v0, tot_icu_days_calc, tot_ip_days_ca
                 (coalesce(tot_ip['post_tot_ip_days'], lit(0)) / feat['tot_post_days']).alias('post_ip_visit_ratio'),
                 (coalesce(tot_ip['covid_tot_ip_days'], lit(0)) / feat['tot_covid_days']).alias('covid_ip_visit_ratio'),
                 (coalesce(tot_icu['post_tot_icu_days'], lit(0)) / feat['tot_post_days']).alias('post_icu_visit_ratio'),
-                (coalesce(tot_icu['covid_tot_icu_days'], lit(0)) / feat['tot_covid_days']).alias('covid_icu_visit_ratio'))
+                (coalesce(tot_icu['covid_tot_icu_days'], lit(0)) / feat['tot_covid_days']).alias(
+                    'covid_icu_visit_ratio'))
     return feat
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4"),
-####     hosp_and_non=Input(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
-####     manifest_safe_harbor=Input(rid="ri.foundry.main.dataset.b4407989-1851-4e07-a13f-0539fae10f26"),
-####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
-# )
 def sql_statement_03(Covid_Pasc_Index_Dates, hosp_and_non, microvisits_to_macrovisits):
     # calculate pre-covid, post-covid windows
     hc = hosp_and_non
@@ -114,12 +89,6 @@ def sql_statement_03(Covid_Pasc_Index_Dates, hosp_and_non, microvisits_to_macrov
     return result_df
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887"),
-####     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
-####     condition_occurrence=Input(rid="ri.foundry.main.dataset.2f496793-6a4e-4bf4-b0fc-596b277fb7e2"),
-####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
-# )
 def sql_statement_04(cohort, cond_occ, micro_to_macro):
     cohort = cohort.join(micro_to_macro, "person_id", "left") \
         .filter((micro_to_macro.visit_start_date >= date_add(cohort.min_covid_dt, -14)) &
@@ -134,10 +103,6 @@ def sql_statement_04(cohort, cond_occ, micro_to_macro):
     return cohort
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88"),
-####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
-# )
 def sql_statement_05(microvisits_to_macrovisits, concept):
     df = microvisits_to_macrovisits \
         .join(concept, (microvisits_to_macrovisits.visit_concept_id == concept.concept_id), 'left') \
@@ -148,14 +113,9 @@ def sql_statement_05(microvisits_to_macrovisits, concept):
                                         'Intensive Care',
                                         'Emergency Room - Hospital')) \
         .where(col('visit_occurrence_id').isNotNull())
-    return (df)
+    return df
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.a20c0955-295e-48b1-9286-81621279712f"),
-####     Collect_the_Cohort=Input(rid="ri.vector.main.execute.b394ad88-ebb0-4f13-bf86-cfa6a7f5e612"),
-####     Hospitalized_Cases=Input(rid="ri.vector.main.execute.fafe2849-680c-4e7c-bd60-bc474da15887")
-# )
 def sql_statement_06(cohort, hosp_cases):
     cohort = cohort.alias("ctc").join(hosp_cases.alias('hc'), "person_id", "left") \
         .select(col("ctc.person_id"),
@@ -170,10 +130,6 @@ def sql_statement_06(cohort, hosp_cases):
     return cohort
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef"),
-####     microvisits_to_macrovisits=Input(rid="ri.foundry.main.dataset.d77a701f-34df-48a1-a71c-b28112a07ffa")
-# )
 def sql_statement_07(microvisits_to_macrovisits, concept):
     df = microvisits_to_macrovisits \
         .join(concept, (microvisits_to_macrovisits.visit_concept_id == concept.concept_id), 'left') \
@@ -186,10 +142,6 @@ def sql_statement_07(microvisits_to_macrovisits, concept):
     return df
 
 
-#### @transform_pandas(
-####     Output(rid="ri.foundry.main.dataset.34a5ed27-4c8c-49ae-b084-73bd73c79a49"),
-####     Covid_Pasc_Index_Dates=Input(rid="ri.vector.main.execute.354cc0eb-336b-4864-b750-9d75bf0a8ba4")
-# )
 def sql_statement_08(covid_pasc_index_dates):
     long_covid_df = covid_pasc_index_dates.select(col("person_id"),
                                                   col("pasc_code_after_four_weeks").alias("long_covid"),
@@ -198,11 +150,6 @@ def sql_statement_08(covid_pasc_index_dates):
     return long_covid_df
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.e8f9f7e0-1c42-44d6-8fcd-20cc54971623"),
-####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-####     ICU_visits=Input(rid="ri.vector.main.execute.e86d4e39-4ce0-4b57-b3ec-921a86640b88")
-# )
 def sql_statement_09(Feature_Table_Builder_v0, icu_visits):
     feat = Feature_Table_Builder_v0
 
@@ -239,7 +186,8 @@ def sql_statement_09(Feature_Table_Builder_v0, icu_visits):
     post_tbl = post_tbl.withColumnRenamed("person_id", "person_id_post") \
         .withColumnRenamed("post_window_start_dt", "post_window_start_dt_post")
 
-    joined_df = post_tbl.join(covid_tbl, (post_tbl.person_id_post == covid_tbl.person_id) & ((post_tbl.post_window_start_dt_post == covid_tbl.post_window_start_dt)),
+    joined_df = post_tbl.join(covid_tbl, (post_tbl.person_id_post == covid_tbl.person_id) & (
+        (post_tbl.post_window_start_dt_post == covid_tbl.post_window_start_dt)),
                               how="full_outer") \
         .select(
         coalesce(post_tbl.person_id_post, covid_tbl.person_id).alias("person_id"),
@@ -252,11 +200,6 @@ def sql_statement_09(Feature_Table_Builder_v0, icu_visits):
     return joined_df
 
 
-#### @transform_pandas(
-####     Output(rid="ri.vector.main.execute.fe1ce00c-f84c-4fc6-b1bb-d3a268301ade"),
-####     Feature_Table_Builder_v0=Input(rid="ri.vector.main.execute.e26f3947-ea85-4de9-b662-4048a52ec048"),
-####     inpatient_visits=Input(rid="ri.vector.main.execute.3853f0d6-ac95-4675-bbd2-5a33395676ef")
-# )
 def sql_statement_10(Feature_Table_Builder_v0, inpatient_visits):
     feat = Feature_Table_Builder_v0
 
@@ -293,8 +236,8 @@ def sql_statement_10(Feature_Table_Builder_v0, inpatient_visits):
     post_tbl = post_tbl.withColumnRenamed("person_id", "person_id_post") \
         .withColumnRenamed("post_window_start_dt", "post_window_start_dt_post")
 
-
-    joined_df = post_tbl.join(covid_tbl, (post_tbl.person_id_post == covid_tbl.person_id) & ((post_tbl.post_window_start_dt_post == covid_tbl.post_window_start_dt)),
+    joined_df = post_tbl.join(covid_tbl, (post_tbl.person_id_post == covid_tbl.person_id) & (
+        (post_tbl.post_window_start_dt_post == covid_tbl.post_window_start_dt)),
                               how="full_outer") \
         .select(
         coalesce(post_tbl.person_id_post, covid_tbl.person_id).alias("person_id"),

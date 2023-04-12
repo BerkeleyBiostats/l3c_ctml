@@ -1,7 +1,3 @@
-###@transform_pandas(
-###    Output(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29"),
-###    pos_neg_date=Input(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8")
-# )
 from pyspark.sql.functions import *
 
 
@@ -48,11 +44,6 @@ def sql_statement_00(covid_person):
     return joined_df
 
 
-##@transform_pandas(
-##    Output(rid="ri.foundry.main.dataset.5b072ea2-72c8-42d1-b653-1cfaf691857b"),
-##    covid_measure_indicators=Input(rid="ri.vector.main.execute.7c00f4ba-988d-44b7-ace8-3792fc7d61dd"),
-##    start_end_date=Input(rid="ri.vector.main.execute.1018f056-2996-47a5-949d-fcf8362a5a29")
-# )
 def sql_statement_01(covid_measure_indicators, start_end_date_df):
     cmi = covid_measure_indicators
     covidtbl = start_end_date_df.filter(col("window_type") == "covid") \
@@ -96,11 +87,6 @@ def sql_statement_01(covid_measure_indicators, start_end_date_df):
     return result
 
 
-##@transform_pandas(
-##    Output(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b"),
-##    Feature_table_builder=Input(rid="ri.foundry.main.dataset.ce7a93a0-4140-4fdb-b97d-fb78c0caf345"),
-##    measurement=Input(rid="ri.foundry.main.dataset.5c8b84fb-814b-4ee5-a89a-9525f4a617c7")
-# )
 def sql_statement_02(Feature_table_builder, measurement, concept):
     ft = Feature_table_builder
     m = measurement.join(concept, (measurement.measurement_concept_id == concept.concept_id), 'left')
@@ -130,10 +116,6 @@ def sql_statement_02(Feature_table_builder, measurement, concept):
     return df
 
 
-##@transform_pandas(
-##    Output(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
-##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
-# )
 def sql_statement_03(covid_person):
     df = covid_person \
         .filter(
@@ -147,41 +129,30 @@ def sql_statement_03(covid_person):
     return df
 
 
-##@transform_pandas(
-##    Output(rid="ri.vector.main.execute.93733e19-4810-405f-90ae-5c17466940e8"),
-##    covid_window=Input(rid="ri.vector.main.execute.b27c552d-ec9a-48c8-b742-27e8483a88cb"),
-##    post_covid=Input(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914")
-# )
 def sql_statement_04(covid_window, post_covid):
-	ct = covid_window.groupBy("person_id", "measure_type") \
-		.agg(min("measure_pos_date").alias("first_pos_dt"), max("measure_pos_date").alias("last_pos_dt"))
+    ct = covid_window.groupBy("person_id", "measure_type") \
+        .agg(min("measure_pos_date").alias("first_pos_dt"), max("measure_pos_date").alias("last_pos_dt"))
 
-	covidtbl = (covid_window
-				.join(ct, ["person_id", "measure_type"], "left")
-				.where((col("measure_neg_date") > col("first_pos_dt")) | (col("measure_neg_date").isNull()))
-				.groupBy("person_id", "measure_type", "first_pos_dt", "last_pos_dt")
-				.agg(min(col("measure_neg_date")).alias("first_neg_dt"),
-					 lit('covid').alias("window_type")))
+    covidtbl = (covid_window
+                .join(ct, ["person_id", "measure_type"], "left")
+                .where((col("measure_neg_date") > col("first_pos_dt")) | (col("measure_neg_date").isNull()))
+                .groupBy("person_id", "measure_type", "first_pos_dt", "last_pos_dt")
+                .agg(min(col("measure_neg_date")).alias("first_neg_dt"),
+                     lit('covid').alias("window_type")))
 
-	t = post_covid.groupBy("person_id", "measure_type") \
-		.agg(min("measure_pos_date").alias("first_pos_dt"), max("measure_pos_date").alias("last_pos_dt"))
+    t = post_covid.groupBy("person_id", "measure_type") \
+        .agg(min("measure_pos_date").alias("first_pos_dt"), max("measure_pos_date").alias("last_pos_dt"))
 
-
-	posttbl = (post_covid
-			   .join(t, ["person_id", "measure_type"], "left")
-			   .where((col("measure_neg_date") > col("first_pos_dt")) | (col("measure_neg_date").isNull()))
-			   .groupBy("person_id", "measure_type", "first_pos_dt", "last_pos_dt")
-			   .agg(min(col("measure_neg_date")).alias("first_neg_dt"),
-					lit('pos_covid').alias("window_type")))
-	df = covidtbl.union(posttbl)
-	return df
-
+    posttbl = (post_covid
+               .join(t, ["person_id", "measure_type"], "left")
+               .where((col("measure_neg_date") > col("first_pos_dt")) | (col("measure_neg_date").isNull()))
+               .groupBy("person_id", "measure_type", "first_pos_dt", "last_pos_dt")
+               .agg(min(col("measure_neg_date")).alias("first_neg_dt"),
+                    lit('pos_covid').alias("window_type")))
+    df = covidtbl.union(posttbl)
+    return df
 
 
-##@transform_pandas(
-##    Output(rid="ri.vector.main.execute.f8eeed48-0ebb-4e6a-9f4f-8cccc7fa3914"),
-##    covid_person=Input(rid="ri.vector.main.execute.23ea3189-2921-45e1-9782-ac15dfb58c8b")
-# )
 def sql_statement_05(covid_person):
     df = covid_person \
         .filter(
