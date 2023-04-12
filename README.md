@@ -31,3 +31,6 @@ Add the following files to the training and testing folders:
 
 4. Run data_preparation.py
 Once the additional files have been added, run the `data_preparation.py` script to prepare the data for analysis.
+
+5. Run train_n_infer.py
+Import the `training.csv` and `testing.csv` files from last step. Train SL model with the training data, then make predictions with the testing data. Make Shapley plots with the training data.

@@ -49,6 +49,7 @@ df_train_res.show()
 # TBD Import Synthetic Test Data
 df_test = pd.read_csv('data.csv')
 df_test_spark = spark.createDataFrame(df_test)
+df_test_spark = df_test_spark.select("*").withColumn("idx", monotonically_increasing_id()+1)
 df_preds = targeted_ml_team_predictions(train_sl = df_train_res, 
     analytic_full_train = df_train_spark, 
     analytic_final_test = df_test_spark)
