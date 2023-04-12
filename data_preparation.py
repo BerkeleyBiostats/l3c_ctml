@@ -147,15 +147,13 @@ def main():
     training_df = preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features)
     training_df.write.csv('training.csv')
+    print("Training saved")
 
 
     read_files(spark, type="training")
     testing_df = preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features)
-    training_df.write.csv('testing.csv')
-
-
-
+    testing_df.write.csv('testing.csv')
 
 
 
