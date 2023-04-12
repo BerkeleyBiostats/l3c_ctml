@@ -24,6 +24,7 @@ from pyspark.sql.functions import monotonically_increasing_id
 
 # TBD Import Synthetic Data
 df = pd.read_csv('data.csv')
+df = spark.createDataFrame(df)
 df = df.select("*").withColumn("idx", monotonically_increasing_id()+1)
 
 #--------------------------------#
@@ -47,6 +48,7 @@ df_res.show()
 #--------------------------------#
 # TBD Import Synthetic Test Data
 df_test = pd.read_csv('data.csv')
+df_test = spark.createDataFrame(df_test)
 df_preds = targeted_ml_team_predictions(train_sl = df_res, 
     analytic_full_train = df, 
     analytic_final_test = df_test)
