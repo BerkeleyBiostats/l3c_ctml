@@ -150,7 +150,7 @@ def main():
 
     read_files(spark, type="training")
     print("Start preprocessing")
-    training_df = preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
+    training_df = preprocess("training", spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features)
     print("Finish preprocessing")
     training_df.write.csv('training.csv')
@@ -158,7 +158,7 @@ def main():
 
 
     read_files(spark, type="training")
-    testing_df = preprocess(spark, long_covid_silver_standard, person, condition_occurrence,
+    testing_df = preprocess("testing", spark, long_covid_silver_standard, person, condition_occurrence,
                microvisits_to_macrovisits, concept, drug_exposure, measurement, observation, features)
     testing_df.write.csv('testing.csv')
 
