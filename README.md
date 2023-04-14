@@ -7,6 +7,12 @@ This is the formatted competition code for the L3C Challenge entry of the Target
 The python module format_code can process raw code exported from the enclave (as in the `src_raw` folder) and generate runnable python code (as in the `src` folder). R is not currently supported.
 
 ### Set up environment
+#### Environment Requirements
+> Note: Using different versions of Python or Java may results in code failure.
+- Java 12.0.2
+- Python 3.6
+
+#### Install python packages
 ```
 pip install -r requirements.txt
 ```
